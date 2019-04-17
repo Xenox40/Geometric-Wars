@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 public class Cube {
 
     private CubeView cubeView;
-    static final float movementTimeInSeconds = 0.5f;
+    static final float movementTimeInSeconds = 0.25f;
 
     private float rotationAngleSumInDegrees;
     private boolean moving = false;
@@ -31,12 +31,13 @@ public class Cube {
     public void updateRotationAndPosition() {
         if(isMoving()) {
             float deltaDegrees = (float)(Gdx.graphics.getDeltaTime()*90/(double)(movementTimeInSeconds));
-            rotationAngleSumInDegrees += deltaDegrees;
-            if(rotationAngleSumInDegrees >= 90){
+            if(rotationAngleSumInDegrees+deltaDegrees >= 90){
                 deltaDegrees = 90-rotationAngleSumInDegrees;
-                rotationAngleSumInDegrees = 90;
                 moving = false;
             }
+
+            rotationAngleSumInDegrees += deltaDegrees;
+
             cubeView.rotate(rotationDirection, deltaDegrees,bx,bz);
             if(!moving) {
                 rotationAngleSumInDegrees = 0;

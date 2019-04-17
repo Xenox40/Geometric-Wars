@@ -8,7 +8,12 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.geometric.wars.Values;
 
+/**
+ * Class contains instance of Floor model.
+ * Do not forget to dispose an instance of the model.
+ */
 public class FloorModel {
+    private FloorModel() { }
     private static Model instance = null;
 
     private static float width = Values.unit;
@@ -17,6 +22,9 @@ public class FloorModel {
 
     private static Color color = Color.LIME;
 
+    /**
+     * @return simple model of floor
+     */
     public static Model getModel() {
         if (instance == null)
             instance = new ModelBuilder().createBox(width, height, depth,

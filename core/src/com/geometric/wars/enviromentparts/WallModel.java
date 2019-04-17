@@ -8,7 +8,12 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.geometric.wars.Values;
 
+/**
+ * Class contains instance of Wall model.
+ * Do not forget to dispose an instance of the model.
+ */
 public class WallModel {
+    private WallModel() { }
     private static Model instance = null;
 
     private static float width = Values.unit;
@@ -17,6 +22,9 @@ public class WallModel {
 
     private static Color color = Color.GREEN;
 
+    /**
+     * @return simple model of wall
+     */
     public static Model getModel() {
         if (instance == null)
             instance = new ModelBuilder().createBox(width, height, depth,

@@ -3,9 +3,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
 public class Cube {
-
-    private CubeView cubeView;
     static final float movementTimeInSeconds = 0.25f;
+
+    private final CubeView cubeView;
+
 
     private float rotationAngleSumInDegrees;
     private boolean moving = false;

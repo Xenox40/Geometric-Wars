@@ -15,9 +15,9 @@ import com.badlogic.gdx.math.Vector3;
 
 
 public class CubeView {
-    Model model;
-    ModelInstance cubeModelInstance;
-    private final float size = 1f;
+    final Model model;
+    final ModelInstance cubeModelInstance;
+    private static final float size = 1f;
     private KeyInputListener arrowAction;
     CubeView(){
         ModelBuilder modelBuilder = new ModelBuilder();

@@ -9,26 +9,17 @@ public class CubeController {
     public CubeController(CubeView cubeView, Cube cube) {
         this.cubeView = cubeView;
         this.cube = cube;
+        this.cubeView.setArrowAction( key -> {
+            if (key == Input.Keys.UP) {
+                cube.moveUp();
+            } else if (key == Input.Keys.RIGHT) {
+                cube.moveRight();
+            } else if (key == Input.Keys.DOWN) {
+                cube.moveDown();
+            } else if (key == Input.Keys.LEFT) {
+                cube.moveLeft();
+            }
+        });
     }
-
-    void processKeyInput() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            cube.moveUp();
-            return;
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-            cube.moveRight();
-            return;
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-            cube.moveDown();
-            return;
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-            cube.moveLeft();
-            return;
-        }
-    }
-
 
 }

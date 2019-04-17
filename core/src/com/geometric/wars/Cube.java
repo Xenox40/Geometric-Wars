@@ -1,4 +1,5 @@
 package com.geometric.wars;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
 public class Cube {
@@ -6,7 +7,9 @@ public class Cube {
     private CubeView cubeView;
     private Vector3 md = new Vector3(0,0,0);
     private Vector3 mr = new Vector3(0,0,0);
+    static final float movementTimeInSeconds = 0.8f;
     int px = 0, pz = 0;
+
     public Cube(CubeView cubeView) {
         this.cubeView = cubeView;
     }
@@ -32,29 +35,28 @@ public class Cube {
         md.set(1,0,0);
         mr.set(-1,0,0);
         pz--;
-        cubeView.move(md,mr);
+        cubeView.rotate(md,mr,90);
     }
 
     public void moveRight(){
         md.set(1,0,0);
         mr.set(0,0,-1);
         px++;
-        cubeView.move(md,mr);
+        cubeView.rotate(md,mr,90);
     }
 
     public void moveDown(){
         md.set(0, 0, 1);
         mr.set(1,0,0);
         pz++;
-        cubeView.move(md,mr);
+        cubeView.rotate(md,mr,90);
     }
-
-
+    
     public void moveLeft(){
         md.set(0, 0,1);
         mr.set(0,0,1);
         px--;
-        cubeView.move(md,mr);
+        cubeView.rotate(md,mr,90);
     }
 
 }

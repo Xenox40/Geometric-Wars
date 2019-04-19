@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
@@ -17,7 +18,7 @@ import com.badlogic.gdx.math.Vector3;
 public class CubeView {
     final Model model;
     final ModelInstance cubeModelInstance;
-    private static final float size = 1f;
+    private static final float size = Values.unit;
     private KeyInputListener arrowAction;
     CubeView(){
         ModelBuilder modelBuilder = new ModelBuilder();
@@ -32,11 +33,10 @@ public class CubeView {
 
         Vector3 curPosition  = cubeModelInstance.transform.getTranslation(new Vector3());
 
-        Quaternion curRotation = cubeModelInstance.transform.getRotation(new Quaternion());
+        Quaternion curRotation = cubeModelInstance.transform.getRotation(new Quaternion()).nor();
 
 
-        Quaternion invRotation = new Quaternion(-curRotation.x / curRotation.len2(), -curRotation.y / curRotation.len2(),
-                -curRotation.z / curRotation.len2(),  curRotation.w / curRotation.len2());
+        Quaternion invRotation = curRotation.cpy().conjugate();
 
         cubeModelInstance.transform
                 .rotate(invRotation)
@@ -48,6 +48,7 @@ public class CubeView {
                 .rotate(curRotation)
             ;
     }
+
 
     public void rotateRight(float degrees,Vector3 pp) {
         rotate(new Vector3(size/2,-size/2,0), new Vector3(0,0,-1),degrees,pp);

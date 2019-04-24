@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public class CubeController {
-    public CubeController(final CubeView cubeView, final Cube cube) {
-        cubeView.setArrowAction(new KeyInputListener() {
+    private KeyInputListener arrowAction;
+
+    public CubeController(final Cube cube) {
+        arrowAction = new KeyInputListener() {
             @Override
             public void doAction(int key) {
                 if (key == Input.Keys.UP) {
@@ -18,7 +20,24 @@ public class CubeController {
                     cube.moveLeft();
                 }
             }
-        });
+        };
     }
 
+    public void setArrowAction(KeyInputListener arrowAction) {
+        this.arrowAction = arrowAction;
+    }
+
+    public void processKeyInput() {
+        if(Gdx.input.isKeyPressed(Input.Keys.UP))
+            arrowAction.doAction(Input.Keys.UP);
+        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            arrowAction.doAction(Input.Keys.RIGHT);
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            arrowAction.doAction(Input.Keys.DOWN);
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            arrowAction.doAction(Input.Keys.LEFT);
+        }
+    }
 }

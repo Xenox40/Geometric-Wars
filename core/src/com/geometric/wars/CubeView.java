@@ -11,7 +11,7 @@ public class CubeView extends ModelInstance {
 
     private static final float size = Values.unit;
 
-    CubeView() {
+    public CubeView() {
         super(CubeModel.getModel());
     }
 

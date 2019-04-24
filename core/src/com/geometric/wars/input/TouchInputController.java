@@ -5,12 +5,23 @@ import com.badlogic.gdx.input.GestureDetector;
 
 public class TouchInputController implements InputController {
 
+    /**
+     * Has to be singleton.
+     */
+    private static TouchInputController instance = null;
+
+    public static TouchInputController getInstance() {
+        if (instance == null)
+            instance = new TouchInputController();
+        return instance;
+    }
+
     private boolean up;
     private boolean down;
     private boolean right;
     private boolean left;
 
-    public TouchInputController() {
+    private TouchInputController() {
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
             @Override
             public void onUp() {

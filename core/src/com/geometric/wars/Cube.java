@@ -1,6 +1,5 @@
 package com.geometric.wars;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector3;
 
 public class Cube {
     static final float movementTimeInSeconds = 0.25f;

@@ -1,4 +1,4 @@
-package com.geometric.wars;
+package com.geometric.wars.input;
 
 
 public interface InputController {

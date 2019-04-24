@@ -1,4 +1,4 @@
-package com.geometric.wars;
+package com.geometric.wars.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

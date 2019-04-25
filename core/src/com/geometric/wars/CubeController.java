@@ -1,11 +1,17 @@
 package com.geometric.wars;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.geometric.wars.input.ArrowInputController;
+import com.geometric.wars.input.InputController;
+import com.geometric.wars.input.KeyInputListener;
 
 public class CubeController {
-    public CubeController(final CubeView cubeView, final Cube cube) {
-        cubeView.setArrowAction(new KeyInputListener() {
+    private KeyInputListener arrowAction;
+    private InputController inputController;
+
+    public CubeController(final Cube cube, InputController inputController) {
+        this.inputController = inputController;
+        arrowAction = new KeyInputListener() {
             @Override
             public void doAction(int key) {
                 if (key == Input.Keys.UP) {
@@ -18,7 +24,25 @@ public class CubeController {
                     cube.moveLeft();
                 }
             }
-        });
+        };
     }
 
+    public CubeController(final Cube cube) {
+        this(cube, new ArrowInputController());
+    }
+
+    public void processKeyInput() {
+        if(inputController.moveUp()) {
+            arrowAction.doAction(Input.Keys.UP);
+        }
+        else if(inputController.moveRight()) {
+            arrowAction.doAction(Input.Keys.RIGHT);
+        }
+        else if(inputController.moveDown()) {
+            arrowAction.doAction(Input.Keys.DOWN);
+        }
+        else if(inputController.moveLeft()) {
+            arrowAction.doAction(Input.Keys.LEFT);
+        }
+    }
 }

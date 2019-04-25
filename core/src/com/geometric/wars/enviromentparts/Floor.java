@@ -3,6 +3,7 @@ package com.geometric.wars.enviromentparts;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 import com.geometric.wars.Values;
+import com.geometric.wars.models.FloorModel;
 
 /**
  * Represents a floor as an not-interactive model instance.

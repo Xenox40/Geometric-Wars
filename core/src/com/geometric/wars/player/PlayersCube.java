@@ -11,6 +11,7 @@ class PlayersCube extends CubeView {
 
     public PlayersCube(int x, int y, InputController input) {
         cube = new Cube(this);
+        cube.setPosition(x,y);
         cubeController = new CubeController(cube, input);
     }
 

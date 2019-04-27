@@ -5,4 +5,9 @@ public interface InputController {
     boolean moveDown();
     boolean moveRight();
     boolean moveLeft();
+
+    /**
+     * will be called after all controllable objects finishes their input  processing
+     */
+    void endOnProcessingInput();
 }

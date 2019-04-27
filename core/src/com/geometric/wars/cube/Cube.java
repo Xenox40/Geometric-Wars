@@ -1,31 +1,53 @@
 package com.geometric.wars.cube;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.geometric.wars.Direction;
-import com.geometric.wars.Values;
 
 public class Cube {
     static final float movementTimeInSeconds = 0.25f;
-
-    private final CubeView cubeView;
 
     private float rotationAngleSumInDegrees;
     private boolean moving = false;
     private Direction rotationDirection;
 
-    public boolean isMoving() {
-        return moving;
-    }
-    private void startRotating() {
-        moving = true;
-        rotationAngleSumInDegrees = 0;
-    }
-
     private int bx = 0, bz = 0;
     private int ax = 0, az = 0;
 
-
+    private final CubeView cubeView;
     public Cube(CubeView cubeView) {
         this.cubeView = cubeView;
+    }
+
+
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+
+    /**
+     * sets position (teleports) cube to (x,z)
+     * warning: it cancells rotating and resets orientation to default
+     */
+    public void setPosition(int x, int z) {
+        finishRotating();
+        this.ax = this.bx = x;
+        this.az = this.bz = z;
+        cubeView.transform.setToTranslation(x,0,z);
+    }
+
+    /**
+     * @return position where cube was before t started moving
+     */
+    public Vector2 getPosition() {
+        return new Vector2(ax,az);
+    }
+
+    /**
+     * @return position where cube will be after it finishes moving
+     */
+    public Vector2 getApproachingPosition() {
+        return new Vector2(bx,bz);
     }
 
 
@@ -41,13 +63,10 @@ public class Cube {
 
             cubeView.rotate(rotationDirection, deltaDegrees,bx,bz);
             if(!moving) {
-                rotationAngleSumInDegrees = 0;
-                bx = ax;
-                bz = az;
+                finishRotating();
             }
         }
     }
-
 
     public void move(Direction direction) {
         if(isMoving())
@@ -64,6 +83,19 @@ public class Cube {
             az++;
         if(direction == Direction.LEFT)
             ax--;
+    }
+
+    private void startRotating() {
+        moving = true;
+        rotationAngleSumInDegrees = 0;
+    }
+
+    private void finishRotating() {
+        moving = false;
+        rotationAngleSumInDegrees = 0;
+        rotationDirection = null;
+        bx = ax;
+        bz = az;
     }
 
 }

@@ -22,40 +22,28 @@ public class SwipeInputController implements InputController {
 
     @Override
     public boolean moveUp() {
-        if (up) {
-            up = false;
-            return true;
-        }
-        return false;
+        return up;
     }
 
     @Override
     public boolean moveDown() {
-        if (down) {
-            down = false;
-            return true;
-        }
-        return false;
+        return down;
     }
 
     @Override
     public boolean moveRight() {
-        if (right) {
-            right = false;
-            return true;
-        }
-        return false;
+        return right;
     }
 
     @Override
     public boolean moveLeft() {
-        if (left) {
-            left = false;
-            return true;
-        }
-        return false;
+        return left;
     }
 
+    @Override
+    public void endOnProcessingInput() {
+        up = right = down = left = false;
+    }
 
     private SwipeInputController() {
         DirectionGestureDetector gestureDetector = new DirectionGestureDetector(createDirectionListener());

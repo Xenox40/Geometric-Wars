@@ -4,25 +4,25 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.geometric.wars.input.InputController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class represents player.
  * Player is build with a number of cubes (for example in logic mode),
  * which are represents by PlayersCube objects.
  */
-public class PlayersControler {
+public class PlayersController {
 
     private List<PlayersCube> cubes;
-
+    private InputController inputController;
     /**
      * @param numberOfCubes - number of cubes which player moves
      * @param inputController - a way in which player input his moves
      * @param X - array of x coordinates of cubes on a grid
      * @param Y - array of y coordinates of cubes on a grid
      */
-    public PlayersControler(int numberOfCubes, InputController inputController, int[] X, int[] Y) {
+    public PlayersController(int numberOfCubes, InputController inputController, int[] X, int[] Y) {
+        this.inputController = inputController;
         cubes = new ArrayList<>();
         for (int i = 0; i < numberOfCubes; i++)
             cubes.add(new PlayersCube(X[i], Y[i], inputController));
@@ -35,6 +35,7 @@ public class PlayersControler {
     public void update() {
         for (PlayersCube p : cubes)
             p.update();
+        inputController.endOnProcessingInput();
     }
 
     /**

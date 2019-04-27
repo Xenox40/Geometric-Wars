@@ -23,4 +23,7 @@ public class ArrowInputController implements InputController {
     public boolean moveLeft() {
         return Gdx.input.isKeyPressed(Input.Keys.LEFT);
     }
+
+    @Override
+    public void endOnProcessingInput() {}
 }

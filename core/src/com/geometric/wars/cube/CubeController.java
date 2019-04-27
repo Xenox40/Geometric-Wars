@@ -1,6 +1,7 @@
 package com.geometric.wars.cube;
 
 import com.badlogic.gdx.Input;
+import com.geometric.wars.Direction;
 import com.geometric.wars.cube.Cube;
 import com.geometric.wars.input.ArrowInputController;
 import com.geometric.wars.input.InputController;
@@ -16,13 +17,13 @@ public class CubeController {
             @Override
             public void doAction(int key) {
                 if (key == Input.Keys.UP) {
-                    cube.moveUp();
+                    cube.move(Direction.UP);
                 } else if (key == Input.Keys.RIGHT) {
-                    cube.moveRight();
+                    cube.move(Direction.RIGHT);
                 } else if (key == Input.Keys.DOWN) {
-                    cube.moveDown();
+                    cube.move(Direction.DOWN);
                 } else if (key == Input.Keys.LEFT) {
-                    cube.moveLeft();
+                    cube.move(Direction.LEFT);
                 }
             }
         };

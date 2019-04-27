@@ -1,15 +1,16 @@
 package com.geometric.wars.cube;
 import com.badlogic.gdx.Gdx;
+import com.geometric.wars.Direction;
+import com.geometric.wars.Values;
 
 public class Cube {
     static final float movementTimeInSeconds = 0.25f;
 
     private final CubeView cubeView;
 
-
     private float rotationAngleSumInDegrees;
     private boolean moving = false;
-    private int rotationDirection;
+    private Direction rotationDirection;
 
     public boolean isMoving() {
         return moving;
@@ -48,54 +49,21 @@ public class Cube {
     }
 
 
-    /**
-     *
-     * @param direction
-     *      0 -> up, 1->right, 2 ->down, 3->left
-     */
-    public void move(int direction) {
-        //if(direction >= 4) throw...
-        if(direction == 0)
-            moveUp();
-        if(direction == 1)
-            moveLeft();
-        if(direction == 2)
-            moveDown();
-        if(direction == 3)
-            moveRight();
-    }
-
-    public void moveUp(){
+    public void move(Direction direction) {
         if(isMoving())
             return;
+
         startRotating();
-        rotationDirection = 0;
-        az--;
+        rotationDirection = direction;
+
+        if(direction == Direction.UP)
+            az--;
+        if(direction == Direction.RIGHT)
+            ax++;
+        if(direction == Direction.DOWN)
+            az++;
+        if(direction == Direction.LEFT)
+            ax--;
     }
 
-    public void moveRight(){
-        if(isMoving())
-            return;
-        startRotating();
-        rotationDirection = 1;
-        ax++;
-    }
-
-    public void moveDown(){
-        if(isMoving())
-            return;
-        startRotating();
-
-        rotationDirection = 2;
-        az++;
-    }
-
-    public void moveLeft(){
-        if(isMoving())
-            return;
-        startRotating();
-
-        rotationDirection = 3;
-        ax--;
-    }
 }

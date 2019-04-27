@@ -1,6 +1,7 @@
-package com.geometric.wars;
+package com.geometric.wars.cube;
 
 import com.badlogic.gdx.Input;
+import com.geometric.wars.cube.Cube;
 import com.geometric.wars.input.ArrowInputController;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.KeyInputListener;

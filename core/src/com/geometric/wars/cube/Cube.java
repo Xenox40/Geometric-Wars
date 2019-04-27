@@ -1,4 +1,4 @@
-package com.geometric.wars;
+package com.geometric.wars.cube;
 import com.badlogic.gdx.Gdx;
 
 public class Cube {

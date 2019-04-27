@@ -1,8 +1,8 @@
 package com.geometric.wars.player;
 
-import com.geometric.wars.Cube;
-import com.geometric.wars.CubeController;
-import com.geometric.wars.CubeView;
+import com.geometric.wars.cube.Cube;
+import com.geometric.wars.cube.CubeController;
+import com.geometric.wars.cube.CubeView;
 import com.geometric.wars.input.InputController;
 
 class PlayersCube extends CubeView {

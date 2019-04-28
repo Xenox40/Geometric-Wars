@@ -37,17 +37,17 @@ public class Cube {
     }
 
     /**
-     * @return position where cube was before t started moving
+     * @return position where cube was before it started moving
      */
     public Vector2 getPosition() {
-        return new Vector2(ax,az);
+        return new Vector2(bx,bz);
     }
 
     /**
      * @return position where cube will be after it finishes moving
      */
     public Vector2 getApproachingPosition() {
-        return new Vector2(bx,bz);
+        return new Vector2(ax,az);
     }
 
 

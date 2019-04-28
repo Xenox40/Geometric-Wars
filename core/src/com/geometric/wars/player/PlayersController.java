@@ -2,7 +2,6 @@ package com.geometric.wars.player;
 
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.geometric.wars.input.InputController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +14,17 @@ import java.util.List;
 public class PlayersController {
 
     private List<PlayersCube> cubes;
-    private InputController inputController;
+    private PlayersCubeFactory cubeFactory;
     /**
      * @param numberOfCubes - number of cubes which player moves
-     * @param inputController - a way in which player input his moves
      * @param X - array of x coordinates of cubes on a grid
      * @param Y - array of y coordinates of cubes on a grid
      */
-    public PlayersController(int numberOfCubes, InputController inputController, int[] X, int[] Y) {
-        this.inputController = inputController;
+    public PlayersController(int numberOfCubes, PlayersCubeFactory cubeFactory, int[] X, int[] Y) {
+        this.cubeFactory = cubeFactory;
         cubes = new ArrayList<>();
         for (int i = 0; i < numberOfCubes; i++)
-            cubes.add(new PlayersCube(X[i], Y[i], inputController));
+            cubes.add(cubeFactory.createCube(X[i],Y[i]));
     }
 
     /**
@@ -36,7 +34,7 @@ public class PlayersController {
     public void update() {
         for (PlayersCube p : cubes)
             p.update();
-        inputController.endOnProcessingInput();
+        cubeFactory.endOfUpdatingAllCubes();
     }
 
     /**
@@ -47,7 +45,7 @@ public class PlayersController {
      */
     public void render(ModelBatch batch, Environment environment) {
         for (PlayersCube p : cubes)
-            batch.render(p, environment);
+            p.render(batch,environment);
     }
 }
 

@@ -16,15 +16,16 @@ public class GeometricWars extends ApplicationAdapter {
 	public ShooterPlayersController player;
 	public Floor floor1;
 	public Floor floor2;
-	GameScreen gameScreen;
+	private GameScreen gameScreen;
 
 	@Override
 	public void create () {
+		gameScreen = new GameScreen(this);
+
 		player = new ShooterPlayersController(0, 0, new PersonsCubeFactory(new ArrowInputController()));
 		floor1 = new Floor(0, 0);
 		floor2 = new Floor(1, 0);
 
-		gameScreen = new GameScreen(this);
 	}
 
 	@Override

@@ -5,4 +5,9 @@ public abstract class PlayersCubeFactory {
         return createCube(0,0);
     }
     public abstract PlayersCube createCube(int x,int y);
+
+    /**
+     * will be called after updating all cubes
+     */
+    public void endOfUpdatingAllCubes(){}
 }

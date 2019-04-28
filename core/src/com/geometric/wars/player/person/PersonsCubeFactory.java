@@ -14,4 +14,9 @@ public class PersonsCubeFactory extends PlayersCubeFactory {
     public PlayersCube createCube(int x,int y) {
         return new PersonsCube(inputController, x, y);
     }
+
+    @Override
+    public void endOfUpdatingAllCubes() {
+        inputController.endOnProcessingInput();
+    }
 }

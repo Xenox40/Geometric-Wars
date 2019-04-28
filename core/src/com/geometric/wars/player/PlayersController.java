@@ -14,13 +14,14 @@ import java.util.List;
 public class PlayersController {
 
     private List<PlayersCube> cubes;
-
+    private PlayersCubeFactory cubeFactory;
     /**
      * @param numberOfCubes - number of cubes which player moves
      * @param X - array of x coordinates of cubes on a grid
      * @param Y - array of y coordinates of cubes on a grid
      */
     public PlayersController(int numberOfCubes, PlayersCubeFactory cubeFactory, int[] X, int[] Y) {
+        this.cubeFactory = cubeFactory;
         cubes = new ArrayList<>();
         for (int i = 0; i < numberOfCubes; i++)
             cubes.add(cubeFactory.createCube(X[i],Y[i]));
@@ -33,6 +34,7 @@ public class PlayersController {
     public void update() {
         for (PlayersCube p : cubes)
             p.update();
+        cubeFactory.endOfUpdatingAllCubes();
     }
 
     /**

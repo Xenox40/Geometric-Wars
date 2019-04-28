@@ -18,6 +18,7 @@ public class Floor extends ModelInstance {
      * @param y - y coordinate on a plane grid
      */
     public Floor(int x, int y) {
-        super(FloorModel.getModel(), new Vector3(x * Values.unit, 0, y * Values.unit));
+        //TODO constants for y cord
+        super(FloorModel.getModel(), new Vector3(x * Values.unit, -Values.unit/2-0.05f, y * Values.unit));
     }
 }

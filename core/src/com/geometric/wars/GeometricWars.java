@@ -1,33 +1,40 @@
 package com.geometric.wars;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.geometric.wars.enviromentparts.Floor;
+import com.geometric.wars.input.ArrowInputController;
+import com.geometric.wars.models.CubeModel;
+import com.geometric.wars.models.FloorModel;
+import com.geometric.wars.models.WallModel;
+import com.geometric.wars.player.ShooterPlayersController;
+import com.geometric.wars.screens.GameScreen;
+
 
 public class GeometricWars extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+	//TODO getters
+	public ShooterPlayersController player;
+	public Floor floor1;
+	public Floor floor2;
+	GameScreen gameScreen;
+
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		player = new ShooterPlayersController(0, 0, new ArrowInputController());
+		floor1 = new Floor(0, 0);
+		floor2 = new Floor(1, 0);
+
+		gameScreen = new GameScreen(this);
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		gameScreen.render(1/30);
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		CubeModel.getModel().dispose();
+		FloorModel.getModel().dispose();
+		WallModel.getModel().dispose();
 	}
 }

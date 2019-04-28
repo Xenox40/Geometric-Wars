@@ -47,7 +47,7 @@ public class PlayersController {
      */
     public void render(ModelBatch batch, Environment environment) {
         for (PlayersCube p : cubes)
-            batch.render(p, environment);
+            p.render(batch,environment);
     }
 }
 

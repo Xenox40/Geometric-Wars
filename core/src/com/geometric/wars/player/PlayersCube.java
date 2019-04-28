@@ -1,23 +1,20 @@
 package com.geometric.wars.player;
 
-import com.geometric.wars.cube.Cube;
-import com.geometric.wars.cube.CubeController;
-import com.geometric.wars.cube.CubeView;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.geometric.wars.cube.*;
 import com.geometric.wars.input.InputController;
 
-class PlayersCube extends CubeView {
+class PlayersCube {
     private CubeController cubeController;
     private Cube cube;
+    private CubeView cubeView;
 
     public PlayersCube(int x, int y, InputController input) {
-        cube = new Cube(this);
+        cubeView = new CubeView();
+        cube = new Cube(cubeView);
         cube.setPosition(x,y);
-        cubeController = new CubeController(cube, input);
-    }
-
-    public PlayersCube(int x, int y) {
-        cube = new Cube(this);
-        cubeController = new CubeController(cube);
+        cubeController = new CubeInputController(cube,input);
     }
 
     /**
@@ -25,7 +22,19 @@ class PlayersCube extends CubeView {
      * Updates rotation and position of player.
      */
     public void update() {
-        cubeController.processKeyInput();
+        cubeController.processMoving();
         cube.updateRotationAndPosition();
     }
+
+
+    /**
+     * Renders player on screen.
+     *
+     * @param batch ModelBatch using to render.
+     * @param environment Environment
+     */
+    public void render(ModelBatch batch, Environment environment) {
+        batch.render(cubeView, environment);
+    }
+
 }

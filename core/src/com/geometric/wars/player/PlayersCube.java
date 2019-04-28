@@ -3,18 +3,15 @@ package com.geometric.wars.player;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.geometric.wars.cube.*;
-import com.geometric.wars.input.InputController;
 
-class PlayersCube {
-    private CubeController cubeController;
-    private Cube cube;
-    private CubeView cubeView;
+public abstract class PlayersCube {
+    protected CubeController cubeController;
+    protected Cube cube;
+    protected CubeView cubeView;
 
-    public PlayersCube(int x, int y, InputController input) {
-        cubeView = new CubeView();
-        cube = new Cube(cubeView);
+
+    public void setPosition(int x,int y) {
         cube.setPosition(x,y);
-        cubeController = new CubeInputController(cube,input);
     }
 
     /**
@@ -25,7 +22,6 @@ class PlayersCube {
         cubeController.processMoving();
         cube.updateRotationAndPosition();
     }
-
 
     /**
      * Renders player on screen.

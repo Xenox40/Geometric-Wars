@@ -1,6 +1,8 @@
-package com.geometric.wars.cube;
+package com.geometric.wars.player.person;
 
 import com.geometric.wars.Direction;
+import com.geometric.wars.cube.Cube;
+import com.geometric.wars.cube.CubeController;
 import com.geometric.wars.input.InputController;
 
 public class CubeInputController extends CubeController {

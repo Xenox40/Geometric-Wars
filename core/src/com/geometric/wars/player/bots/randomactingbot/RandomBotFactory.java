@@ -1,7 +1,7 @@
 package com.geometric.wars.player.bots.randomactingbot;
 
-import com.geometric.wars.player.PlayersCubeFactory;
 import com.geometric.wars.player.PlayersCube;
+import com.geometric.wars.player.PlayersCubeFactory;
 
 public class RandomBotFactory extends PlayersCubeFactory {
     @Override

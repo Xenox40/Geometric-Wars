@@ -7,6 +7,7 @@ import com.geometric.wars.models.CubeModel;
 import com.geometric.wars.models.FloorModel;
 import com.geometric.wars.models.WallModel;
 import com.geometric.wars.player.ShooterPlayersController;
+import com.geometric.wars.player.person.PersonsCubeFactory;
 import com.geometric.wars.screens.GameScreen;
 
 
@@ -19,7 +20,7 @@ public class GeometricWars extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		player = new ShooterPlayersController(0, 0, new ArrowInputController());
+		player = new ShooterPlayersController(0, 0, new PersonsCubeFactory(new ArrowInputController()));
 		floor1 = new Floor(0, 0);
 		floor2 = new Floor(1, 0);
 

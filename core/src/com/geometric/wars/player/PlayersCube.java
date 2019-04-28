@@ -2,7 +2,9 @@ package com.geometric.wars.player;
 
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.geometric.wars.cube.*;
+import com.geometric.wars.cube.Cube;
+import com.geometric.wars.cube.CubeController;
+import com.geometric.wars.cube.CubeView;
 
 public abstract class PlayersCube {
     protected CubeController cubeController;

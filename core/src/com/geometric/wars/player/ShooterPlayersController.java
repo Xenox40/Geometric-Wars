@@ -2,7 +2,7 @@ package com.geometric.wars.player;
 
 import com.geometric.wars.input.InputController;
 
-public class ShooterPlayersControler extends PlayersControler {
+public class ShooterPlayersController extends PlayersController {
 
     private int healthPoints;
     private int ammo;
@@ -12,7 +12,7 @@ public class ShooterPlayersControler extends PlayersControler {
      * @param x               - x coordinate of cube on a grid
      * @param y               - y coordinate of cube on a grid
      */
-    public ShooterPlayersControler(int x, int y, InputController inputController) {
+    public ShooterPlayersController(int x, int y, InputController inputController) {
         super(1, inputController, new int[]{x}, new int[]{y});
     }
 

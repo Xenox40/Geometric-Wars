@@ -1,9 +1,11 @@
-package com.geometric.wars;
+package com.geometric.wars.cube;
 
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+import com.geometric.wars.Direction;
+import com.geometric.wars.Values;
 import com.geometric.wars.models.CubeModel;
 
 
@@ -19,9 +21,7 @@ public class CubeView extends ModelInstance {
     private void rotate(Vector3 translation, Vector3 rotation, float degrees, Vector3 pp) {
 
         Vector3 curPosition  = transform.getTranslation(new Vector3());
-
         Quaternion curRotation = transform.getRotation(new Quaternion()).nor();
-
         Quaternion invRotation = curRotation.cpy().conjugate();
 
         transform.rotate(invRotation)
@@ -33,31 +33,32 @@ public class CubeView extends ModelInstance {
                 .rotate(curRotation);
     }
 
+    public void rotate(Direction direction, float degrees, int px, int pz) {
+        if(direction == Direction.UP)
+            rotateUp(degrees,new Vector3(px,0,pz));
+        else if(direction == Direction.RIGHT)
+            rotateRight(degrees,new Vector3(px,0,pz));
+        else if(direction == Direction.DOWN)
+            rotateDown(degrees,new Vector3(px,0,pz));
+        else if(direction == Direction.LEFT)
+            rotateLeft(degrees,new Vector3(px,0,pz));
+    }
 
-    public void rotateRight(float degrees,Vector3 pp) {
+
+    private void rotateRight(float degrees,Vector3 pp) {
         rotate(new Vector3(size/2,-size/2,0), new Vector3(0,0,-1),degrees,pp);
     }
 
-    public void rotateLeft(float degrees,Vector3 pp) {
+    private void rotateLeft(float degrees,Vector3 pp) {
         rotate(new Vector3(-size/2,-size/2,0), new Vector3(0,0,1),degrees,pp);
     }
 
-    public void rotateUp(float degrees,Vector3 pp) {
+    private void rotateUp(float degrees,Vector3 pp) {
         rotate(new Vector3(0,-size/2,-size/2), new Vector3(-1,0,0),degrees,pp);
     }
 
-    public void rotateDown(float degrees,Vector3 pp) {
+    private void rotateDown(float degrees,Vector3 pp) {
         rotate(new Vector3(0,-size/2,size/2), new Vector3(1,0,0),degrees,pp);
     }
 
-    public void rotate(int direction,float degrees,int px, int pz) {
-        if(direction == 0)
-            rotateUp(degrees,new Vector3(px,0,pz));
-        else if(direction == 1)
-            rotateRight(degrees,new Vector3(px,0,pz));
-        else if(direction == 2)
-            rotateDown(degrees,new Vector3(px,0,pz));
-        else if(direction == 3)
-            rotateLeft(degrees,new Vector3(px,0,pz));
-    }
 }

@@ -16,7 +16,6 @@ public class MapObjectCheckerService {
     private  MapObjectCheckerService(){}
 
     void loadMap(Map map) {
-        System.out.println("map loaded");
         this.map = map;
     }
 

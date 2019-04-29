@@ -2,6 +2,8 @@ package com.geometric.wars.maps;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g3d.ModelCache;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.Values;
 import com.geometric.wars.enviromentparts.Floor;
@@ -43,7 +45,6 @@ public class MapLoader {
                     throw new IOException("Wrong map width in: "+fileName);
 
                 for (char item: line.toCharArray()) {
-                    map.staticMapObjects.add(new Floor(x, y));
                     switch (item) {
                         case '#':
                             map.staticMapObjects.add(new Wall(x, y));
@@ -68,6 +69,18 @@ public class MapLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Floor floor = new Floor(0,0);
+        floor.transform.translate((width-Values.unit)/2f,0,(height-Values.unit)/2f);
+        floor.transform.scale((float)width,1f,(float)height);
+        map.staticMapObjects.add(floor);
+
+
+        map.staticModelsCache = new ModelCache();
+        map.staticModelsCache.begin();
+        for(StaticMapObject o : map.staticMapObjects)
+            o.cache(map.staticModelsCache);
+        map.staticModelsCache.end();
+
         map.width = width;
         map.height = height;
         MapObjectCheckerService service = MapObjectCheckerService.getInstance();

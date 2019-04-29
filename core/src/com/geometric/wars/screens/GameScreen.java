@@ -23,7 +23,7 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
 
-        System.out.println(" FPS: "+ Gdx.graphics.getFramesPerSecond());
+        //System.out.println(" FPS: "+ Gdx.graphics.getFramesPerSecond());
 
         map.update();
 
@@ -31,5 +31,10 @@ public class GameScreen extends AbstractScreen {
         map.render(batch, environment);
         //axes.render(batch, environment);
         batch.end();
+    }
+    @Override
+    public void dispose() {
+        super.dispose();
+        map.dispose();
     }
 }

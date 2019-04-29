@@ -26,7 +26,8 @@ public class MapLoader {
         map.width = width;
         map.height = height;
         map.occupied = new boolean[width][height];
-        MapObjectCheckerService service = new MapObjectCheckerService(map);
+        MapObjectCheckerService service = MapObjectCheckerService.getInstance();
+        service.loadMap(map);
         try {
             handle = Gdx.files.internal(fileName);
             reader = handle.reader(15);
@@ -48,10 +49,10 @@ public class MapLoader {
                         case 'P':
                             if(inputController == null)
                                 throw new IOException("No inputController provided");
-                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new PersonsCubeFactory(service, inputController)));
+                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new PersonsCubeFactory(inputController)));
                             break;
                         case 'B':
-                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new RandomBotFactory(service)));
+                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new RandomBotFactory()));
                             break;
                     }
                     x += Values.unit;

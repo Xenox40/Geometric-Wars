@@ -5,8 +5,18 @@ import com.badlogic.gdx.math.Vector2;
 public class MapObjectCheckerService {
     private Map map;
     private boolean[][] ocuppedCells;
+    private static MapObjectCheckerService instance;
 
-    public MapObjectCheckerService(Map map){
+    public static MapObjectCheckerService getInstance() {
+        if(instance == null)
+            instance = new MapObjectCheckerService();
+        return instance;
+    }
+
+    private  MapObjectCheckerService(){}
+
+    void loadMap(Map map) {
+        System.out.println("map loaded");
         this.map = map;
     }
 

@@ -15,11 +15,9 @@ public class Cube {
     private int ax = 0, az = 0;
 
     private final CubeView cubeView;
-    private MapObjectCheckerService mapObjectCheckerService;
 
-    public Cube(CubeView cubeView, MapObjectCheckerService mapObjectCheckerService) {
+    public Cube(CubeView cubeView) {
         this.cubeView = cubeView;
-        this.mapObjectCheckerService = mapObjectCheckerService;
     }
 
 
@@ -74,7 +72,7 @@ public class Cube {
 
     public boolean moveIsAllowed(Direction direction) {
         Vector2 nextPosition = direction.toVector2();
-        return !(mapObjectCheckerService.checkIfIsOccupied(bx + (int)nextPosition.x, bz + (int)nextPosition.y));
+        return !(MapObjectCheckerService.getInstance().checkIfIsOccupied(bx + (int)nextPosition.x, bz + (int)nextPosition.y));
     }
 
     public void move(Direction direction) {

@@ -8,15 +8,15 @@ import com.geometric.wars.maps.MapObjectCheckerService;
 import com.geometric.wars.player.PlayersCube;
 
 public class RandomBotCube extends PlayersCube {
-    public RandomBotCube(MapObjectCheckerService mapObjectCheckerService)  {
+    public RandomBotCube()  {
         cubeView = new CubeView();
-        cube = new Cube(cubeView, mapObjectCheckerService);
+        cube = new Cube(cubeView);
         cubeController = new CubeRandomController(cube);
         cubeView.materials.get(0).set(ColorAttribute.createDiffuse(Color.PURPLE));
     }
 
-    public RandomBotCube(MapObjectCheckerService mapObjectCheckerService, int x, int y) {
-        this(mapObjectCheckerService);
+    public RandomBotCube(int x, int y) {
+        this();
         setPosition(x, y);
     }
 }

@@ -1,5 +1,7 @@
 package com.geometric.wars.player;
 
+import com.geometric.wars.maps.MapObjectCheckerService;
+
 public class ShooterPlayersController extends PlayersController {
 
     private int healthPoints;

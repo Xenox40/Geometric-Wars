@@ -1,17 +1,17 @@
 package com.geometric.wars.screens;
 
 import com.geometric.wars.GeometricWars;
-import com.geometric.wars.debug.axises.CoordinateAxises3D;
+import com.geometric.wars.debug.axes.CoordinateAxes3D;
 import com.geometric.wars.maps.Map;
 import com.geometric.wars.maps.MapLoader;
 
 public class GameScreen extends AbstractScreen {
-    CoordinateAxises3D axises;
+    CoordinateAxes3D axises;
     Map map;
 
     public GameScreen(GeometricWars game, String mapName) {
         super(game);
-        axises = new CoordinateAxises3D();
+        axises = new CoordinateAxes3D();
         map = new MapLoader().setFileName("maps/"+mapName).setInputController(game.getInputController()).load();
     }
 

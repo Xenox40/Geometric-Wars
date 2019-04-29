@@ -21,6 +21,10 @@ public class MapLoader {
     public Map load() {
         BufferedReader reader;
         Map map = new Map();
+        map.width = width;
+        map.height = height;
+        map.occupied = new boolean[width][height];
+        MapObjectCheckerService service = new MapObjectCheckerService(map);
         try {
             reader = new BufferedReader(new FileReader(fileName));
             String line = reader.readLine();
@@ -36,14 +40,15 @@ public class MapLoader {
                     switch (item) {
                         case '#':
                             map.staticMapObjects.add(new Wall(x, y));
+                            map.occupied[x][y] = true;
                             break;
                         case 'P':
                             if(inputController == null)
                                 throw new IOException("No inputController provided");
-                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new PersonsCubeFactory(inputController)));
+                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new PersonsCubeFactory(service, inputController)));
                             break;
                         case 'B':
-                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new RandomBotFactory()));
+                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new RandomBotFactory(service)));
                             break;
                     }
                     x += Values.unit;

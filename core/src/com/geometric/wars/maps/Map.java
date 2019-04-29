@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.Array;
 
 public class Map {
-    public Array<StaticMapObject> staticMapObjects;
+    Array<StaticMapObject> staticMapObjects;
     Array<DynamicMapObject> dynamicMapObjects;
+    int width, height;
+    boolean [][] occupied;
 
     public Map() {
         staticMapObjects = new Array<>();
@@ -26,5 +28,10 @@ public class Map {
         for(DynamicMapObject dynamicMapObject : dynamicMapObjects) {
             dynamicMapObject.render(modelBatch, environment);
         }
+    }
+    public boolean isOccupied(int x, int y){
+        if(x < 0 || y < 0 || x >= width || y >= height)
+            return true;
+        return occupied[x][y];
     }
 }

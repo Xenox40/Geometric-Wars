@@ -2,6 +2,7 @@ package com.geometric.wars.enviromentparts;
 
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelCache;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 import com.geometric.wars.Values;
@@ -28,5 +29,10 @@ public class Floor extends ModelInstance implements StaticMapObject {
     @Override
     public void render(ModelBatch modelBatch, Environment environment) {
         modelBatch.render(this, environment);
+    }
+
+    @Override
+    public void cache(ModelCache cache) {
+        cache.add(this);
     }
 }

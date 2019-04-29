@@ -29,7 +29,7 @@ public class GeometricWars extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		gameScreen.render(1/30);
+		gameScreen.render(1/30f);
 	}
 
 	@Override

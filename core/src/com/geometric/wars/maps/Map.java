@@ -12,12 +12,10 @@ public class Map {
     Array<DynamicMapObject> dynamicMapObjects;
 
     int width, height;
-    Array<Array<Boolean> > occupied;
 
     public Map() {
         staticMapObjects = new Array<>();
         dynamicMapObjects = new Array<>();
-        occupied = new Array<>();
     }
 
     public void update() {
@@ -34,12 +32,7 @@ public class Map {
             dynamicMapObject.render(modelBatch, environment);
         }
     }
-    public boolean isOccupied(int x, int y){
-        if(x < 0 || y < 0 || x >= width || y >= height)
-            return true;
-        return occupied.get(y).get(x);
-    }
-
+    
     public int getWidth() {
         return width;
     }

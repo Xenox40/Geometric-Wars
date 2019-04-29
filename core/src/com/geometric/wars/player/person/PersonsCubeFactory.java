@@ -1,7 +1,6 @@
 package com.geometric.wars.player.person;
 
 import com.geometric.wars.input.InputController;
-import com.geometric.wars.maps.MapObjectCheckerService;
 import com.geometric.wars.player.PlayersCube;
 import com.geometric.wars.player.PlayersCubeFactory;
 

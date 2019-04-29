@@ -1,6 +1,5 @@
 package com.geometric.wars.player.bots.randomactingbot;
 
-import com.geometric.wars.maps.MapObjectCheckerService;
 import com.geometric.wars.player.PlayersCube;
 import com.geometric.wars.player.PlayersCubeFactory;
 

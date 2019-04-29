@@ -3,7 +3,6 @@ package com.geometric.wars.maps;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g3d.ModelCache;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.Values;
 import com.geometric.wars.enviromentparts.Floor;
@@ -25,7 +24,11 @@ public class MapLoader {
     public Map load() {
         FileHandle handle;
         BufferedReader reader;
+
         Map map = new Map();
+        MapService service = MapService.getInstance();
+        service.setMap(map);
+
         int height = 0;
         int width = 0;
         try {
@@ -35,10 +38,8 @@ public class MapLoader {
             width = line.length();
             int x = 0, y = 0;
             while(line != null) {
-                map.occupied.add(new Array<Boolean>());
-                map.occupied.get(height).setSize(width);
-                for(int i=0;i<width;i++)
-                    map.occupied.get(height).set(i,false);
+                service.mapObjects.add(new Array<MapObjectType>());
+
                 ++height;
 
                 if(line.length() != width)
@@ -48,15 +49,20 @@ public class MapLoader {
                     switch (item) {
                         case '#':
                             map.staticMapObjects.add(new Wall(x, y));
-                            map.occupied.get(y).set(x, true);
+                            service.mapObjects.get(y).add(MapObjectType.WALL);
                             break;
                         case 'P':
                             if(inputController == null)
                                 throw new IOException("No inputController provided");
                             map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new PersonsCubeFactory(inputController)));
+                            service.mapObjects.get(y).add(MapObjectType.PLAYER);
                             break;
                         case 'B':
                             map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new RandomBotFactory()));
+                            service.mapObjects.get(y).add(MapObjectType.PLAYER);
+                            break;
+                        default:
+                            service.mapObjects.get(y).add(MapObjectType.EMPTY);
                             break;
                     }
                     x += Values.unit;
@@ -83,8 +89,7 @@ public class MapLoader {
 
         map.width = width;
         map.height = height;
-        MapObjectCheckerService service = MapObjectCheckerService.getInstance();
-        service.loadMap(map);
+
         return map;
     }
 
@@ -93,15 +98,6 @@ public class MapLoader {
         return this;
     }
 
-    public MapLoader setWidth(int width) {
-        this.width = width;
-        return this;
-    }
-
-    public MapLoader setHeight(int height) {
-        this.height = height;
-        return this;
-    }
 
     public MapLoader setInputController(InputController inputController) {
         this.inputController = inputController;

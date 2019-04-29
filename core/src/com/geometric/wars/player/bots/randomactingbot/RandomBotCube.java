@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.geometric.wars.cube.Cube;
 import com.geometric.wars.cube.CubeView;
-import com.geometric.wars.maps.MapObjectCheckerService;
 import com.geometric.wars.player.PlayersCube;
 
 public class RandomBotCube extends PlayersCube {

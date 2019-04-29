@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.geometric.wars.GeometricWars;
 
 public abstract class AbstractScreen implements Screen {
@@ -19,6 +21,8 @@ public abstract class AbstractScreen implements Screen {
 
     protected ModelBatch batch;
     protected Environment environment;
+
+    protected Viewport viewport;
 
     public AbstractScreen(GeometricWars game) {
         this.game = game;
@@ -32,6 +36,8 @@ public abstract class AbstractScreen implements Screen {
         Gdx.input.setInputProcessor(cameraController);
 
         batch = new ModelBatch();
+
+        viewport = new ExtendViewport(1,1,camera);
     }
 
     private void createCamera() {
@@ -70,7 +76,8 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width,height);
+        camera.update();
     }
 
     @Override

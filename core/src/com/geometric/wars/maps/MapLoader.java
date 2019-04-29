@@ -2,6 +2,7 @@ package com.geometric.wars.maps;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.Values;
 import com.geometric.wars.enviromentparts.Floor;
 import com.geometric.wars.enviromentparts.Wall;
@@ -15,27 +16,29 @@ import java.io.IOException;
 
 public class MapLoader {
     private String fileName;
-    private int width = 13;
-    private int height = 13;
+    private int width;
+    private int height ;
     private InputController inputController;
 
     public Map load() {
         FileHandle handle;
         BufferedReader reader;
         Map map = new Map();
-        map.width = width;
-        map.height = height;
-        map.occupied = new boolean[width][height];
-        MapObjectCheckerService service = MapObjectCheckerService.getInstance();
-        service.loadMap(map);
+        int height = 0;
+        int width = 0;
         try {
             handle = Gdx.files.internal(fileName);
             reader = handle.reader(15);
             String line = reader.readLine();
-            int lineCounter = 0;
+            width = line.length();
             int x = 0, y = 0;
             while(line != null) {
-                ++lineCounter;
+                map.occupied.add(new Array<Boolean>());
+                map.occupied.get(height).setSize(width);
+                for(int i=0;i<width;i++)
+                    map.occupied.get(height).set(i,false);
+                ++height;
+
                 if(line.length() != width)
                     throw new IOException("Wrong map width in: "+fileName);
 
@@ -44,7 +47,7 @@ public class MapLoader {
                     switch (item) {
                         case '#':
                             map.staticMapObjects.add(new Wall(x, y));
-                            map.occupied[x][y] = true;
+                            map.occupied.get(y).set(x, true);
                             break;
                         case 'P':
                             if(inputController == null)
@@ -61,12 +64,14 @@ public class MapLoader {
                 line = reader.readLine();
                 x = 0; y += Values.unit;
             }
-            if(lineCounter != height)
-                throw new IOException("Wrong map height in: "+fileName);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        map.width = width;
+        map.height = height;
+        MapObjectCheckerService service = MapObjectCheckerService.getInstance();
+        service.loadMap(map);
         return map;
     }
 

@@ -8,11 +8,12 @@ public class Map {
     Array<StaticMapObject> staticMapObjects;
     Array<DynamicMapObject> dynamicMapObjects;
     int width, height;
-    boolean [][] occupied;
+    Array<Array<Boolean> > occupied;
 
     public Map() {
         staticMapObjects = new Array<>();
         dynamicMapObjects = new Array<>();
+        occupied = new Array<>();
     }
 
     public void update() {
@@ -32,7 +33,7 @@ public class Map {
     public boolean isOccupied(int x, int y){
         if(x < 0 || y < 0 || x >= width || y >= height)
             return true;
-        return occupied[x][y];
+        return occupied.get(y).get(x);
     }
 
     public int getWidth() {

@@ -20,7 +20,7 @@ public class WallModel {
     private static float height = Values.unit;
     private static float depth = Values.unit;
 
-    private static Color color = Color.GREEN;
+    private static Color color = Color.CYAN;
 
     /**
      * @return simple model of wall

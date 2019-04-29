@@ -2,6 +2,7 @@ package com.geometric.wars.player;
 
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.geometric.wars.maps.DynamicMapObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * Player is build with a number of cubes (for example in logic mode),
  * which are represents by PlayersCube objects.
  */
-public class PlayersController {
+public class PlayersController implements DynamicMapObject {
 
     private List<PlayersCube> cubes;
     private PlayersCubeFactory cubeFactory;

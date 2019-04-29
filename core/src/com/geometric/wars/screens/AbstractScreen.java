@@ -1,5 +1,6 @@
 package com.geometric.wars.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,6 +10,8 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.geometric.wars.GeometricWars;
 
 public abstract class AbstractScreen implements Screen {
@@ -20,6 +23,8 @@ public abstract class AbstractScreen implements Screen {
     protected ModelBatch batch;
     protected Environment environment;
 
+    protected Viewport viewport;
+
     public AbstractScreen(GeometricWars game) {
         this.game = game;
 
@@ -29,15 +34,16 @@ public abstract class AbstractScreen implements Screen {
 
         createCamera();
         cameraController = new CameraInputController(camera);
-        Gdx.input.setInputProcessor(cameraController);
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop)
+            Gdx.input.setInputProcessor(cameraController);
 
         batch = new ModelBatch();
+
+        viewport = new ExtendViewport(1,1,camera);
     }
 
     private void createCamera() {
-        camera = new PerspectiveCamera(70, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.position.set(0f, 7f, 10f);
-        camera.lookAt(0,0,0);
+        camera = new PerspectiveCamera(55, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.near = 1f;
         camera.far = 300f;
         camera.update();
@@ -70,7 +76,8 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width,height);
+        camera.update();
     }
 
     @Override

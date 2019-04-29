@@ -31,7 +31,12 @@ public class GeometricWars extends ApplicationAdapter {
 	public void render () {
 		gameScreen.render(1/30);
 	}
-	
+
+	@Override
+	public void resize(int x,int y){
+		gameScreen.resize(x,y);
+	}
+
 	@Override
 	public void dispose () {
 		CubeModel.getModel().dispose();

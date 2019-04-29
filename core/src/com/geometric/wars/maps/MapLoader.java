@@ -1,5 +1,7 @@
 package com.geometric.wars.maps;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.geometric.wars.Values;
 import com.geometric.wars.enviromentparts.Floor;
 import com.geometric.wars.enviromentparts.Wall;
@@ -9,7 +11,6 @@ import com.geometric.wars.player.bots.randomactingbot.RandomBotFactory;
 import com.geometric.wars.player.person.PersonsCubeFactory;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 
 public class MapLoader {
@@ -19,10 +20,16 @@ public class MapLoader {
     private InputController inputController;
 
     public Map load() {
+        FileHandle handle;
         BufferedReader reader;
         Map map = new Map();
+        map.width = width;
+        map.height = height;
+        map.occupied = new boolean[width][height];
+        MapObjectCheckerService service = new MapObjectCheckerService(map);
         try {
-            reader = new BufferedReader(new FileReader(fileName));
+            handle = Gdx.files.internal(fileName);
+            reader = handle.reader(15);
             String line = reader.readLine();
             int lineCounter = 0;
             int x = 0, y = 0;
@@ -36,14 +43,15 @@ public class MapLoader {
                     switch (item) {
                         case '#':
                             map.staticMapObjects.add(new Wall(x, y));
+                            map.occupied[x][y] = true;
                             break;
                         case 'P':
                             if(inputController == null)
                                 throw new IOException("No inputController provided");
-                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new PersonsCubeFactory(inputController)));
+                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new PersonsCubeFactory(service, inputController)));
                             break;
                         case 'B':
-                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new RandomBotFactory()));
+                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new RandomBotFactory(service)));
                             break;
                     }
                     x += Values.unit;

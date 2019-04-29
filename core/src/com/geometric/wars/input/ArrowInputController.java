@@ -37,4 +37,9 @@ public class ArrowInputController implements InputController {
 
     @Override
     public void endOnProcessingInput() {}
+
+    @Override
+    public void dispose() {
+        instance = null;
+    }
 }

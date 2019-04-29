@@ -34,4 +34,10 @@ public class LineModel {
         meshBuilder.line(0, 0, 0, Values.unit,0,0);
         return meshModelBuilder.end();
     }
+
+    public static void dispose() {
+        if (instance != null)
+            instance.dispose();
+        instance = null;
+    }
 }

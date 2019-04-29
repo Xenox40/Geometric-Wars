@@ -10,4 +10,6 @@ public interface InputController {
      * will be called after all controllable objects finishes their input  processing
      */
     void endOnProcessingInput();
+
+    void dispose();
 }

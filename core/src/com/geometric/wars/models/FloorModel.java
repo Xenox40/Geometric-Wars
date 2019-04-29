@@ -32,4 +32,10 @@ public class FloorModel {
                     VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         return instance;
     }
+
+    public static void dispose() {
+        if (instance != null)
+            instance.dispose();
+        instance = null;
+    }
 }

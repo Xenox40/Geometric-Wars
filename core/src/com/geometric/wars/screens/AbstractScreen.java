@@ -41,9 +41,7 @@ public abstract class AbstractScreen implements Screen {
     }
 
     private void createCamera() {
-        camera = new PerspectiveCamera(70, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.position.set(0f, 7f, 10f);
-        camera.lookAt(0,0,0);
+        camera = new PerspectiveCamera(55, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.near = 1f;
         camera.far = 300f;
         camera.update();

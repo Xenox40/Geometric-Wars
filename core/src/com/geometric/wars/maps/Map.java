@@ -34,4 +34,11 @@ public class Map {
             return true;
         return occupied[x][y];
     }
+
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
+    }
 }

@@ -13,6 +13,9 @@ public class GameScreen extends AbstractScreen {
         super(game);
         axises = new CoordinateAxes3D();
         map = new MapLoader().setFileName("maps/"+mapName).setInputController(game.getInputController()).load();
+        camera.position.set(map.getHeight()*1/2f, 12f, map.getWidth()*5/4f);
+        camera.lookAt(map.getHeight()/2.0f,0,map.getWidth()/2.0f);
+        camera.update();
     }
 
     @Override
@@ -22,7 +25,7 @@ public class GameScreen extends AbstractScreen {
 
         batch.begin(camera);
         map.render(batch, environment);
-        axises.render(batch, environment);
+        //axises.render(batch, environment);
         batch.end();
     }
 }

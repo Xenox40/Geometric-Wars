@@ -4,6 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public class ArrowInputController implements InputController {
+
+    private static ArrowInputController instance = null;
+
+    public static ArrowInputController getInstance() {
+        if (instance == null)
+            instance = new ArrowInputController();
+        return instance;
+    }
+
+    private ArrowInputController() { }
+
     @Override
     public boolean moveUp() {
         return Gdx.input.isKeyPressed(Input.Keys.UP);

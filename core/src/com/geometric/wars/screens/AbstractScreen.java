@@ -1,5 +1,6 @@
 package com.geometric.wars.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -33,7 +34,8 @@ public abstract class AbstractScreen implements Screen {
 
         createCamera();
         cameraController = new CameraInputController(camera);
-        Gdx.input.setInputProcessor(cameraController);
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop)
+            Gdx.input.setInputProcessor(cameraController);
 
         batch = new ModelBatch();
 

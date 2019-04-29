@@ -6,12 +6,12 @@ import com.geometric.wars.maps.Map;
 import com.geometric.wars.maps.MapLoader;
 
 public class GameScreen extends AbstractScreen {
-    CoordinateAxes3D axises;
+    CoordinateAxes3D axes;
     Map map;
 
     public GameScreen(GeometricWars game, String mapName) {
         super(game);
-        axises = new CoordinateAxes3D();
+        axes = new CoordinateAxes3D();
         map = new MapLoader().setFileName("maps/"+mapName).setInputController(game.getInputController()).load();
         camera.position.set(map.getHeight()*1/2f, 12f, map.getWidth()*5/4f);
         camera.lookAt(map.getHeight()/2.0f,0,map.getWidth()/2.0f);
@@ -25,7 +25,7 @@ public class GameScreen extends AbstractScreen {
 
         batch.begin(camera);
         map.render(batch, environment);
-        //axises.render(batch, environment);
+        //axes.render(batch, environment);
         batch.end();
     }
 }

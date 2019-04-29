@@ -74,7 +74,6 @@ public class Cube {
 
     public boolean moveIsAllowed(Direction direction) {
         Vector2 nextPosition = direction.toVector2();
-        System.out.println((bx + (int)nextPosition.x)+" "+(bz + (int)nextPosition.y));
         return !(mapObjectCheckerService.checkIfIsOccupied(bx + (int)nextPosition.x, bz + (int)nextPosition.y));
     }
 

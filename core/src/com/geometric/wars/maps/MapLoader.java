@@ -3,7 +3,7 @@ package com.geometric.wars.maps;
 import com.geometric.wars.Values;
 import com.geometric.wars.enviromentparts.Floor;
 import com.geometric.wars.enviromentparts.Wall;
-import com.geometric.wars.input.ArrowInputController;
+import com.geometric.wars.input.InputController;
 import com.geometric.wars.player.ShooterPlayersController;
 import com.geometric.wars.player.bots.randomactingbot.RandomBotFactory;
 import com.geometric.wars.player.person.PersonsCubeFactory;
@@ -16,6 +16,7 @@ public class MapLoader {
     private String fileName;
     private int width = 13;
     private int height = 13;
+    private InputController inputController;
 
     public Map load() {
         BufferedReader reader;
@@ -23,7 +24,6 @@ public class MapLoader {
         try {
             reader = new BufferedReader(new FileReader(fileName));
             String line = reader.readLine();
-            System.out.println(line);
             int lineCounter = 0;
             int x = 0, y = 0;
             while(line != null) {
@@ -38,7 +38,9 @@ public class MapLoader {
                             map.staticMapObjects.add(new Wall(x, y));
                             break;
                         case 'P':
-                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new PersonsCubeFactory(new ArrowInputController())));
+                            if(inputController == null)
+                                throw new IOException("No inputController provided");
+                            map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new PersonsCubeFactory(inputController)));
                             break;
                         case 'B':
                             map.dynamicMapObjects.add(new ShooterPlayersController(x, y, new RandomBotFactory()));
@@ -56,7 +58,6 @@ public class MapLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(map.staticMapObjects.size);
         return map;
     }
 
@@ -74,5 +75,11 @@ public class MapLoader {
         this.height = height;
         return this;
     }
+
+    public MapLoader setInputController(InputController inputController) {
+        this.inputController = inputController;
+        return this;
+    }
+
 
 }

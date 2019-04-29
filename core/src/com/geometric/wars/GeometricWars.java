@@ -15,15 +15,16 @@ import com.geometric.wars.screens.GameScreen;
 public class GeometricWars extends ApplicationAdapter {
 	private GameScreen gameScreen;
 
-	private InputController inputController;
+    private InputController inputController;
 
 	@Override
 	public void create () {
-		gameScreen = new GameScreen(this, "map1.txt");
         if (Gdx.app.getType() == Application.ApplicationType.Android)
             inputController = SwipeInputController.getInstance();
         else
             inputController = ArrowInputController.getInstance();
+
+		gameScreen = new GameScreen(this, "map1.txt");
 	}
 
 	@Override
@@ -37,4 +38,8 @@ public class GeometricWars extends ApplicationAdapter {
 		FloorModel.getModel().dispose();
 		WallModel.getModel().dispose();
 	}
+
+    public InputController getInputController() {
+        return inputController;
+    }
 }

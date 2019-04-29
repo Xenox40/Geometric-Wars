@@ -12,9 +12,7 @@ public class GameScreen extends AbstractScreen {
     public GameScreen(GeometricWars game, String mapName) {
         super(game);
         axises = new CoordinateAxises3D();
-        map = new MapLoader().setFileName("maps/"+mapName).load();
-        System.out.println(new MapLoader().setFileName("maps/"+mapName).load().staticMapObjects.size);
-        System.out.println(map.staticMapObjects.size);
+        map = new MapLoader().setFileName("maps/"+mapName).setInputController(game.getInputController()).load();
     }
 
     @Override

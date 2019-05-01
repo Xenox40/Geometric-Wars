@@ -6,8 +6,8 @@ public class ShooterPlayersController extends PlayersController {
     private int ammo;
 
     /**
-     * @param x               - x coordinate of cube on a grid
-     * @param y               - y coordinate of cube on a grid
+     * @param x               - x coordinate of dynamicCube on a grid
+     * @param y               - y coordinate of dynamicCube on a grid
      */
     public ShooterPlayersController(int x, int y, PlayersCubeFactory cubeFactory) {
         super(1,cubeFactory, new int[]{x}, new int[]{y});

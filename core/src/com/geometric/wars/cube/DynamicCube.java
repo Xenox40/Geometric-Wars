@@ -5,7 +5,7 @@ import com.geometric.wars.Direction;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.scene.SceneManager;
 
-public class Cube {
+public class DynamicCube {
     static final float movementTimeInSeconds = 0.25f;
 
     private float rotationAngleSumInDegrees;
@@ -15,10 +15,10 @@ public class Cube {
     private int bx = 0, bz = 0;
     private int ax = 0, az = 0;
 
-    private final CubeView cubeView;
+    private final DynamicCubeView dynamicCubeView;
 
-    public Cube(CubeView cubeView) {
-        this.cubeView = cubeView;
+    public DynamicCube(DynamicCubeView dynamicCubeView) {
+        this.dynamicCubeView = dynamicCubeView;
     }
 
 
@@ -29,25 +29,25 @@ public class Cube {
 
 
     /**
-     * sets position (teleports) cube to (x,z)
+     * sets position (teleports) dynamicCube to (x,z)
      * warning: it cancells rotating and resets orientation to default
      */
     public void setPosition(int x, int z) {
         finishRotating();
         this.ax = this.bx = x;
         this.az = this.bz = z;
-        cubeView.transform.setToTranslation(x,0,z);
+        dynamicCubeView.transform.setToTranslation(x,0,z);
     }
 
     /**
-     * @return position where cube was before it started moving
+     * @return position where dynamicCube was before it started moving
      */
     public Vector2 getPosition() {
         return new Vector2(bx,bz);
     }
 
     /**
-     * @return position where cube will be after it finishes moving
+     * @return position where dynamicCube will be after it finishes moving
      */
     public Vector2 getApproachingPosition() {
         return new Vector2(ax,az);
@@ -64,7 +64,7 @@ public class Cube {
 
             rotationAngleSumInDegrees += deltaDegrees;
 
-            cubeView.rotate(rotationDirection, deltaDegrees,bx,bz);
+            dynamicCubeView.rotate(rotationDirection, deltaDegrees,bx,bz);
             if(!moving) {
                 finishRotating();
             }

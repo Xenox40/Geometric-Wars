@@ -1,32 +1,32 @@
 package com.geometric.wars.player.person;
 
 import com.geometric.wars.Direction;
-import com.geometric.wars.cube.Cube;
-import com.geometric.wars.cube.CubeController;
+import com.geometric.wars.cube.DynamicCube;
+import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.input.InputController;
 
-public class CubeInputController extends CubeController {
+public class DynamicCubeInputController extends DynamicCubeController {
 
     private InputController inputController;
 
-    public CubeInputController(Cube cube, InputController inputController) {
-        super(cube);
+    public DynamicCubeInputController(DynamicCube dynamicCube, InputController inputController) {
+        super(dynamicCube);
         this.inputController = inputController;
     }
 
     @Override
     public void processMoving() {
         if(inputController.moveUp()) {
-            cube.move(Direction.UP);
+            dynamicCube.move(Direction.UP);
         }
         else if(inputController.moveRight()) {
-            cube.move(Direction.RIGHT);
+            dynamicCube.move(Direction.RIGHT);
         }
         else if(inputController.moveDown()) {
-            cube.move(Direction.DOWN);
+            dynamicCube.move(Direction.DOWN);
         }
         else if(inputController.moveLeft()) {
-            cube.move(Direction.LEFT);
+            dynamicCube.move(Direction.LEFT);
         }
     }
 

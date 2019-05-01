@@ -9,11 +9,11 @@ import com.geometric.wars.Values;
 import com.geometric.wars.models.CubeModel;
 
 
-public class CubeView extends ModelInstance {
+public class DynamicCubeView extends ModelInstance {
 
     private static final float size = Values.unit;
 
-    public CubeView() {
+    public DynamicCubeView() {
         super(CubeModel.getModel());
     }
 

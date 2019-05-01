@@ -1,8 +1,11 @@
 package com.geometric.wars.cube;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.Direction2D;
+import com.geometric.wars.Direction3D;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.scene.SceneManager;
 
@@ -18,15 +21,20 @@ public class DynamicCube {
     private final DynamicCubeView dynamicCubeView;
 
     private Array<CubeFace> faces;
+    private Quaternion rotationBeforeMove = new Quaternion();
+    private Quaternion rotationAfterMove = new Quaternion();
 
     public DynamicCube(DynamicCubeView dynamicCubeView) {
         this.dynamicCubeView = dynamicCubeView;
         faces = new Array<>(6);
         for(int i=0;i<6;i++)
             faces.add(new CubeFace());
+
     }
 
-
+    public CubeFace getFaceAt(Direction3D direction) {
+        return faces.get(RotationCalculator.getFaceAt(direction,rotationAfterMove).ordinal());
+    }
 
 
 
@@ -89,9 +97,11 @@ public class DynamicCube {
 
         startRotating();
         rotationDirection2D = direction2D;
+        rotationAfterMove = RotationCalculator.transformAfterRoll(new Matrix4(rotationBeforeMove),direction2D,90,0,0,0).getRotation(new Quaternion()).nor();
 
-        if(direction2D == Direction2D.UP)
+        if(direction2D == Direction2D.UP) {
             az--;
+        }
         if(direction2D == Direction2D.RIGHT)
             ax++;
         if(direction2D == Direction2D.DOWN)
@@ -111,6 +121,7 @@ public class DynamicCube {
         rotationDirection2D = null;
         bx = ax;
         bz = az;
+        rotationBeforeMove = rotationAfterMove;
     }
 
 }

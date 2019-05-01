@@ -10,7 +10,7 @@ import com.geometric.wars.Values;
 
 
 /**
- * Class contains instance of DynamicCube model.
+ * Class contains instance of Cube model.
  * Do not forget to dispose an instance of the model.
  */
 public class CubeModel {
@@ -24,7 +24,7 @@ public class CubeModel {
     private static Color color = Color.RED;
 
     /**
-     * @return simple model of dynamicCube
+     * @return simple model of cube
      */
     public static Model getModel() {
         if (instance == null)

@@ -28,7 +28,7 @@ public class GameScreen extends AbstractScreen {
         super.render(delta);
 
         //System.out.println(" FPS: "+ Gdx.graphics.getFramesPerSecond());
-
+        
         sceneManager.getCurrentScene().update();
 
         batch.begin(camera);

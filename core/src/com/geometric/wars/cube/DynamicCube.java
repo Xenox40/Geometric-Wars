@@ -1,7 +1,8 @@
 package com.geometric.wars.cube;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.geometric.wars.Direction;
+import com.badlogic.gdx.utils.Array;
+import com.geometric.wars.Direction2D;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.scene.SceneManager;
 
@@ -10,16 +11,22 @@ public class DynamicCube {
 
     private float rotationAngleSumInDegrees;
     private boolean moving = false;
-    private Direction rotationDirection;
+    private Direction2D rotationDirection2D;
 
     private int bx = 0, bz = 0;
     private int ax = 0, az = 0;
-
     private final DynamicCubeView dynamicCubeView;
+
+    private Array<CubeFace> faces;
 
     public DynamicCube(DynamicCubeView dynamicCubeView) {
         this.dynamicCubeView = dynamicCubeView;
+        faces = new Array<>(6);
+        for(int i=0;i<6;i++)
+            faces.add(new CubeFace());
     }
+
+
 
 
 
@@ -64,32 +71,32 @@ public class DynamicCube {
 
             rotationAngleSumInDegrees += deltaDegrees;
 
-            dynamicCubeView.rotate(rotationDirection, deltaDegrees,bx,bz);
+            dynamicCubeView.rotate(rotationDirection2D, deltaDegrees,bx,bz);
             if(!moving) {
                 finishRotating();
             }
         }
     }
 
-    public boolean moveIsAllowed(Direction direction) {
-        Vector2 nextPosition = direction.toVector2();
+    public boolean moveIsAllowed(Direction2D direction2D) {
+        Vector2 nextPosition = direction2D.toVector2();
         return !(SceneManager.getInstance().getCurrentMapService().checkIfIsOccupied(bx + (int)nextPosition.x, bz + (int)nextPosition.y));
     }
 
-    public void move(Direction direction) {
-        if(isMoving() || !moveIsAllowed(direction))
+    public void move(Direction2D direction2D) {
+        if(isMoving() || !moveIsAllowed(direction2D))
             return;
 
         startRotating();
-        rotationDirection = direction;
+        rotationDirection2D = direction2D;
 
-        if(direction == Direction.UP)
+        if(direction2D == Direction2D.UP)
             az--;
-        if(direction == Direction.RIGHT)
+        if(direction2D == Direction2D.RIGHT)
             ax++;
-        if(direction == Direction.DOWN)
+        if(direction2D == Direction2D.DOWN)
             az++;
-        if(direction == Direction.LEFT)
+        if(direction2D == Direction2D.LEFT)
             ax--;
     }
 
@@ -101,7 +108,7 @@ public class DynamicCube {
     private void finishRotating() {
         moving = false;
         rotationAngleSumInDegrees = 0;
-        rotationDirection = null;
+        rotationDirection2D = null;
         bx = ax;
         bz = az;
     }

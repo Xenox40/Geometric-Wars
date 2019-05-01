@@ -4,7 +4,7 @@ package com.geometric.wars.cube;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.geometric.wars.Direction;
+import com.geometric.wars.Direction2D;
 import com.geometric.wars.Values;
 import com.geometric.wars.models.CubeModel;
 
@@ -33,14 +33,14 @@ public class DynamicCubeView extends ModelInstance {
                 .rotate(curRotation);
     }
 
-    public void rotate(Direction direction, float degrees, int px, int pz) {
-        if(direction == Direction.UP)
+    public void rotate(Direction2D direction2D, float degrees, int px, int pz) {
+        if(direction2D == Direction2D.UP)
             rotateUp(degrees,new Vector3(px,0,pz));
-        else if(direction == Direction.RIGHT)
+        else if(direction2D == Direction2D.RIGHT)
             rotateRight(degrees,new Vector3(px,0,pz));
-        else if(direction == Direction.DOWN)
+        else if(direction2D == Direction2D.DOWN)
             rotateDown(degrees,new Vector3(px,0,pz));
-        else if(direction == Direction.LEFT)
+        else if(direction2D == Direction2D.LEFT)
             rotateLeft(degrees,new Vector3(px,0,pz));
     }
 

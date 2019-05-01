@@ -7,7 +7,7 @@ public abstract class DynamicCubeController {
     }
 
     /**
-     *  should call dynamicCube.move(Direction) according to detected input or AI strategy
+     *  should call dynamicCube.move(Direction2D) according to detected input or AI strategy
      */
     public abstract void processMoving();
 }

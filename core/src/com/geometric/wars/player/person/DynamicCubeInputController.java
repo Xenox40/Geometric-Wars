@@ -1,6 +1,6 @@
 package com.geometric.wars.player.person;
 
-import com.geometric.wars.Direction;
+import com.geometric.wars.Direction2D;
 import com.geometric.wars.cube.DynamicCube;
 import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.input.InputController;
@@ -17,16 +17,16 @@ public class DynamicCubeInputController extends DynamicCubeController {
     @Override
     public void processMoving() {
         if(inputController.moveUp()) {
-            dynamicCube.move(Direction.UP);
+            dynamicCube.move(Direction2D.UP);
         }
         else if(inputController.moveRight()) {
-            dynamicCube.move(Direction.RIGHT);
+            dynamicCube.move(Direction2D.RIGHT);
         }
         else if(inputController.moveDown()) {
-            dynamicCube.move(Direction.DOWN);
+            dynamicCube.move(Direction2D.DOWN);
         }
         else if(inputController.moveLeft()) {
-            dynamicCube.move(Direction.LEFT);
+            dynamicCube.move(Direction2D.LEFT);
         }
     }
 

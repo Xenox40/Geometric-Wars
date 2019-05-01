@@ -73,5 +73,10 @@ public class SwipeInputController implements InputController {
             }
         };
     }
+
+
+    public void dispose() {
+        instance = null;
+    }
 }
 

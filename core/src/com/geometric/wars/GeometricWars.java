@@ -8,6 +8,7 @@ import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
 import com.geometric.wars.models.CubeModel;
 import com.geometric.wars.models.FloorModel;
+import com.geometric.wars.models.LineModel;
 import com.geometric.wars.models.WallModel;
 import com.geometric.wars.screens.GameScreen;
 
@@ -39,9 +40,11 @@ public class GeometricWars extends ApplicationAdapter {
 
 	@Override
 	public void dispose () {
-		CubeModel.getModel().dispose();
-		FloorModel.getModel().dispose();
-		WallModel.getModel().dispose();
+		CubeModel.dispose();
+		FloorModel.dispose();
+		WallModel.dispose();
+		LineModel.dispose();
+		inputController.dispose();
 	}
 
     public InputController getInputController() {

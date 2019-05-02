@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.geometric.wars.input.ArrowInputController;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
-import com.geometric.wars.models.CubeModel;
+import com.geometric.wars.models.DynamicCubeModel;
 import com.geometric.wars.models.FloorModel;
 import com.geometric.wars.models.LineModel;
 import com.geometric.wars.models.WallModel;
@@ -51,7 +51,7 @@ public class GeometricWars extends ApplicationAdapter {
 
 	@Override
 	public void dispose () {
-		CubeModel.dispose();
+		DynamicCubeModel.dispose();
 		FloorModel.dispose();
 		WallModel.dispose();
 		LineModel.dispose();

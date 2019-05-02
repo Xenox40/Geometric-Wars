@@ -11,7 +11,7 @@ public class RandomBotCube extends PlayersCube {
         dynamicCubeView = new DynamicCubeView();
         dynamicCube = new DynamicCube(dynamicCubeView);
         dynamicCubeController = new DynamicCubeRandomController(dynamicCube);
-        dynamicCubeView.materials.get(0).set(ColorAttribute.createDiffuse(Color.PURPLE));
+        dynamicCubeView.setColor(Color.PURPLE);
     }
 
     public RandomBotCube(int x, int y) {

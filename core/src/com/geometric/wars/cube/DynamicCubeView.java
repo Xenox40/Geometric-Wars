@@ -1,12 +1,13 @@
 package com.geometric.wars.cube;
 
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.Quaternion;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.geometric.wars.Direction2D;
 import com.geometric.wars.Values;
-import com.geometric.wars.models.CubeModel;
+import com.geometric.wars.models.DynamicCubeModel;
 
 
 public class DynamicCubeView extends ModelInstance {
@@ -14,7 +15,13 @@ public class DynamicCubeView extends ModelInstance {
     private static final float size = Values.unit;
 
     public DynamicCubeView() {
-        super(CubeModel.getModel());
+        super(DynamicCubeModel.getModel());
+    }
+
+    public void setColor(Color color) {
+        for(Material material : this.materials) {
+            material.set(ColorAttribute.createDiffuse(color));
+        }
     }
 
 

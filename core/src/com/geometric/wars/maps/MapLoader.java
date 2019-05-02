@@ -13,19 +13,17 @@ import com.geometric.wars.player.person.PersonsCubeFactory;
 import com.geometric.wars.scene.Scene;
 import com.geometric.wars.scene.SceneManager;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class MapLoader {
     private String fileName;
-    private int width;
-    private int height ;
     private InputController inputController;
     private Scene scene;
 
     public void load() {
         FileHandle handle;
-        BufferedReader reader;
+        Scanner scanner;
 
         MapService service = SceneManager
                 .getInstance()
@@ -35,67 +33,93 @@ public class MapLoader {
         mapObjects = new Array<>();
 
         int height = 0;
-        int width = 0;
+        int width = -1;
         try {
             handle = Gdx.files.internal(fileName);
-            reader = handle.reader(15);
-            String line = reader.readLine();
-            width = line.length();
-            int x = 0, y = 0;
-            while(line != null) {
-                mapObjects.add(new Array<MapObjectType>());
+            scanner = new Scanner(handle.reader(15));
+            int row = 0;
 
-                ++height;
-
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                Array<MapObjectType> objects = new Array<>();
+                if (width == -1)
+                    width = line.length();
                 if(line.length() != width)
                     throw new IOException("Wrong scene width in: "+fileName);
 
-                for (char item: line.toCharArray()) {
-                    switch (item) {
-                        case '#':
-                            scene.addStaticGameOject(new Wall(x, y));
-                            mapObjects.get(y).add(MapObjectType.WALL);
-                            break;
-                        case 'P':
-                            if(inputController == null)
-                                throw new IOException("No inputController provided");
-                            scene.addDynamicGameObject(new ShooterPlayersController(x, y, new PersonsCubeFactory(inputController)));
-                            mapObjects.get(y).add(MapObjectType.PLAYER);
-                            break;
-                        case 'B':
-                            scene.addDynamicGameObject(new ShooterPlayersController(x, y, new RandomBotFactory()));
-                            mapObjects.get(y).add(MapObjectType.PLAYER);
-                            break;
-                        default:
-                            mapObjects.get(y).add(MapObjectType.EMPTY);
-                            break;
-                    }
-                    x += Values.unit;
-                }
+                addObjectsToMap(line, row, objects);
 
-                line = reader.readLine();
-                x = 0; y += Values.unit;
+                height++;
+                row ++;
+                mapObjects.add(objects);
             }
-            reader.close();
+            scanner.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Floor floor = new Floor(0,0);
-        floor.transform.translate((width-Values.unit)/2f,0,(height-Values.unit)/2f);
-        floor.transform.scale((float)width,1f,(float)height);
-        scene.addStaticGameOject(floor);
+        addFloor(height, width);
 
-
-
-//        scene.staticModelsCache = new ModelCache();
-//        scene.staticModelsCache.begin();
-//        for(StaticGameObject o : scene.staticMapObjects)
-//            o.cache(scene.staticModelsCache);
-//        scene.staticModelsCache.end();
 
         service.setHeight(height);
         service.setWidth(width);
         service.setMapObjects(mapObjects);
+    }
+
+    private void addObjectsToMap(String line, int row, Array<MapObjectType> objects) throws IOException {
+        int col = 0;
+        for (char item: line.toCharArray()) {
+            switch (item) {
+                case '#':
+                    addWall(objects, col, row);
+                    break;
+                case 'P':
+                    addPlayersController(objects, col, row);
+                    break;
+                case 'B':
+                    addRandomBot(objects, col, row);
+                    break;
+                default:
+                    addFloorObject(objects, col, row);
+                    break;
+            }
+            col ++;
+        }
+    }
+
+    private void addFloor(int height, int width) {
+        Floor floor = new Floor(0,0);
+        floor.transform.translate((width- Values.unit)/2f,0,(height-Values.unit)/2f);
+        floor.transform.scale((float)width,1f,(float)height);
+        scene.addStaticGameOject(floor);
+    }
+
+    private void addWall(Array<MapObjectType> objects, int x, int y) {
+        x *= Values.unit;
+        y *= Values.unit;
+        scene.addStaticGameOject(new Wall(x, y));
+        objects.add(MapObjectType.WALL);
+    }
+
+    private void addPlayersController(Array<MapObjectType> objects, int x, int y) throws IOException {
+        x *= Values.unit;
+        y *= Values.unit;
+        if(inputController == null)
+            throw new IOException("No inputController provided");
+        scene.addDynamicGameObject(new ShooterPlayersController(x, y, new PersonsCubeFactory(inputController)));
+        objects.add(MapObjectType.PLAYER);
+    }
+
+    private void addRandomBot(Array<MapObjectType> objects, int x, int y) {
+        x *= Values.unit;
+        y *= Values.unit;
+        scene.addDynamicGameObject(new ShooterPlayersController(x, y, new RandomBotFactory()));
+        objects.add(MapObjectType.PLAYER);
+    }
+
+    private void addFloorObject(Array<MapObjectType> objects, int x, int y) {
+        x *= Values.unit;
+        y *= Values.unit;
+        objects.add(MapObjectType.EMPTY);
     }
 
     public MapLoader setFileName(String fileName) {

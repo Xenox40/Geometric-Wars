@@ -27,9 +27,13 @@ public class DynamicCube {
     public DynamicCube(DynamicCubeView dynamicCubeView) {
         this.dynamicCubeView = dynamicCubeView;
         faces = new Array<>(6);
-        for(int i=0;i<6;i++)
-            faces.add(new CubeFace());
+        for(int i=0;i<6;i++) {
+            faces.add(new CubeFace(dynamicCubeView,i));
+        }
+    }
 
+    public void addMountable(Direction3D direction3D, Mountable mountable) {
+        getFaceAt(direction3D).setMountedObject(mountable);
     }
 
     public CubeFace getFaceAt(Direction3D direction) {

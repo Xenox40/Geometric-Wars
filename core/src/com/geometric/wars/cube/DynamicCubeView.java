@@ -16,8 +16,8 @@ public class DynamicCubeView extends ModelInstance {
 
     private static final float size = Values.unit;
 
-    public DynamicCubeView() {
-        super(DynamicCubeModel.getModel());
+    public DynamicCubeView(String modelName) {
+        super(DynamicCubeModel.getModel(modelName));
     }
 
     public void setColor(Color color) {

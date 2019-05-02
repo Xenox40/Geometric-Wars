@@ -1,5 +1,6 @@
 package com.geometric.wars.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.geometric.wars.GeometricWars;
 import com.geometric.wars.TypeOfGame;
 import com.geometric.wars.debug.axes.CoordinateAxes3D;
@@ -28,7 +29,7 @@ public class GameScreen extends AbstractScreen {
         super.render(delta);
 
         //System.out.println(" FPS: "+ Gdx.graphics.getFramesPerSecond());
-        
+
         sceneManager.getCurrentScene().update();
 
         batch.begin(camera);

@@ -4,24 +4,34 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class MapService {
-    private Map map;
 
-    Array<Array<MapObjectType>> mapObjects;
-
-    private static MapService instance;
-
-    public static MapService getInstance() {
-        if(instance == null)
-            instance = new MapService();
-        return instance;
-    }
-
-    private MapService(){
+    public MapService() {
         mapObjects = new Array<>();
     }
 
-    void setMap(Map map) {
-        this.map = map;
+    private Array<Array<MapObjectType>> mapObjects;
+    private int width;
+    private int height;
+
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setMapObjects(Array<Array<MapObjectType>> mapObjects) {
+        this.mapObjects = mapObjects;
     }
 
     public boolean checkIfIsOccupied(Vector2 vector2) {
@@ -29,7 +39,7 @@ public class MapService {
     }
 
     public boolean checkIfIsOccupied(int x,int y) {
-        if(x < 0 || y < 0 || x >= map.getWidth() || y >= map.getHeight())
+        if(x < 0 || y < 0 || x >= width || y >= height)
             return true;
         return mapObjects.get(y).get(x) == MapObjectType.WALL; //TODO implement collision with players
     }

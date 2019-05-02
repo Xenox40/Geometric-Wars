@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g3d.ModelCache;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 import com.geometric.wars.Values;
-import com.geometric.wars.maps.StaticMapObject;
+import com.geometric.wars.gameobjects.StaticGameObject;
 import com.geometric.wars.models.FloorModel;
 
 /**
  * Represents a floor as an not-interactive model instance.
  */
-public class Floor extends ModelInstance implements StaticMapObject {
+public class Floor extends ModelInstance implements StaticGameObject {
 
     /**
      * Create new instance of Floor model, and

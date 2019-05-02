@@ -1,6 +1,7 @@
 package com.geometric.wars.screens;
 
 import com.geometric.wars.GeometricWars;
+import com.geometric.wars.TypeOfGame;
 import com.geometric.wars.debug.axes.CoordinateAxes3D;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.scene.Scene;
@@ -11,7 +12,7 @@ public class GameScreen extends AbstractScreen {
     CoordinateAxes3D axes;
     SceneManager sceneManager;
 
-    public GameScreen(GeometricWars game, String mapName) {
+    public GameScreen(GeometricWars game, String mapName, TypeOfGame typeOfGame) {
         super(game);
         axes = new CoordinateAxes3D();
         sceneManager = SceneManager.getInstance();

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Vector3;
 import com.geometric.wars.Direction3D;
 
 public interface MountableView {
@@ -15,5 +16,6 @@ public interface MountableView {
      * should contain rules to build part of model
      **/
     void buildMeshPart(ModelBuilder modelBuilder);
+    Vector3 getSize();
 }
 

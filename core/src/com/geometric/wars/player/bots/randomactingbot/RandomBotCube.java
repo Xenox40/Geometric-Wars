@@ -9,10 +9,8 @@ import com.geometric.wars.player.PlayersCube;
 public class RandomBotCube extends PlayersCube {
     public RandomBotCube()  {
         DynamicCubeBuilder builder = new DynamicCubeBuilder();
-        dynamicCube = builder.createCube().build();
-        dynamicCubeView = dynamicCube.getView();
+        dynamicCube = builder.createCube(Color.PURPLE).build();
         dynamicCubeController = new DynamicCubeRandomController(dynamicCube);
-        dynamicCubeView.setColor(Color.PURPLE);
     }
 
     public RandomBotCube(int x, int y) {

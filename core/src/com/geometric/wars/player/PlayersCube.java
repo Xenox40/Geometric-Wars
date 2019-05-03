@@ -4,12 +4,10 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.geometric.wars.cube.DynamicCube;
 import com.geometric.wars.cube.DynamicCubeController;
-import com.geometric.wars.cube.DynamicCubeView;
 
 public abstract class PlayersCube {
     protected DynamicCubeController dynamicCubeController;
     protected DynamicCube dynamicCube;
-    protected DynamicCubeView dynamicCubeView;
 
 
     public void setPosition(int x,int y) {
@@ -32,7 +30,7 @@ public abstract class PlayersCube {
      * @param environment Environment
      */
     public void render(ModelBatch batch, Environment environment) {
-        batch.render(dynamicCubeView, environment);
+        batch.render(dynamicCube.getView(), environment);
     }
 
 }

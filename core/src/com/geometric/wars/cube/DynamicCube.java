@@ -9,7 +9,18 @@ import com.geometric.wars.Direction3D;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.scene.SceneManager;
 
+/**
+ * should be built only with DynamicCubeBuilder, manages its view
+ */
 public class DynamicCube {
+
+    DynamicCube() {
+        faces = new Array<>(6);
+        for(int i=0;i<6;i++) {
+            faces.add(new CubeFace());
+        }
+    }
+
     static final float movementTimeInSeconds = 0.25f;
 
     private float rotationAngleSumInDegrees;
@@ -29,12 +40,7 @@ public class DynamicCube {
     private Quaternion rotationBeforeMove = new Quaternion();
     private Quaternion rotationAfterMove = new Quaternion();
 
-    public DynamicCube() {
-        faces = new Array<>(6);
-        for(int i=0;i<6;i++) {
-            faces.add(new CubeFace());
-        }
-    }
+
 
     public CubeFace getFaceAt(Direction3D direction) {
         return faces.get(RotationCalculator.getFaceAt(direction,rotationAfterMove).ordinal());

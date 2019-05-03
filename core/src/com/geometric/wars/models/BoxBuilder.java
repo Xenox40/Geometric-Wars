@@ -16,7 +16,7 @@ public class BoxBuilder {
         Node node = modelBuilder.node();
 
         final int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal;
-        MeshPartBuilder box = modelBuilder.part(name, GL20.GL_TRIANGLES, attr, new Material(ColorAttribute.createDiffuse(Color.WHITE)));
+        MeshPartBuilder box = modelBuilder.part(name, GL20.GL_TRIANGLES, attr, new Material(ColorAttribute.createDiffuse(color)));
         buildFaces(box,xSize,ySize,zSize);
         return node;
     }

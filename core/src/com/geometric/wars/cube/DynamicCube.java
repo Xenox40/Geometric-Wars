@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.Direction2D;
 import com.geometric.wars.Direction3D;
-import com.geometric.wars.maps.MapService;
 import com.geometric.wars.scene.SceneManager;
+import com.geometric.wars.math.RotationCalculator;
 
 /**
  * should be built only with DynamicCubeBuilder, manages its view
@@ -43,7 +43,7 @@ public class DynamicCube {
 
 
     public CubeFace getFaceAt(Direction3D direction) {
-        return faces.get(RotationCalculator.getFaceAt(direction,rotationAfterMove).ordinal());
+        return faces.get(com.geometric.wars.math.RotationCalculator.getFaceAt(direction,rotationAfterMove).ordinal());
     }
 
 

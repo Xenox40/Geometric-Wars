@@ -1,4 +1,4 @@
-package com.geometric.wars.cube;
+package com.geometric.wars.math;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;

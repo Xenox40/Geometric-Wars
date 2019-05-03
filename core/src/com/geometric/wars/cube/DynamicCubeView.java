@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.geometric.wars.Direction2D;
 import com.geometric.wars.Values;
+import com.geometric.wars.math.RotationCalculator;
 
 /**
  * should be built only with DynamicCubeBuilder

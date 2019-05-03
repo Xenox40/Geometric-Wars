@@ -1,10 +1,13 @@
 package com.geometric.wars.cube;
 
 
-class CubeFace {
-    private Mountable mountedObject;
+import com.geometric.wars.cube.mountables.Mountable;
+import com.geometric.wars.cube.mountables.MountableView;
 
-    void setMountedObject(Mountable mountable) {
+class CubeFace {
+    private com.geometric.wars.cube.mountables.Mountable mountedObject;
+
+    void setMountedObject(com.geometric.wars.cube.mountables.Mountable mountable) {
         this.mountedObject = mountable;
     }
     Mountable getMountedObject() {

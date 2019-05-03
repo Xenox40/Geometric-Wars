@@ -18,22 +18,22 @@ public class DynamicCube {
 
     private int bx = 0, bz = 0;
     private int ax = 0, az = 0;
-    private final DynamicCubeView dynamicCubeView;
 
-    private Array<CubeFace> faces;
+    DynamicCubeView dynamicCubeView;
+
+    public DynamicCubeView getView() {
+        return dynamicCubeView;
+    }
+
+    Array<CubeFace> faces;
     private Quaternion rotationBeforeMove = new Quaternion();
     private Quaternion rotationAfterMove = new Quaternion();
 
-    public DynamicCube(DynamicCubeView dynamicCubeView) {
-        this.dynamicCubeView = dynamicCubeView;
+    public DynamicCube() {
         faces = new Array<>(6);
         for(int i=0;i<6;i++) {
-            faces.add(new CubeFace(dynamicCubeView,i));
+            faces.add(new CubeFace());
         }
-    }
-
-    public void addMountable(Direction3D direction3D, Mountable mountable) {
-        getFaceAt(direction3D).setMountedObject(mountable);
     }
 
     public CubeFace getFaceAt(Direction3D direction) {

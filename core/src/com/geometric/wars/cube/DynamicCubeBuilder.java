@@ -1,4 +1,4 @@
-package com.geometric.wars.models;
+package com.geometric.wars.cube;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -6,47 +6,50 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.Direction3D;
-import com.geometric.wars.cube.*;
+import com.geometric.wars.models.BoxBuilder;
+import com.geometric.wars.models.DynamicCubeModelDisposer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
-public class DynamicCubeModelBuilder {
+public class DynamicCubeBuilder {
     /**
      * treated as map via Direction3D.ordinal()
      */
-    private Array<CubeFaceView> faces;
+    private DynamicCube cube;
     private ModelBuilder builder;
 
-    public DynamicCubeModelBuilder() {
-        faces = new Array<>();
-        for(int i=0;i<6;i++)
-            faces.add(new CubeFaceView());
+    public DynamicCubeBuilder() {
+        cube = new DynamicCube();
     }
-    public DynamicCubeModelBuilder createCube() {
+
+
+    public DynamicCubeBuilder createCube() {
         builder = new ModelBuilder();
         return this;
     }
 
-    public DynamicCubeModelBuilder addMountable(Direction3D direction, MountableView mountable) {
-        faces.get(direction.ordinal()).setMountedObject(mountable);
+    public DynamicCubeBuilder addMountable(Direction3D direction, Mountable mountable) {
+        cube.faces.get(direction.ordinal()).setMountedObject(mountable);
         return this;
     }
-    public String build(String name) {
-        if(DynamicCubeModel.getModel(name) != null)
-            return name;
+
+
+    public DynamicCube build() {
         builder.begin();
         BoxBuilder.addColoredBoxNode(builder,"core", Color.WHITE,1,1,1);
-        for(int i=0;i<faces.size;i++) {
-            if(faces.get(i).getView() == null)
+        for(int i=0;i<cube.faces.size;i++) {
+
+            CubeFace face = cube.faces.get(i);
+            Direction3D faceDirection = Direction3D.values()[i];
+
+            if(face.getMountedObject() == null)
                 continue;
-            faces.get(i).buildMeshPart(builder);
+
+            face.getMountedObject().getView().buildMeshPart(builder);
 
             Matrix4 transform = new Matrix4();
 
-           Direction3D faceDirection = Direction3D.values()[i];
+
             if(faceDirection == Direction3D.UP)
                 transform.setToRotation(Vector3.Y,90);
             if(faceDirection == Direction3D.LEFT)
@@ -59,11 +62,13 @@ public class DynamicCubeModelBuilder {
                 transform.setToRotation(Vector3.Z,270);
 
             transform.translate(0.7f,0,0);
-            faces.get(i).getNode().translation.set(transform.getTranslation(new Vector3()));
-            faces.get(i).getNode().rotation.set(transform.getRotation(new Quaternion()));
+            face.getMountedObject().getView().getNode().translation.set(transform.getTranslation(new Vector3()));
+            face.getMountedObject().getView().getNode().rotation.set(transform.getRotation(new Quaternion()));
             //faces.get(i).getNode().translation.set(2f,0,0);
         }
-        DynamicCubeModel.addModel(name,builder.end());
-        return name;
+        Model model = builder.end();
+        DynamicCubeModelDisposer.addModel(model);
+        cube.dynamicCubeView = new DynamicCubeView(model);
+        return cube;
     }
 }

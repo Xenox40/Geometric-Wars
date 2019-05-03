@@ -4,20 +4,20 @@ package com.geometric.wars.cube;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.geometric.wars.Direction2D;
 import com.geometric.wars.Values;
-import com.geometric.wars.models.DynamicCubeModel;
 
 
 public class DynamicCubeView extends ModelInstance {
 
     private static final float size = Values.unit;
 
-    public DynamicCubeView(String modelName) {
-        super(DynamicCubeModel.getModel(modelName));
+    public DynamicCubeView(Model cubeModel) {
+        super(cubeModel);
     }
 
     public void setColor(Color color) {

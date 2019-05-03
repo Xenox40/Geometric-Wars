@@ -19,7 +19,7 @@ public class GeometricWars extends ApplicationAdapter {
     private TypeOfGame typeOfGame;
     private String mapName;
 
-    GeometricWars() {
+    public GeometricWars() {
     	typeOfGame = TypeOfGame.MOCK_GAME;
 		mapName = "map1.txt";
 	}
@@ -36,7 +36,7 @@ public class GeometricWars extends ApplicationAdapter {
         else
 			inputController = ArrowInputController.getInstance();
 
-		gameScreen = new GameScreen(this, mapName, typeOfGame);
+		gameScreen = new GameScreen(this, mapName);
 	}
 
 	@Override

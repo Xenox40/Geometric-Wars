@@ -12,7 +12,7 @@ public class GameScreen extends AbstractScreen {
     CoordinateAxes3D axes;
     SceneManager sceneManager;
 
-    public GameScreen(GeometricWars game, String mapName, TypeOfGame typeOfGame) {
+    public GameScreen(GeometricWars game, String mapName) {
         super(game);
         axes = new CoordinateAxes3D();
         sceneManager = SceneManager.getInstance();

@@ -9,18 +9,24 @@ import com.geometric.wars.models.BoxBuilder;
 
 
 
-public class SimpleGun implements MountableGun {
-    private MountableView view = new MountableView(new Vector3(0.4f,0.2f,0.2f)) {
-
-        @Override
-        public void buildMeshPart(ModelBuilder modelBuilder) {
-            super.createNode(modelBuilder);
-            node = BoxBuilder.addColoredBoxNode(modelBuilder,"gun1", Color.PINK,size.x,size.y,size.z);
-        }
-
-    };
-    public MountableView getView() {
-        return view;
+public class SimpleGun extends MountableGun {
+    public SimpleGun() {
+        this.view = new MountableView(new Vector3(0.4f, 0.2f, 0.2f)) {
+            @Override
+            public void buildMeshPart(ModelBuilder modelBuilder) {
+                super.createNode(modelBuilder);
+                node = BoxBuilder.addColoredBoxNode(modelBuilder, "gun1", Color.PINK, size.x, size.y, size.z);
+            }
+        };
     }
 
+    @Override
+    public int getDamage() {
+        return 0;
+    }
+
+    @Override
+    public int getWaitingTime() {
+        return 0;
+    }
 }

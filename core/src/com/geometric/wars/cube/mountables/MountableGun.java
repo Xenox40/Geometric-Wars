@@ -1,5 +1,6 @@
 package com.geometric.wars.cube.mountables;
 
-public interface MountableGun extends Mountable {
-    //TODO add gun specific parameters
+public abstract class MountableGun extends Mountable {
+    public abstract int getDamage();
+    public abstract int getWaitingTime();
 }

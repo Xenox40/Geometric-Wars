@@ -43,7 +43,14 @@ public class DynamicCube {
 
 
     public CubeFace getFaceAt(Direction3D direction) {
-        return faces.get(com.geometric.wars.math.RotationCalculator.getFaceAt(direction,rotationAfterMove).ordinal());
+        return faces.get(RotationCalculator.getFaceAt(direction,rotationAfterMove).ordinal());
+    }
+
+    public Direction3D getFaceOrientation(CubeFace face) {
+        for(int i=0;i<6;i++)
+            if(getFaceAt(Direction3D.values()[i]) == face)
+                return Direction3D.values()[i];
+        throw new RuntimeException("face not found");
     }
 
 

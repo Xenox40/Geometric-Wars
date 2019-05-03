@@ -11,7 +11,7 @@ public class CubeFace {
         this.mountedObject = mountable;
         mountable.setFaceMountedAt(this);
     }
-    Mountable getMountedObject() {
+    public Mountable getMountedObject() {
         return mountedObject;
     }
     public MountableView getMountedObjectView() {

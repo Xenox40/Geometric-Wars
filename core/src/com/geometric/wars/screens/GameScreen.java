@@ -34,7 +34,6 @@ public class GameScreen extends AbstractScreen {
 
         batch.begin(camera);
         sceneManager.getCurrentScene().render(batch, environment);
-        //axes.render(batch, environment);
         batch.end();
     }
     @Override

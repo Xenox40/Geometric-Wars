@@ -10,7 +10,7 @@ import com.geometric.wars.player.PlayersCube;
 public class PersonsCube extends PlayersCube {
     public PersonsCube(InputController inputController) {
         DynamicCubeBuilder builder = new DynamicCubeBuilder();
-        dynamicCube = builder.createCube(Color.RED).addMountable(Direction3D.DOWN, new SimpleGun()).addMountable(Direction3D.LEFT, new SimpleGun()).build();
+        dynamicCube = builder.createCube(Color.RED).addMountable(Direction3D.DOWN, new SimpleGun()).build();
         dynamicCubeController = new DynamicCubeInputController(dynamicCube, inputController);
     }
     public PersonsCube(InputController inputController, int x, int y) {

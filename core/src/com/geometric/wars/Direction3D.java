@@ -1,6 +1,7 @@
 package com.geometric.wars;
 
-import com.badlogic.gdx.math.Quaternion;
+
+import com.badlogic.gdx.math.Vector3;
 
 public enum Direction3D {
     UP,
@@ -35,7 +36,23 @@ public enum Direction3D {
             return Direction3D.BOTTOM;
         if(this == BOTTOM)
             return Direction3D.TOP;
-        throw new NullPointerException();
+        throw new RuntimeException("Direction3D.opposite is not any of enum values");
+    }
+
+    public Vector3 toVector3(){
+        if(this == UP)
+            return new Vector3(0,0,-1);
+        if(this == DOWN)
+            return new Vector3(0,0,1);
+        if(this == RIGHT)
+            return new Vector3(1,0,0);
+        if(this == LEFT)
+            return new Vector3(-1,0,0);
+        if(this == TOP)
+            return new Vector3(0,1,0);
+        if(this == BOTTOM)
+            return new Vector3(0,-1,0);
+        throw new RuntimeException("Direction3D.toVector3 is not any of enum values");
     }
 
 }

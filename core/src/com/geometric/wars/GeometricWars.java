@@ -15,17 +15,28 @@ import com.geometric.wars.screens.GameScreen;
 
 public class GeometricWars extends ApplicationAdapter {
 	private GameScreen gameScreen;
-
     private InputController inputController;
+    private TypeOfGame typeOfGame;
+    private String mapName;
+
+    public GeometricWars() {
+    	typeOfGame = TypeOfGame.MOCK_GAME;
+		mapName = "map1.txt";
+	}
+
+	public GeometricWars(TypeOfGame typeOfGame, String mapName) {
+		this.typeOfGame = typeOfGame;
+		this.mapName = mapName;
+	}
 
 	@Override
 	public void create () {
         if (Gdx.app.getType() == Application.ApplicationType.Android)
             inputController = SwipeInputController.getInstance();
         else
-            inputController = ArrowInputController.getInstance();
+			inputController = ArrowInputController.getInstance();
 
-		gameScreen = new GameScreen(this, "map1.txt");
+		gameScreen = new GameScreen(this, mapName);
 	}
 
 	@Override

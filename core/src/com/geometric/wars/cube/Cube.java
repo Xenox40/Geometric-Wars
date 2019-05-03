@@ -3,6 +3,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.geometric.wars.Direction;
 import com.geometric.wars.maps.MapService;
+import com.geometric.wars.scene.SceneManager;
 
 public class Cube {
     static final float movementTimeInSeconds = 0.25f;
@@ -72,7 +73,7 @@ public class Cube {
 
     public boolean moveIsAllowed(Direction direction) {
         Vector2 nextPosition = direction.toVector2();
-        return !(MapService.getInstance().checkIfIsOccupied(bx + (int)nextPosition.x, bz + (int)nextPosition.y));
+        return !(SceneManager.getInstance().getCurrentMapService().checkIfIsOccupied(bx + (int)nextPosition.x, bz + (int)nextPosition.y));
     }
 
     public void move(Direction direction) {

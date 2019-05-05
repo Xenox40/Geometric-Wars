@@ -1,7 +1,7 @@
 package com.geometric.wars.screens;
 
 import com.geometric.wars.GeometricWars;
-import com.geometric.wars.debug.axes.CoordinateAxes3D;
+import com.geometric.wars.utils.axes.CoordinateAxes3D;
 import com.geometric.wars.scene.SceneManager;
 
 public class GameScreen extends AbstractScreen {

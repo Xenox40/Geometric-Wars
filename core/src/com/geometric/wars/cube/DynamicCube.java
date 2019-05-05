@@ -8,11 +8,8 @@ import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.utils.Direction3D;
 import com.geometric.wars.math.RotationCalculator;
-import com.geometric.wars.scene.SceneManager;
 
-/**
- * should be built only with DynamicCubeBuilder, manages its view
- */
+
 public class DynamicCube {
 
     DynamicCube() {
@@ -104,13 +101,8 @@ public class DynamicCube {
         }
     }
 
-    public boolean moveIsAllowed(Direction2D direction2D) {
-        Vector2 nextPosition = direction2D.toVector2();
-        return !(SceneManager.getInstance().getCurrentMapService().checkIfIsOccupied(bx + (int)nextPosition.x, bz + (int)nextPosition.y));
-    }
-
     public void move(Direction2D direction2D) {
-        if(isMoving() || !moveIsAllowed(direction2D))
+        if(isMoving())
             return;
 
         startRotating();

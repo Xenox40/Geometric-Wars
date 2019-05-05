@@ -14,13 +14,13 @@ import com.geometric.wars.models.DynamicCubeModelDisposer;
 
 
 public class DynamicCubeBuilder {
-    private DynamicCube cube;
+    private CollidableDynamicCube cube;
     private Color coreColor;
     private ModelBuilder builder;
     private static final float cubeSize = Values.unit;
 
     public DynamicCubeBuilder() {
-        cube = new DynamicCube();
+        cube = new CollidableDynamicCube();
     }
 
 
@@ -37,7 +37,7 @@ public class DynamicCubeBuilder {
     }
 
 
-    public DynamicCube build() {
+    public CollidableDynamicCube build() {
         builder.begin();
         BoxBuilder.addColoredBoxNode(builder,"core", coreColor,cubeSize,cubeSize,cubeSize);
         for(int i=0;i<cube.faces.size;i++) {

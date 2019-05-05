@@ -1,11 +1,8 @@
 package com.geometric.wars.player;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.geometric.wars.Direction2D;
-import com.geometric.wars.Direction3D;
+import com.geometric.wars.utils.Direction3D;
 import com.geometric.wars.cube.CubeFace;
-import com.geometric.wars.cube.DynamicCube;
 import com.geometric.wars.cube.mountables.MountableGun;
 
 public class ShooterPlayersController extends PlayersController {

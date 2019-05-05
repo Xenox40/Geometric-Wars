@@ -1,13 +1,14 @@
 package com.geometric.wars.cube;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.geometric.wars.Direction2D;
-import com.geometric.wars.Direction3D;
-import com.geometric.wars.scene.SceneManager;
+import com.geometric.wars.utils.Direction2D;
+import com.geometric.wars.utils.Direction3D;
 import com.geometric.wars.math.RotationCalculator;
+import com.geometric.wars.scene.SceneManager;
 
 /**
  * should be built only with DynamicCubeBuilder, manages its view
@@ -62,7 +63,7 @@ public class DynamicCube {
 
     /**
      * sets position (teleports) dynamicCube to (x,z)
-     * warning: it cancells rotating and resets orientation to default
+     * warning: it cancels rotating and resets orientation to default
      */
     public void setPosition(int x, int z) {
         finishRotating();

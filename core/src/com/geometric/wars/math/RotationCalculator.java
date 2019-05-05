@@ -3,8 +3,8 @@ package com.geometric.wars.math;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.geometric.wars.Direction2D;
-import com.geometric.wars.Direction3D;
+import com.geometric.wars.utils.Direction2D;
+import com.geometric.wars.utils.Direction3D;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +36,7 @@ public class RotationCalculator {
         if(direction == Direction3D.BOTTOM)
             rotation2 = orientationAfterRoll(rotation,Direction2D.DOWN,180);
         if(!quaternionToRotation.containsKey(quaternionToArrayInt(rotation2))) {
-            throw new ArithmeticException("queaterion precision exception for Rotation Calculator");
+            throw new ArithmeticException("quaternion precision exception for Rotation Calculator");
         }
         return quaternionToRotation.get(quaternionToArrayInt(rotation2));
     }
@@ -51,8 +51,8 @@ public class RotationCalculator {
      * @param transform object transform
      * @param direction2D direction of roll in world's coordinate system
      * @param degrees rotation's degrees
-     * @param size lenght of cube's size
-     * @param px x position before started movinh
+     * @param size length of cube's size
+     * @param px x position before started moving
      * @param pz z position before started moving
      * @return calculated object's transform
      *

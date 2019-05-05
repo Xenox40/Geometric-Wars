@@ -1,12 +1,7 @@
 package com.geometric.wars.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.geometric.wars.GeometricWars;
-import com.geometric.wars.TypeOfGame;
 import com.geometric.wars.debug.axes.CoordinateAxes3D;
-import com.geometric.wars.maps.MapService;
-import com.geometric.wars.scene.Scene;
-import com.geometric.wars.maps.MapLoader;
 import com.geometric.wars.scene.SceneManager;
 
 public class GameScreen extends AbstractScreen {

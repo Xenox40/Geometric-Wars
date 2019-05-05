@@ -1,6 +1,6 @@
 package com.geometric.wars.player.person;
 
-import com.geometric.wars.Direction2D;
+import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.cube.DynamicCube;
 import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.input.InputController;

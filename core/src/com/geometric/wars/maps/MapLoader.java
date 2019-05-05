@@ -3,7 +3,7 @@ package com.geometric.wars.maps;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
-import com.geometric.wars.Values;
+import com.geometric.wars.utils.Values;
 import com.geometric.wars.enviromentparts.Floor;
 import com.geometric.wars.enviromentparts.Wall;
 import com.geometric.wars.input.InputController;
@@ -90,13 +90,13 @@ public class MapLoader {
         Floor floor = new Floor(0,0);
         floor.transform.translate((width- Values.unit)/2f,0,(height-Values.unit)/2f);
         floor.transform.scale((float)width,1f,(float)height);
-        scene.addStaticGameOject(floor);
+        scene.addStaticGameObject(floor);
     }
 
     private void addWall(Array<MapObjectType> objects, int x, int y) {
         x *= Values.unit;
         y *= Values.unit;
-        scene.addStaticGameOject(new Wall(x, y));
+        scene.addStaticGameObject(new Wall(x, y));
         objects.add(MapObjectType.WALL);
     }
 

@@ -1,7 +1,7 @@
 package com.geometric.wars.player.bots.randomactingbot;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.geometric.wars.Direction2D;
+import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.cube.DynamicCube;
 import com.geometric.wars.cube.DynamicCubeController;
 

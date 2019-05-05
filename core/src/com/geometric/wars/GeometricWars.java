@@ -11,16 +11,17 @@ import com.geometric.wars.models.FloorModel;
 import com.geometric.wars.models.LineModel;
 import com.geometric.wars.models.WallModel;
 import com.geometric.wars.screens.GameScreen;
+import com.geometric.wars.utils.TypeOfGame;
 
 
 public class GeometricWars extends ApplicationAdapter {
 	private GameScreen gameScreen;
     private InputController inputController;
-    private TypeOfGame typeOfGame;
+    private com.geometric.wars.utils.TypeOfGame typeOfGame;
     private String mapName;
 
     public GeometricWars() {
-    	typeOfGame = TypeOfGame.MOCK_GAME;
+    	typeOfGame = com.geometric.wars.utils.TypeOfGame.MOCK_GAME;
 		mapName = "map1.txt";
 	}
 

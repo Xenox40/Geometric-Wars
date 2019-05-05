@@ -33,4 +33,7 @@ public abstract class PlayersCube {
         batch.render(dynamicCube.getView(), environment);
     }
 
+    public CollidableDynamicCube getCollidableCube() {
+        return dynamicCube;
+    }
 }

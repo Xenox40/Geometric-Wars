@@ -15,22 +15,22 @@ public class CollidableDynamicCube extends DynamicCube implements DynamicBody {
         super();
     }
 
-    private boolean moveIsAllowed(Direction2D direction2D) {
-        Vector2 nextPosition = direction2D.toVector2();
-        return !(SceneManager.getInstance().getCurrentMapService().checkIfIsOccupied((int)getPosition().x + (int)nextPosition.x, (int)getPosition().y + (int)nextPosition.y));
-    }
 
     @Override
     public void move(Direction2D direction) {
-        if(moveIsAllowed(direction))
+        Vector2 newPos = getPosition().cpy().add(direction.toVector2());
+        if(SceneManager.getInstance().getCurrentMapService().isMoveAllowed(this,(int)newPos.x,(int)newPos.y)) {
             super.move(direction);
+            SceneManager.getInstance().getCurrentMapService().updatePosition(this,(int)getPosition().x,(int)getPosition().y,(int)newPos.x,(int)newPos.y);
+        }
     }
 
     @Override
     public boolean canCollideWith(DynamicBody object) {
-        if(object instanceof PlayersController)
-            return false;
-        throw new RuntimeException("dynamicGameObject "+object+" not supported by PlayersController collisions");
+        return true;
+        //if(object instanceof DynamicCube)
+       //     return false;
+       // throw new RuntimeException("dynamicGameObject "+object+" not supported by PlayersController collisions");
     }
 
     @Override

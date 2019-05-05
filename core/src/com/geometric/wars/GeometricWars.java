@@ -17,11 +17,11 @@ import com.geometric.wars.utils.TypeOfGame;
 public class GeometricWars extends ApplicationAdapter {
 	private GameScreen gameScreen;
     private InputController inputController;
-    private com.geometric.wars.utils.TypeOfGame typeOfGame;
+    private TypeOfGame typeOfGame;
     private String mapName;
 
     public GeometricWars() {
-    	typeOfGame = com.geometric.wars.utils.TypeOfGame.MOCK_GAME;
+    	typeOfGame = TypeOfGame.MOCK_GAME;
 		mapName = "map1.txt";
 	}
 

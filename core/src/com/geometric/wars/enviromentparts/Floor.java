@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelCache;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
+import com.geometric.wars.collisions.DynamicBody;
+import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.utils.Values;
 import com.geometric.wars.gameobjects.StaticGameObject;
 import com.geometric.wars.models.FloorModel;
@@ -35,4 +37,12 @@ public class Floor extends ModelInstance implements StaticGameObject {
     public void cache(ModelCache cache) {
         cache.add(this);
     }
+
+    @Override
+    public boolean canCollideWith(DynamicBody object) {
+        return false;
+    }
+
+    @Override
+    public void onCollisionWith(DynamicBody object) {}
 }

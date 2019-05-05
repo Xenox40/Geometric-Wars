@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class PlayersController implements DynamicGameObject {
 
-    private List<PlayersCube> cubes;
+    protected List<PlayersCube> cubes;
     private PlayersCubeFactory cubeFactory;
     /**
      * @param numberOfCubes - number of cubes which player moves

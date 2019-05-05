@@ -7,5 +7,5 @@ public enum MapObjectType {
     /**
      * map object that represents cell where player already has been but now is moving to different cell
      */
-    PLAYERSPECTRUM;
+    PLAYERSPECTRUM
 }

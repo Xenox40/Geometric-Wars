@@ -1,4 +1,4 @@
-package com.geometric.wars.debug.axes;
+package com.geometric.wars.utils.axes;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;

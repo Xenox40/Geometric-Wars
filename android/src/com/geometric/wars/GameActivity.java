@@ -1,5 +1,6 @@
 package com.geometric.wars;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
@@ -12,6 +13,7 @@ public class GameActivity extends FragmentActivity implements AndroidFragmentApp
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity_layout);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         gameFragment = new GameFragment();
 

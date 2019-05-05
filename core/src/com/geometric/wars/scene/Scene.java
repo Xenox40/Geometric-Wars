@@ -21,7 +21,7 @@ public class Scene {
     }
 
 
-    public void addStaticGameOject(StaticGameObject object) {
+    public void addStaticGameObject(StaticGameObject object) {
         staticMapObjects.add(object);
         areStaticObjectsCacheUpdated = false;
     }

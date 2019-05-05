@@ -1,4 +1,4 @@
-package com.geometric.wars;
+package com.geometric.wars.utils;
 
 public class Values {
     public static final int unit = 1;

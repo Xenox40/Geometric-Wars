@@ -1,4 +1,4 @@
-package com.geometric.wars;
+package com.geometric.wars.utils;
 
 import com.badlogic.gdx.math.Vector2;
 

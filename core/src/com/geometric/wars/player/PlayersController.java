@@ -48,5 +48,9 @@ public class PlayersController implements DynamicGameObject {
         for (PlayersCube p : cubes)
             p.render(batch,environment);
     }
+
+    public PlayersCube getCube(int i) {
+        return cubes.get(i);
+    }
 }
 

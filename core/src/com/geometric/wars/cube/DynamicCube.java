@@ -8,11 +8,8 @@ import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.utils.Direction3D;
 import com.geometric.wars.math.RotationCalculator;
-import com.geometric.wars.scene.SceneManager;
 
-/**
- * should be built only with DynamicCubeBuilder, manages its view
- */
+
 public class DynamicCube {
 
     DynamicCube() {
@@ -66,7 +63,8 @@ public class DynamicCube {
      * warning: it cancels rotating and resets orientation to default
      */
     public void setPosition(int x, int z) {
-        finishRotating();
+        if(isMoving())
+            finishRotating();
         this.ax = this.bx = x;
         this.az = this.bz = z;
         dynamicCubeView.transform.setToTranslation(x,0,z);
@@ -104,22 +102,16 @@ public class DynamicCube {
         }
     }
 
-    public boolean moveIsAllowed(Direction2D direction2D) {
-        Vector2 nextPosition = direction2D.toVector2();
-        return !(SceneManager.getInstance().getCurrentMapService().checkIfIsOccupied(bx + (int)nextPosition.x, bz + (int)nextPosition.y));
-    }
-
     public void move(Direction2D direction2D) {
-        if(isMoving() || !moveIsAllowed(direction2D))
+        if(isMoving())
             return;
 
         startRotating();
         rotationDirection2D = direction2D;
         rotationAfterMove = RotationCalculator.transformAfterRoll(new Matrix4(rotationBeforeMove),direction2D,90,0,0,0).getRotation(new Quaternion()).nor();
 
-        if(direction2D == Direction2D.UP) {
+        if(direction2D == Direction2D.UP)
             az--;
-        }
         if(direction2D == Direction2D.RIGHT)
             ax++;
         if(direction2D == Direction2D.DOWN)
@@ -133,7 +125,7 @@ public class DynamicCube {
         rotationAngleSumInDegrees = 0;
     }
 
-    private void finishRotating() {
+    protected void finishRotating() {
         moving = false;
         rotationAngleSumInDegrees = 0;
         rotationDirection2D = null;
@@ -141,5 +133,6 @@ public class DynamicCube {
         bz = az;
         rotationBeforeMove = rotationAfterMove;
     }
+
 
 }

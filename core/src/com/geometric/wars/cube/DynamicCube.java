@@ -63,7 +63,8 @@ public class DynamicCube {
      * warning: it cancels rotating and resets orientation to default
      */
     public void setPosition(int x, int z) {
-        finishRotating();
+        if(isMoving())
+            finishRotating();
         this.ax = this.bx = x;
         this.az = this.bz = z;
         dynamicCubeView.transform.setToTranslation(x,0,z);
@@ -124,7 +125,7 @@ public class DynamicCube {
         rotationAngleSumInDegrees = 0;
     }
 
-    private void finishRotating() {
+    protected void finishRotating() {
         moving = false;
         rotationAngleSumInDegrees = 0;
         rotationDirection2D = null;
@@ -132,5 +133,6 @@ public class DynamicCube {
         bz = az;
         rotationBeforeMove = rotationAfterMove;
     }
+
 
 }

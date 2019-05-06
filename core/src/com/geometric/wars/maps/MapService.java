@@ -3,6 +3,7 @@ package com.geometric.wars.maps;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.collisions.DynamicBody;
+import com.geometric.wars.cube.DynamicCube;
 import com.geometric.wars.player.person.PersonsCube;
 
 import java.util.ArrayList;
@@ -76,26 +77,19 @@ public class MapService {
         return true;
     }
 
-    public void updatePosition(DynamicBody dynamicBody, int oldX, int oldY, int newX, int newY) {
 
-        if(!mapObjects.get(oldY).get(oldX).contains(dynamicBody)) {
-            for (int i = 0; i < getHeight(); i++){
-                for (int j = 0; j < getWidth(); j++) {
-                    System.out.print((mapObjects.get(i).get(j).size() == 0 ? "{}" : mapObjects.get(i).get(j).get(0).toString().substring(35)) + " ");
-                }
-                System.out.println();
-            }
-            throw new RuntimeException(oldX+" "+oldY+" "+newX+" "+newY);
+    public void extendCollisionArea(DynamicBody dynamicBody, int x, int y) {
+        if(!mapObjects.get(y).get(x).contains(dynamicBody)) {
+            mapObjects.get(y).get(x).add(dynamicBody);
 
+            for (Collidable c : mapObjects.get(y).get(x))
+                c.onCollisionWith(dynamicBody);
         }
-        mapObjects.get(oldY).get(oldX).remove(dynamicBody);
-
-        for (Collidable c : mapObjects.get(newY).get(newX))
-            c.onCollisionWith(dynamicBody);
-
-        mapObjects.get(newY).get(newX).add(dynamicBody);
-
-
     }
+
+    public void decreaseCollisionArea(DynamicBody dynamicBody, int x, int y) {
+        mapObjects.get(y).get(x).remove(dynamicBody);
+    }
+
 
 }

@@ -2,7 +2,7 @@ package com.geometric.wars.cube;
 
 import com.badlogic.gdx.math.Vector2;
 import com.geometric.wars.collisions.DynamicBody;
-import com.geometric.wars.player.PlayersController;
+import com.geometric.wars.maps.MapService;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction2D;
 
@@ -10,7 +10,7 @@ import com.geometric.wars.utils.Direction2D;
  * should be built only with DynamicCubeBuilder, manages its view
  */
 public class CollidableDynamicCube extends DynamicCube implements DynamicBody {
-
+    private MapService service = SceneManager.getInstance().getCurrentMapService();
     CollidableDynamicCube() {
         super();
     }
@@ -19,10 +19,16 @@ public class CollidableDynamicCube extends DynamicCube implements DynamicBody {
     @Override
     public void move(Direction2D direction) {
         Vector2 newPos = getPosition().cpy().add(direction.toVector2());
-        if(!isMoving() && SceneManager.getInstance().getCurrentMapService().isMoveAllowed(this,(int)newPos.x,(int)newPos.y)) {
+        if(!isMoving() && service.isMoveAllowed(this,(int)newPos.x,(int)newPos.y)) {
             super.move(direction);
-            SceneManager.getInstance().getCurrentMapService().updatePosition(this,(int)getPosition().x,(int)getPosition().y,(int)getApproachingPosition().x,(int)getApproachingPosition().y);
+            service.extendCollisionArea(this,(int) getApproachingPosition().x, (int) getApproachingPosition().y);
         }
+    }
+
+    @Override
+    protected void finishRotating() {
+        service.decreaseCollisionArea(this,(int)getPosition().x,(int)getPosition().y);
+        super.finishRotating();
     }
 
     @Override

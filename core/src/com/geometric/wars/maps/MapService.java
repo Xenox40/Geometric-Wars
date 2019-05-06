@@ -66,7 +66,6 @@ public class MapService {
     public boolean isMoveAllowed(DynamicBody dynamicBody, int newX, int newY) {
         if(newX < 0 || newY < 0 ||  newX >= getWidth() || newY >= getHeight())
             return false;
-
         for(Collidable c : mapObjects.get(newY).get(newX)) {
             if(!c.canCollideWith(dynamicBody)) {
                 return false;
@@ -77,16 +76,22 @@ public class MapService {
 
 
     public void extendCollisionArea(DynamicBody dynamicBody, int x, int y) {
+        if(x < 0 || y < 0 ||  x >= getWidth() || y >= getHeight())
+            return;
         if(!mapObjects.get(y).get(x).contains(dynamicBody)) {
-            mapObjects.get(y).get(x).add(dynamicBody);
-
-            for (Collidable c : mapObjects.get(y).get(x))
+            for (Collidable c : mapObjects.get(y).get(x)) {
                 c.onCollisionWith(dynamicBody);
+            }
+            mapObjects.get(y).get(x).add(dynamicBody);
         }
     }
 
     public void decreaseCollisionArea(DynamicBody dynamicBody, int x, int y) {
+        if(x < 0 || y < 0 ||  x >= getWidth() || y >= getHeight())
+            return;
         mapObjects.get(y).get(x).remove(dynamicBody);
+
+
     }
 
 

@@ -8,8 +8,10 @@ import com.geometric.wars.gameobjects.Bullet;
 import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.utils.Direction2D;
 
+import java.util.Iterator;
+
 public class ShootingService implements DynamicGameObject {
-    private Array<Bullet> bullets;
+    private Array<Bullet> bullets = new Array<>();
 
     public void shootBullet(MountableGun gun, int startX, int startY, Direction2D direction2D) {
         Bullet bullet = new Bullet(startX,startY,gun.getDamage());
@@ -26,7 +28,12 @@ public class ShootingService implements DynamicGameObject {
 
     @Override
     public void update() {
-        for(Bullet bullet : bullets)
-            bullet.update();
+        for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();){
+            Bullet bullet = it.next();
+            if(bullet.isDestroyed())
+                it.remove();
+            else
+                bullet.update();
+        }
     }
 }

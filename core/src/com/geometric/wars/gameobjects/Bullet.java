@@ -2,11 +2,11 @@ package com.geometric.wars.gameobjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.geometric.wars.collisions.DynamicBody;
-import com.geometric.wars.cube.CollidableDynamicCube;
+import com.geometric.wars.gameobjects.enviromentparts.Wall;
 import com.geometric.wars.models.BulletModel;
+import com.geometric.wars.player.ShootingPlayersCube;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction3D;
 import com.geometric.wars.utils.Values;
@@ -27,9 +27,9 @@ public class Bullet extends ModelInstance implements DynamicBody {
     private int px, py;
     private boolean startedMoving;
     private Direction3D direction;
-    private float totalDistance;
+    private int lastX,lastY;
 
-
+    private boolean destroyed;
 
     /**
      * Create new instance of Bullet model, and
@@ -40,8 +40,8 @@ public class Bullet extends ModelInstance implements DynamicBody {
      */
     public Bullet(int x, int y, int damage) {
         super(BulletModel.getModel(), new Vector3(x * Values.unit, 0, y * Values.unit));
-        this.startX = x;
-        this.startY = y;
+        this.startX = this.lastX = x;
+        this.startY = this.lastY = y;
         this.damage = damage;
         this.speed = speed;
     }
@@ -56,26 +56,50 @@ public class Bullet extends ModelInstance implements DynamicBody {
         if(startedMoving) {
             float deltaTranslation = speed * Gdx.graphics.getDeltaTime();
             transform.translate(direction.toVector3().scl(deltaTranslation));
-            if(Math.round(totalDistance+deltaTranslation) != Math.round(deltaTranslation)){
-                Vector2 mv = direction.toDirection2D().toVector2().scl(Math.round(totalDistance+deltaTranslation));
-                SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(this,px,py);
-                px = startX + (int)mv.x;
-                py = startY + (int)mv.y;
+
+            Vector3 translation = transform.getTranslation(new Vector3());
+
+            px = Math.round(translation.x);
+            py = Math.round(translation.z);
+
+            if(px != lastX || py != lastY){
+                SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(this,lastX,lastY);
+                if(!SceneManager.getInstance().getCurrentMapService().isMoveAllowed(this,px,py)) {
+                    destroy();
+                    return;
+                }
                 SceneManager.getInstance().getCurrentMapService().extendCollisionArea(this,px,py);
+                lastX = px;
+                lastY = py;
             }
-            totalDistance += deltaTranslation;
         }
+    }
+
+    private void destroy() {
+        SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(this,px,py);
+        this.startedMoving = false;
+        px = lastX = startX;
+        py = lastY = startY;
+        destroyed = true;
     }
 
     @Override
     public boolean canCollideWith(DynamicBody object) {
+        if (object instanceof Wall)
+            return false;
         return true;
     }
 
     @Override
     public void onCollisionWith(DynamicBody object) {
-        if(object instanceof CollidableDynamicCube) {
-
+        if(object instanceof ShootingPlayersCube){
+            ((ShootingPlayersCube) object).takeHp(damage);
+            destroy();
+            return;
         }
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
     }
 }

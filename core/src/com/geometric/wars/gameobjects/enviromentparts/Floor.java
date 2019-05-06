@@ -1,32 +1,31 @@
-package com.geometric.wars.enviromentparts;
+package com.geometric.wars.gameobjects.enviromentparts;
 
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelCache;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
-import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.collisions.DynamicBody;
 import com.geometric.wars.gameobjects.DynamicGameObject;
-import com.geometric.wars.player.PlayersController;
 import com.geometric.wars.utils.Values;
 import com.geometric.wars.gameobjects.StaticGameObject;
-import com.geometric.wars.models.WallModel;
+import com.geometric.wars.models.FloorModel;
 
 /**
- * Represents a Wall as an not-interactive model instance.
+ * Represents a floor as an not-interactive model instance.
  */
-public class Wall extends ModelInstance implements StaticGameObject {
+public class Floor extends ModelInstance implements StaticGameObject {
 
     /**
-     * Create new instance of Wall model, and
+     * Create new instance of Floor model, and
      * place it on given coordinates.
      *
      * @param x - x coordinate on a plane grid
      * @param y - y coordinate on a plane grid
      */
-    public Wall(int x, int y) {
-        super(WallModel.getModel(), new Vector3(x * Values.unit,0, y * Values.unit));
+    public Floor(int x, int y) {
+        //TODO constants for y cord
+        super(FloorModel.getModel(), new Vector3(x * Values.unit, -(float)(Values.unit) / 2 - 0.05f, y * Values.unit));
     }
 
     @Override

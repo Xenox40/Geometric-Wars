@@ -109,9 +109,8 @@ public class DynamicCube {
         rotationDirection2D = direction2D;
         rotationAfterMove = RotationCalculator.transformAfterRoll(new Matrix4(rotationBeforeMove),direction2D,90,0,0,0).getRotation(new Quaternion()).nor();
 
-        if(direction2D == Direction2D.UP) {
+        if(direction2D == Direction2D.UP)
             az--;
-        }
         if(direction2D == Direction2D.RIGHT)
             ax++;
         if(direction2D == Direction2D.DOWN)

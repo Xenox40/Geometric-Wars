@@ -7,13 +7,14 @@ import com.geometric.wars.collisions.DynamicBody;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MapService {
 
     public MapService() {
         mapObjects = new Array<>();
     }
 
-    private Array<Array<List<Collidable>> > mapObjects;
+    public Array<Array<Array<Collidable>> > mapObjects;
 
     private int width;
     private int height;
@@ -45,11 +46,11 @@ public class MapService {
 
         for(int i=0;i<height;i++) {
             if (mapObjects.get(i) == null)
-                mapObjects.set(i, new Array<List<Collidable>>());
+                mapObjects.set(i, new Array<Array<Collidable>>());
             mapObjects.get(i).setSize(width);
             for(int j=0;j<width;j++) {
                 if(mapObjects.get(i).get(j) == null)
-                    mapObjects.get(i).set(j,new ArrayList<Collidable>());
+                    mapObjects.get(i).set(j,new Array<Collidable>());
             }
         }
     }
@@ -78,20 +79,19 @@ public class MapService {
     public void extendCollisionArea(DynamicBody dynamicBody, int x, int y) {
         if(x < 0 || y < 0 ||  x >= getWidth() || y >= getHeight())
             return;
-        if(!mapObjects.get(y).get(x).contains(dynamicBody)) {
+        if(!mapObjects.get(y).get(x).contains(dynamicBody,true)) {
             for (Collidable c : mapObjects.get(y).get(x)) {
                 c.onCollisionWith(dynamicBody);
             }
-            mapObjects.get(y).get(x).add(dynamicBody);
+            if(dynamicBody.exists())
+                mapObjects.get(y).get(x).add(dynamicBody);
         }
     }
 
     public void decreaseCollisionArea(DynamicBody dynamicBody, int x, int y) {
         if(x < 0 || y < 0 ||  x >= getWidth() || y >= getHeight())
             return;
-        mapObjects.get(y).get(x).remove(dynamicBody);
-
-
+        mapObjects.get(y).get(x).removeValue(dynamicBody,true);
     }
 
 

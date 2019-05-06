@@ -46,4 +46,9 @@ public class Wall extends ModelInstance implements StaticGameObject {
 
     @Override
     public void onCollisionWith(DynamicBody object) {}
+
+    @Override
+    public boolean exists() {
+        return true;
+    }
 }

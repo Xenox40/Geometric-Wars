@@ -30,6 +30,11 @@ class DirectionGestureDetector extends GestureDetector {
             }
             return super.fling(velocityX, velocityY, button);
         }
+        @Override
+        public boolean tap(float x, float y, int count, int button) {
+            directionListener.onTap();
+            return super.tap(x,y,count,button);
+        }
     }
 
 }

@@ -24,7 +24,7 @@ public class ShootingPlayersCube extends PlayersCube {
         }
     }
 
-    private int healthPoints;
+    private int healthPoints = 50;
     private MountableGun gun;
 
     public boolean isAlive() {

@@ -5,6 +5,7 @@ public interface InputController {
     boolean moveDown();
     boolean moveRight();
     boolean moveLeft();
+    boolean shoot();
 
     /**
      * will be called after all controllable objects finishes their input  processing

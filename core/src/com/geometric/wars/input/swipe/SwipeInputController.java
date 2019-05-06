@@ -13,6 +13,7 @@ public class SwipeInputController implements InputController {
     private boolean down;
     private boolean right;
     private boolean left;
+    private boolean tapped;
 
     public static SwipeInputController getInstance() {
         if (instance == null)
@@ -41,8 +42,11 @@ public class SwipeInputController implements InputController {
     }
 
     @Override
+    public boolean shoot() { return tapped; }
+
+    @Override
     public void endOnProcessingInput() {
-        up = right = down = left = false;
+        up = right = down = left = tapped =false;
     }
 
     private SwipeInputController() {
@@ -70,6 +74,11 @@ public class SwipeInputController implements InputController {
             @Override
             public void onDown() {
                 down = true;
+            }
+
+            @Override
+            public void onTap() {
+                tapped = true;
             }
         };
     }

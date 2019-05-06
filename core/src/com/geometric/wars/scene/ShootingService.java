@@ -30,10 +30,10 @@ public class ShootingService implements DynamicGameObject {
     public void update() {
         for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();){
             Bullet bullet = it.next();
-            if(bullet.isDestroyed())
+            bullet.update();
+            if(!bullet.exists())
                 it.remove();
-            else
-                bullet.update();
+
         }
     }
 }

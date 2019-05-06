@@ -1,5 +1,6 @@
 package com.geometric.wars.player.persons;
 
+import com.geometric.wars.player.ShootingPlayersCube;
 import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.cube.DynamicCube;
 import com.geometric.wars.cube.DynamicCubeController;
@@ -27,6 +28,11 @@ public class DynamicCubeInputController extends DynamicCubeController {
         }
         else if(inputController.moveLeft()) {
             dynamicCube.move(Direction2D.LEFT);
+        }
+        else if(inputController.shoot()) {
+            if(dynamicCube instanceof ShootingPlayersCube) {
+                ((ShootingPlayersCube) dynamicCube).shoot();
+            }
         }
     }
 

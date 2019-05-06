@@ -40,8 +40,8 @@ public class Bullet extends ModelInstance implements DynamicBody {
      */
     public Bullet(int x, int y, int damage) {
         super(BulletModel.getModel(), new Vector3(x * Values.unit, 0, y * Values.unit));
-        this.startX = this.lastX = x;
-        this.startY = this.lastY = y;
+        this.startX = this.px = this.lastX = x;
+        this.startY = this.py = this.lastY = y;
         this.damage = damage;
         this.speed = speed;
     }
@@ -64,13 +64,13 @@ public class Bullet extends ModelInstance implements DynamicBody {
 
             if(px != lastX || py != lastY){
                 SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(this,lastX,lastY);
-                if(!SceneManager.getInstance().getCurrentMapService().isMoveAllowed(this,px,py)) {
-                    destroy();
-                    return;
-                }
-                SceneManager.getInstance().getCurrentMapService().extendCollisionArea(this,px,py);
                 lastX = px;
                 lastY = py;
+                SceneManager.getInstance().getCurrentMapService().extendCollisionArea(this,px,py);
+            }
+            if(!SceneManager.getInstance().getCurrentMapService().isMoveAllowed(this,px,py)) {
+                destroy();
+                return;
             }
         }
     }
@@ -78,8 +78,6 @@ public class Bullet extends ModelInstance implements DynamicBody {
     private void destroy() {
         SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(this,px,py);
         this.startedMoving = false;
-        px = lastX = startX;
-        py = lastY = startY;
         destroyed = true;
     }
 
@@ -99,7 +97,9 @@ public class Bullet extends ModelInstance implements DynamicBody {
         }
     }
 
-    public boolean isDestroyed() {
-        return destroyed;
+    @Override
+    public boolean exists() {
+        return !destroyed;
     }
+
 }

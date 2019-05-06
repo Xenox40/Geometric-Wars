@@ -37,4 +37,9 @@ public class CollidableDynamicCube extends DynamicCube implements DynamicBody {
     @Override
     public void onCollisionWith(DynamicBody object) {}
 
+    @Override
+    public boolean exists() {
+        return true;
+    }
+
 }

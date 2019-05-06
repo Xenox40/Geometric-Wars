@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.geometric.wars.collisions.DynamicBody;
+import com.geometric.wars.cube.CollidableDynamicCube;
 import com.geometric.wars.models.BulletModel;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction3D;
@@ -68,9 +69,13 @@ public class Bullet extends ModelInstance implements DynamicBody {
 
     @Override
     public boolean canCollideWith(DynamicBody object) {
-        return false;
+        return true;
     }
 
     @Override
-    public void onCollisionWith(DynamicBody object) {}
+    public void onCollisionWith(DynamicBody object) {
+        if(object instanceof CollidableDynamicCube) {
+
+        }
+    }
 }

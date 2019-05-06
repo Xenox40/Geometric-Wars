@@ -11,10 +11,6 @@ import com.geometric.wars.utils.Direction2D;
  */
 public class CollidableDynamicCube extends DynamicCube implements DynamicBody {
     private MapService service = SceneManager.getInstance().getCurrentMapService();
-    CollidableDynamicCube() {
-        super();
-    }
-
 
     @Override
     public void move(Direction2D direction) {

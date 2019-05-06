@@ -5,13 +5,12 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.geometric.wars.cube.CollidableDynamicCube;
 import com.geometric.wars.cube.DynamicCubeController;
 
-public abstract class PlayersCube {
+public abstract class PlayersCube extends CollidableDynamicCube {
     protected DynamicCubeController dynamicCubeController;
-    protected CollidableDynamicCube dynamicCube;
 
-
-    public void setPosition(int x,int y) {
-        dynamicCube.setPosition(x,y);
+    public PlayersCube(DynamicCubeController controller) {
+        this.dynamicCubeController = controller;
+        controller.setControlledCube(this);
     }
 
     /**
@@ -20,7 +19,7 @@ public abstract class PlayersCube {
      */
     public void update() {
         dynamicCubeController.processMoving();
-        dynamicCube.updateRotationAndPosition();
+        this.updateRotationAndPosition();
     }
 
     /**
@@ -30,10 +29,6 @@ public abstract class PlayersCube {
      * @param environment Environment
      */
     public void render(ModelBatch batch, Environment environment) {
-        batch.render(dynamicCube.getView(), environment);
-    }
-
-    public CollidableDynamicCube getCollidableCube() {
-        return dynamicCube;
+        batch.render(this.getView(), environment);
     }
 }

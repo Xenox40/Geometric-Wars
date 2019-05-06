@@ -3,8 +3,6 @@ package com.geometric.wars.maps;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.collisions.DynamicBody;
-import com.geometric.wars.cube.DynamicCube;
-import com.geometric.wars.player.person.PersonsCube;
 
 import java.util.ArrayList;
 import java.util.List;

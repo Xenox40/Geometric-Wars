@@ -22,11 +22,16 @@ public class SimpleGun extends MountableGun {
 
     @Override
     public int getDamage() {
-        return 0;
+        return 5;
     }
 
     @Override
     public int getWaitingTime() {
         return 0;
+    }
+
+    @Override
+    public float getBulletSpeed() {
+        return 2f;
     }
 }

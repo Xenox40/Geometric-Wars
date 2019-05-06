@@ -1,4 +1,4 @@
-package com.geometric.wars.player.person;
+package com.geometric.wars.player.persons;
 
 import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.cube.DynamicCube;
@@ -9,8 +9,8 @@ public class DynamicCubeInputController extends DynamicCubeController {
 
     private InputController inputController;
 
-    public DynamicCubeInputController(DynamicCube dynamicCube, InputController inputController) {
-        super(dynamicCube);
+    public DynamicCubeInputController(InputController inputController) {
+        super();
         this.inputController = inputController;
     }
 

@@ -19,7 +19,7 @@ public class ShooterPlayersController extends PlayersController {
         super(1,cubeFactory, new int[]{x}, new int[]{y});
 
         for(int i=0;i<6;i++){
-            CubeFace face = getCube().dynamicCube.getFaceAt(Direction3D.values()[i]);
+            CubeFace face = getCube().getFaceAt(Direction3D.values()[i]);
             if(face.getMountedObject() != null && face.getMountedObject() instanceof MountableGun) {
                 gun = (MountableGun) face.getMountedObject();
                 break;
@@ -34,8 +34,8 @@ public class ShooterPlayersController extends PlayersController {
     public void shoot() {
         if(gun == null)
             return;
-        Direction3D shootingDirection = getCube().dynamicCube.getFaceOrientation(gun.getFaceMountedAt());
-        Vector3 gunPosition = new Vector3(getCube().dynamicCube.getApproachingPosition().x,0,getCube().dynamicCube.getApproachingPosition().y).add(shootingDirection.toVector3());
+        Direction3D shootingDirection = getCube().getFaceOrientation(gun.getFaceMountedAt());
+        Vector3 gunPosition = new Vector3(getCube().getApproachingPosition().x,0,getCube().getApproachingPosition().y).add(shootingDirection.toVector3());
         // TODO implement shooting
     }
 

@@ -3,6 +3,9 @@ package com.geometric.wars.player;
 
 import com.geometric.wars.cube.DynamicCubeBuilder;
 
+/**
+ * abstract factory for cubes
+ */
 public abstract class PlayersCubeFactory {
     protected DynamicCubeBuilder builder;
 

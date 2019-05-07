@@ -53,7 +53,7 @@ public class Bullet extends ModelInstance implements DynamicBody {
     }
 
     public void update() {
-        if(startedMoving) {
+        if(exists() && startedMoving) {
             float deltaTranslation = speed * Gdx.graphics.getDeltaTime();
             transform.translate(direction.toVector3().scl(deltaTranslation));
 
@@ -90,6 +90,8 @@ public class Bullet extends ModelInstance implements DynamicBody {
 
     @Override
     public void onCollisionWith(DynamicBody object) {
+        if(!exists())
+            return;
         if(object instanceof ShootingPlayersCube){
             ((ShootingPlayersCube) object).takeHp(damage);
             destroy();

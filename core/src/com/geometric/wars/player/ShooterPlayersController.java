@@ -7,6 +7,9 @@ public class ShooterPlayersController extends PlayersController {
      */
     public ShooterPlayersController(int x, int y, PlayersCubeFactory cubeFactory) {
         super(1,cubeFactory, new int[]{x}, new int[]{y});
+        if(!(getCube() instanceof  ShootingPlayersCube)) {
+            throw new RuntimeException("ShooterPlayersController cannot controll "+getCube());
+        }
     }
 
     private PlayersCube getCube() {

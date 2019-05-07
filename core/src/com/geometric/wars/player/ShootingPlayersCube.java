@@ -1,6 +1,7 @@
 package com.geometric.wars.player;
 
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.geometric.wars.collisions.DynamicBody;
 import com.geometric.wars.cube.CubeFace;
 import com.geometric.wars.cube.DynamicCubeController;
@@ -25,6 +26,7 @@ public class ShootingPlayersCube extends PlayersCube {
     }
 
     private int healthPoints = 50;
+    private long lastShootTimeInMillis;
     private MountableGun gun;
 
     public boolean isAlive() {
@@ -38,12 +40,13 @@ public class ShootingPlayersCube extends PlayersCube {
     }
 
     public void shoot() {
-        if(isMoving())
-            return;
-
         if(gun == null)
             findGun();
 
+        if(isMoving() || TimeUtils.timeSinceMillis(lastShootTimeInMillis) < gun.getWaitingTimeInMillis())
+            return;
+
+        lastShootTimeInMillis = TimeUtils.millis();
 
         Direction3D shootingDirection = getFaceOrientation(gun.getFaceMountedAt());
         Vector3 gunPosition = new Vector3(getApproachingPosition().x,0,getApproachingPosition().y).add(shootingDirection.toVector3());

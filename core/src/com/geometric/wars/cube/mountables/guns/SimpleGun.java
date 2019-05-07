@@ -26,8 +26,8 @@ public class SimpleGun extends MountableGun {
     }
 
     @Override
-    public int getWaitingTime() {
-        return 0;
+    public int getWaitingTimeInMillis() {
+        return 250;
     }
 
     @Override

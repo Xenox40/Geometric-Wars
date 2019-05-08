@@ -4,15 +4,14 @@ import com.badlogic.gdx.math.MathUtils;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ShooterMapGenerator {
 
     private GameMap map;
     private int steps = 2;
     private float startingWallChance = 0.6f;
-    private float intoEmptyThreshold = 0.4f, intoWallThreshold = 0.4f;
-    private float intoEmptyBound = 1f, intoWallBound = 0.8f;
+    private float intoEmptyThreshold = 0.7f, intoWallThreshold = 0.7f;
+    private float intoEmptyBound = 1f, intoWallBound = 0.9f;
 
 
     private GameMap.WeightedPoint[] neighbours;
@@ -23,9 +22,9 @@ public class ShooterMapGenerator {
             for(int j=-1;j<=1;j++)
                 if(i != 0 || j != 0) {
                     if(i == 0 || j == 0)
-                        neighboursList.add(new GameMap.WeightedPoint(i, j, 1));
+                        neighboursList.add(new GameMap.WeightedPoint(i, j, 3));
                     else
-                        neighboursList.add(new GameMap.WeightedPoint(i, j, 2));
+                        neighboursList.add(new GameMap.WeightedPoint(i, j, 1));
                 }
 
         neighbours = new GameMap.WeightedPoint[neighboursList.size()];
@@ -44,7 +43,7 @@ public class ShooterMapGenerator {
         }
 
         MapConnector connector = new MapConnector(map);
-        connector.connectAllComponents();
+        connector.connectAllComponents(20);
 
         MapPlayerPlacer placer = new MapPlayerPlacer(map);
         placer.setPlayerCount(4,3).place();
@@ -126,7 +125,7 @@ public class ShooterMapGenerator {
 
     public static void main(String[] args) {
         ShooterMapGenerator generator = new ShooterMapGenerator();
-        generator.generate(10,10).saveAs("map3",true);
+        generator.generate(20,20).saveAs("map4",true);
 
     }
 }

@@ -1,5 +1,7 @@
 package com.geometric.mapgenerators;
 
+import com.badlogic.gdx.math.MathUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,6 +9,8 @@ class MapConnector {
     private final GameMap map;
     private int [][] myComponent;
     private int componentCount = 1;
+    private char fakeEmpty = ',';
+
 
     public MapConnector(GameMap map){
         this.map = map;
@@ -28,6 +32,15 @@ class MapConnector {
             this.component2 = component2;
             distance = Math.abs(i1-j1)+Math.abs(i2-j2);
         }
+        public VerticesPair(int i1, int j1, int component1, int i2, int j2, int component2, int miniDistanceAdd, int maxiDistanceAdd) {
+            this(i1,j1,component1,i2,j2,component2);
+            addRandomToDistance(miniDistanceAdd,maxiDistanceAdd);
+        }
+
+
+        public void addRandomToDistance(int miniAdd, int maxiAdd){
+            distance += MathUtils.random(miniAdd,maxiAdd);
+        }
 
         public void normalize() {
             if (i1 > i2) {
@@ -44,17 +57,28 @@ class MapConnector {
 
         @Override
         public int compareTo(VerticesPair verticesPair) {
-            if(this.distance < verticesPair.distance)
-                return 1;
-            if(this.distance > verticesPair.distance)
-                return -1;
-            int hash1 = this.i1+this.i2*this.j1+this.j2;
-            int hash2 = verticesPair.i1+ verticesPair.i2* verticesPair.j1+ verticesPair.j2;
-            return Integer.compare(hash1,hash2);
+            return Integer.compare(this.distance, verticesPair.distance);
         }
     }
 
-    public void connectAllComponents() {
+    private <T> void randomShuffle(ArrayList<T> list){
+        for (int i=list.size()-1; i>0; i--) {
+            int index = MathUtils.random(i+1);
+
+            T a = list.get(index);
+            list.set(index,list.get(i));
+            list.set(i,a);
+        }
+    }
+
+    public void connectAllComponents(int iterations) {
+        while(iterations --> 0){
+            connect();
+        }
+        end();
+    }
+
+    private void connect() {
         findComponents();
         ArrayList<VerticesPair> verticesPairs = new ArrayList<>();
         for(int i=0;i<map.getHeight();i++){
@@ -63,25 +87,35 @@ class MapConnector {
                     for (int q = j-15; q < j+15; q++) {
                         if(map.isIn(p,q) && i <= p && j <= q && (i != p || j != q) && map.isEmpty(i,j)
                                 && map.isEmpty(p,q) && myComponent[i][j] != myComponent[p][q])
-                            verticesPairs.add(new VerticesPair(i,j,myComponent[i][j],p,q,myComponent[p][q]));
+                            verticesPairs.add(new VerticesPair(i,j,myComponent[i][j],p,q,myComponent[p][q],-map.getWidth()/5,map.getWidth()/5));
                     }
                 }
             }
         }
+        randomShuffle(verticesPairs);
         Collections.sort(verticesPairs);
         FindAndUnion fau = new FindAndUnion(componentCount+1);
-        int joinedComponents = 0;
-        for (int i=0;i<verticesPairs.size() && joinedComponents < componentCount;i++){
+        for (int i=0;i<verticesPairs.size() ;i++){
             if(fau.find(verticesPairs.get(i).component1) != fau.find(verticesPairs.get(i).component2)){
                 fau.union(verticesPairs.get(i).component1,verticesPairs.get(i).component2);
                 drillPath(verticesPairs.get(i));
-                joinedComponents++;
             }
         }
     }
 
+    private void end(){
+        for(int i=0;i<map.getHeight();i++)
+            for(int j=0;j<map.getWidth();j++)
+                if(map.get(i,j) == fakeEmpty)
+                    map.putEmpty(i,j);
+    }
+
     private void findComponents() {
         componentCount = 1;
+        for(int i=0;i<map.getHeight();i++)
+            for(int j=0;j<map.getWidth();j++)
+                myComponent[i][j] = 0;
+
         for(int i=0;i<map.getHeight();i++) {
             for(int j=0;j<map.getWidth();j++){
                 if(myComponent[i][j] == 0)
@@ -103,10 +137,10 @@ class MapConnector {
      private void drillPath(VerticesPair pair) {
         pair.normalize();
         for(int i=pair.i1; i != pair.i2;i++) {
-            map.putEmpty(i,pair.j1);
+            map.put(i,pair.j1,fakeEmpty);
         }
         for(int j=pair.j1; j != pair.j2; j++) {
-            map.putEmpty(pair.i2,j);
+            map.put(pair.i2,j,fakeEmpty);
         }
      }
 }

@@ -22,24 +22,33 @@ public class GameMap {
         map = new char[height][width];
     }
 
-    public boolean isWall(int i, int j) {
-        return map[i][j] == wall;
+    char get(int i, int j) {
+        return map[i][j];
     }
-    public boolean isEmpty(int i,int j) {
-        return map[i][j] == empty;
+    void put(int i,int j, char c) {
+        map[i][j] = c;
     }
 
+    public boolean isWall(int i, int j) {
+        return get(i,j) == wall;
+    }
+    public boolean isEmpty(int i,int j) {
+        return get(i,j) == empty;
+    }
+
+
+
     public void putWall(int i,int j) {
-        map[i][j] = wall;
+        put(i,j,wall);
     }
     public void putEmpty(int i,int j) {
-        map[i][j] = empty;
+        put(i,j,empty);
     }
     public void putBot(int i, int j) {
-        map[i][j] = bot;
+        put(i,j,bot);
     }
     public void putPerson(int i, int j) {
-        map[i][j] = person;
+        put(i,j,person);
     }
 
     public int getWidth() {

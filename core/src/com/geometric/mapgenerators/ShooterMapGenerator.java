@@ -7,8 +7,8 @@ import java.util.Random;
 public class ShooterMapGenerator {
 
     private GameMap map;
-    private int steps = 20;
-    private float startingWallChance = 0.4f;
+    private int steps = 50;
+    private float startingWallChance = 0.5f;
     private float intoEmptyThreshold = 0.5f, intoWallThreshold = 0.5f;
 
 
@@ -30,8 +30,12 @@ public class ShooterMapGenerator {
         ArrayList<WeightedPoint> neighboursList = new ArrayList<>();
         for(int i=-1;i<=1;i++)
             for(int j=-1;j<=1;j++)
-                if(i != 0 && j != 0)
-                    neighboursList.add(new WeightedPoint(i,j,1));
+                if(i != 0 || j != 0) {
+                    if(i == 0 || j == 0)
+                        neighboursList.add(new WeightedPoint(i, j, 10));
+                    else
+                        neighboursList.add(new WeightedPoint(i, j, 1));
+                }
 
         neighbours = new WeightedPoint[neighboursList.size()];
         int ct=0;
@@ -62,6 +66,11 @@ public class ShooterMapGenerator {
                 }
             }
         }
+        System.out.println(map);
+        MapConnector connector = new MapConnector(map);
+        connector.connectAllComponents();
+        System.out.println("***");
+        System.out.println(map);
     }
 
     private void nextMapStep() {
@@ -103,8 +112,7 @@ public class ShooterMapGenerator {
 
         try {
             File file = new File("android/assets/maps/" + simpleNameWithoutExt + ".txt");
-            if(file.createNewFile()) {
-
+            if(file.createNewFile() || overwrite) {
                 FileOutputStream outputStream = new FileOutputStream(file, false);
                 outputStream.write(map.toString().getBytes());
                 outputStream.close();
@@ -125,7 +133,7 @@ public class ShooterMapGenerator {
 
     public static void main(String[] args) {
         ShooterMapGenerator generator = new ShooterMapGenerator();
-        generator.generate(10,8).saveAs("map3",true);
+        generator.generate(15,15).saveAs("map7",true);
 
     }
 }

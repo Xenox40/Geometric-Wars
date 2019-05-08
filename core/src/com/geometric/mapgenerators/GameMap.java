@@ -34,6 +34,10 @@ public class GameMap {
         return height;
     }
 
+    public boolean isIn(int i, int j){
+        return i >= 0 && j >= 0 && i < getHeight() && j < getWidth();
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

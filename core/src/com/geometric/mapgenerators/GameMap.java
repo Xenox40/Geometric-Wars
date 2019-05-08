@@ -1,10 +1,20 @@
 package com.geometric.mapgenerators;
 
 public class GameMap {
-    private final char wall = '#', empty = '.';
+    private final char wall = '#', empty = '.', person = 'P', bot = 'B';
     private int width;
     private int height;
     private char[][] map;
+
+    public static class WeightedPoint{
+        public int x,y;
+        public int weight;
+        public WeightedPoint(int x,int y, int weight){
+            this.x = x;
+            this.y = y;
+            this.weight = weight;
+        }
+    }
 
     public GameMap(int width, int height) {
         this.width = width;
@@ -24,6 +34,12 @@ public class GameMap {
     }
     public void putEmpty(int i,int j) {
         map[i][j] = empty;
+    }
+    public void putBot(int i, int j) {
+        map[i][j] = bot;
+    }
+    public void putPerson(int i, int j) {
+        map[i][j] = person;
     }
 
     public int getWidth() {

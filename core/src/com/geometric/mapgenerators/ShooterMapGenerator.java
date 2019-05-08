@@ -1,5 +1,7 @@
 package com.geometric.mapgenerators;
 
+import com.badlogic.gdx.math.MathUtils;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -7,13 +9,13 @@ import java.util.Random;
 public class ShooterMapGenerator {
 
     private GameMap map;
-    private int steps = 7;
-    private float startingWallChance = 0.7f;
-    private float intoEmptyThreshold = 0.6f, intoWallThreshold = 0.6f;
+    private int steps = 2;
+    private float startingWallChance = 0.6f;
+    private float intoEmptyThreshold = 0.4f, intoWallThreshold = 0.4f;
+    private float intoEmptyBound = 1f, intoWallBound = 0.8f;
+
 
     private GameMap.WeightedPoint[] neighbours;
-
-    private static Random randomGenerator = new Random();
 
     private void setNeighbours() {
         ArrayList<GameMap.WeightedPoint> neighboursList = new ArrayList<>();
@@ -21,9 +23,9 @@ public class ShooterMapGenerator {
             for(int j=-1;j<=1;j++)
                 if(i != 0 || j != 0) {
                     if(i == 0 || j == 0)
-                        neighboursList.add(new GameMap.WeightedPoint(i, j, 10));
-                    else
                         neighboursList.add(new GameMap.WeightedPoint(i, j, 1));
+                    else
+                        neighboursList.add(new GameMap.WeightedPoint(i, j, 2));
                 }
 
         neighbours = new GameMap.WeightedPoint[neighboursList.size()];
@@ -54,7 +56,7 @@ public class ShooterMapGenerator {
     private void createRandomMap() {
         for(int i=0;i<map.getHeight();i++){
             for(int j=0;j<map.getWidth();j++){
-                if(randomGenerator.nextFloat() <= startingWallChance) {
+                if(MathUtils.random(1f) <= startingWallChance) {
                    map.putWall(i,j);
                 }
                 else{
@@ -80,14 +82,14 @@ public class ShooterMapGenerator {
                 }
                 int emptiesWeightSum = totalWeightSum - wallsWeightSum;
                 if(map.isWall(i,j)) {
-                    if(emptiesWeightSum*1f/totalWeightSum >= intoEmptyThreshold) {
+                    if(emptiesWeightSum*1f/totalWeightSum >= intoEmptyThreshold && emptiesWeightSum*1f/totalWeightSum <= intoEmptyBound) {
                         newMap.putEmpty(i,j);
                     }
                     else
                         newMap.putWall(i,j);
                 }
                 else{
-                    if(wallsWeightSum*1f/totalWeightSum >= intoWallThreshold) {
+                    if(wallsWeightSum*1f/totalWeightSum >= intoWallThreshold && emptiesWeightSum*1f/totalWeightSum <= intoWallBound) {
                         newMap.putWall(i,j);
                     }
                     else
@@ -124,7 +126,7 @@ public class ShooterMapGenerator {
 
     public static void main(String[] args) {
         ShooterMapGenerator generator = new ShooterMapGenerator();
-        generator.generate(15,15).saveAs("map2",true);
+        generator.generate(10,10).saveAs("map3",true);
 
     }
 }

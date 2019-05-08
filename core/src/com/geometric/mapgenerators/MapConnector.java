@@ -59,8 +59,8 @@ class MapConnector {
         ArrayList<VerticesPair> verticesPairs = new ArrayList<>();
         for(int i=0;i<map.getHeight();i++){
             for(int j=0;j<map.getWidth();j++) {
-                for(int p=i-10;p<i+10;p++) {
-                    for (int q = j-10; q < j+10; q++) {
+                for(int p=i-15;p<i+15;p++) {
+                    for (int q = j-15; q < j+15; q++) {
                         if(map.isIn(p,q) && i <= p && j <= q && (i != p || j != q) && map.isEmpty(i,j)
                                 && map.isEmpty(p,q) && myComponent[i][j] != myComponent[p][q])
                             verticesPairs.add(new VerticesPair(i,j,myComponent[i][j],p,q,myComponent[p][q]));
@@ -71,7 +71,7 @@ class MapConnector {
         Collections.sort(verticesPairs);
         FindAndUnion fau = new FindAndUnion(componentCount+1);
         int joinedComponents = 0;
-        for (int i=0;i<verticesPairs.size() && joinedComponents+1 < componentCount;i++){
+        for (int i=0;i<verticesPairs.size() && joinedComponents < componentCount;i++){
             if(fau.find(verticesPairs.get(i).component1) != fau.find(verticesPairs.get(i).component2)){
                 fau.union(verticesPairs.get(i).component1,verticesPairs.get(i).component2);
                 drillPath(verticesPairs.get(i));

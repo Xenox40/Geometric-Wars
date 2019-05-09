@@ -4,11 +4,14 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class TunnelingMapGenerator implements MapGenerator {
     private GameMap map;
-    private float tunnelsPerSquareUnit;
+    private float percentageFill;
     private int x,y;
+    private int filledCells = 0;
+    private int maxTunnelLength;
 
-    public TunnelingMapGenerator(float tunnelsPerSquareUnit) {
-        this.tunnelsPerSquareUnit = tunnelsPerSquareUnit;
+    public TunnelingMapGenerator(float percentageFill, int maxTunnelLength) {
+        this.percentageFill = percentageFill;
+        this.maxTunnelLength = maxTunnelLength;
     }
 
     @Override
@@ -21,11 +24,10 @@ public class TunnelingMapGenerator implements MapGenerator {
         }
         x = MathUtils.random(map.getHeight()-1);
         y = MathUtils.random(map.getWidth()-1);
+        filledCells = 0;
 
-        int tunnelsCount = (int) (tunnelsPerSquareUnit * (double)map.getWidth()* (double)map.getHeight());
-
-        while (tunnelsCount --> 0) {
-            int len = MathUtils.random(20);
+        while (filledCells/(1f*map.getWidth()*map.getHeight()) < percentageFill) {
+            int len = MathUtils.random(maxTunnelLength);
 
             int direction = MathUtils.random(3);
             if(direction == 0)
@@ -44,6 +46,8 @@ public class TunnelingMapGenerator implements MapGenerator {
 
     private void digTunnel(int len, int deltaX, int deltaY) {
         for(int i=0;i<len;i++){
+            if(!map.isEmpty(x,y))
+                filledCells++;
             map.putEmpty(x,y);
             if(!map.isIn(x+deltaX,y+deltaY))
                 return;

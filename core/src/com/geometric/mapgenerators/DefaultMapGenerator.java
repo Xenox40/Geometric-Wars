@@ -5,9 +5,14 @@ import java.util.ArrayList;
 
 public class DefaultMapGenerator implements MapGenerator{
 
+    public DefaultMapGenerator(int steps, float startingWallChance) {
+        this.steps = steps;
+        this.startingWallChance = startingWallChance;
+    }
+
     private GameMap map;
-    private int steps = 2;
-    private float startingWallChance = 0.5f;
+    private int steps;
+    private float startingWallChance;
     private float intoEmptyThreshold = 0.7f, intoWallThreshold = 0.7f;
     private float intoEmptyBound = 1f, intoWallBound = 0.9f;
 

@@ -53,8 +53,8 @@ public class MapBuilder {
 
     public static void main(String[] args) {
         MapBuilder builder = new MapBuilder();
-        builder.setGenerator(new ShooterMapGenerator()).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(10)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
-        builder.build(20,40).saveAs("map3",true);
+        builder.setGenerator(new TunnelingMapGenerator(0.3f)).setConnector(new DefaultMapConnector(10)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+        builder.build(10,10).saveAs("map3",true);
 
 
     }

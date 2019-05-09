@@ -3,7 +3,7 @@ package com.geometric.mapgenerators;
 import com.badlogic.gdx.math.MathUtils;
 import java.util.ArrayList;
 
-public class ShooterMapGenerator implements MapGenerator{
+public class DefaultMapGenerator implements MapGenerator{
 
     private GameMap map;
     private int steps = 2;
@@ -16,7 +16,7 @@ public class ShooterMapGenerator implements MapGenerator{
 
     @Override
     public GameMap generate(int width, int height) {
-        map = new GameMap(width*3,height*4);
+        map = new GameMap(width,height);
         setNeighbours();
         createRandomMap();
         for(int i=0;i<steps;i++){

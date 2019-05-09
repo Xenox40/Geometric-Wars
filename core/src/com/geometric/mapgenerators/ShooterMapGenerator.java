@@ -1,11 +1,9 @@
 package com.geometric.mapgenerators;
 
 import com.badlogic.gdx.math.MathUtils;
-
-import java.io.*;
 import java.util.ArrayList;
 
-public class ShooterMapGenerator {
+public class ShooterMapGenerator implements MapGenerator{
 
     private GameMap map;
     private int steps = 2;
@@ -38,24 +36,14 @@ public class ShooterMapGenerator {
     }
 
 
-    public ShooterMapGenerator generate(int width, int height) {
+    public GameMap generate(int width, int height) {
         map = new GameMap(width*3,height*4);
         setNeighbours();
         createRandomMap();
         for(int i=0;i<steps;i++){
             nextMapStep();
         }
-
-        MapSizeCompressor compressor = new MapSizeCompressor(map);
-        compressor.compress(width,height);
-
-        MapConnector connector = new MapConnector(map);
-        connector.connectAllComponents(20);
-
-        MapPlayerPlacer placer = new MapPlayerPlacer(map);
-        placer.setPlayerCount(4,3).place();
-
-        return this;
+        return map;
     }
 
 
@@ -105,35 +93,5 @@ public class ShooterMapGenerator {
             }
         }
         map = newMap;
-    }
-
-
-    public void saveAs(String simpleNameWithoutExt, boolean overwrite) {
-
-        try {
-            File file = new File("android/assets/maps/" + simpleNameWithoutExt + ".txt");
-            if(file.createNewFile() || overwrite) {
-                FileOutputStream outputStream = new FileOutputStream(file, false);
-                outputStream.write(map.toString().getBytes());
-                outputStream.close();
-            }
-            else {
-                System.out.println("map with given name already exists, cancelling saveToFile\n");
-                return;
-            }
-
-        }
-        catch (IOException e){
-            System.out.println(e);
-        }
-    }
-    public void saveAs(String simpleNameWithoutExt){
-        saveAs(simpleNameWithoutExt,false);
-    }
-
-    public static void main(String[] args) {
-        ShooterMapGenerator generator = new ShooterMapGenerator();
-        generator.generate(13,13).saveAs("map3",true);
-
     }
 }

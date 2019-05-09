@@ -7,11 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
  * cuts random fragment of map
  */
 public class MapSizeCompressor {
-    private GameMap map;
-    public MapSizeCompressor(GameMap map) {
-        this.map = map;
-    }
-    public void compress(int width, int height) {
+    public GameMap compress(GameMap map, int width, int height) {
         if(map.getWidth() < width || map.getHeight() < height) {
             throw new RuntimeException("compressed map cannot be greater than original");
         }
@@ -26,5 +22,6 @@ public class MapSizeCompressor {
             }
         }
         map.setTo(newMap);
+        return map;
     }
 }

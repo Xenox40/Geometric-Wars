@@ -1,5 +1,9 @@
 package com.geometric.mapgenerators;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class GameMap {
     private final char wall = '#', empty = '.', person = 'P', bot = 'B';
     private int width;
@@ -82,6 +86,29 @@ public class GameMap {
             builder.append('\n');
         }
         return builder.toString();
+    }
+
+    public void saveAs(String simpleNameWithoutExt, boolean overwrite) {
+        try {
+            File file = new File("android/assets/maps/" + simpleNameWithoutExt + ".txt");
+            if(file.createNewFile() || overwrite) {
+                FileOutputStream outputStream = new FileOutputStream(file, false);
+                System.out.println("pp");
+                outputStream.write(this.toString().getBytes());
+                outputStream.close();
+            }
+            else {
+                System.out.println("map with given name already exists, cancelling saveToFile\n");
+                return;
+            }
+
+        }
+        catch (IOException e){
+            System.out.println(e);
+        }
+    }
+    public void saveAs(String simpleNameWithoutExt){
+        saveAs(simpleNameWithoutExt,false);
     }
 
 

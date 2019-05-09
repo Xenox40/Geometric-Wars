@@ -6,24 +6,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 class MapConnector {
-    private final GameMap map;
     private int [][] myComponent;
+    private GameMap map;
+    private int iterations;
     private int componentCount = 1;
     private char fakeEmpty = ',';
 
 
-    public MapConnector(GameMap map){
-        this.map = map;
-        myComponent = new int[map.getHeight()][map.getWidth()];
+    public MapConnector(int iterations){
+        this.iterations = iterations;
     }
 
     private static class VerticesPair implements Comparable<VerticesPair>{
-        public int i1,j1;
-        public int i2,j2;
-        public int component1;
-        public int component2;
+        int i1,j1;
+        int i2,j2;
+        int component1;
+        int component2;
         private int distance;
-        public VerticesPair(int i1, int j1, int component1, int i2, int j2, int component2) {
+        VerticesPair(int i1, int j1, int component1, int i2, int j2, int component2) {
             this.i1 = i1;
             this.j1 = j1;
             this.component1 = component1;
@@ -32,17 +32,17 @@ class MapConnector {
             this.component2 = component2;
             distance = Math.abs(i1-j1)+Math.abs(i2-j2);
         }
-        public VerticesPair(int i1, int j1, int component1, int i2, int j2, int component2, int miniDistanceAdd, int maxiDistanceAdd) {
+        VerticesPair(int i1, int j1, int component1, int i2, int j2, int component2, int miniDistanceAdd, int maxiDistanceAdd) {
             this(i1,j1,component1,i2,j2,component2);
             addRandomToDistance(miniDistanceAdd,maxiDistanceAdd);
         }
 
 
-        public void addRandomToDistance(int miniAdd, int maxiAdd){
+        void addRandomToDistance(int miniAdd, int maxiAdd){
             distance += MathUtils.random(miniAdd,maxiAdd);
         }
 
-        public void normalize() {
+        void normalize() {
             if (i1 > i2) {
                 int tmp = i1;
                 i1 = i2;
@@ -71,7 +71,9 @@ class MapConnector {
         }
     }
 
-    public void connectAllComponents(int iterations) {
+    public void connectAllComponents(GameMap map) {
+        this.map = map;
+
         while(iterations --> 0){
             connect();
         }
@@ -112,6 +114,7 @@ class MapConnector {
 
     private void findComponents() {
         componentCount = 1;
+        myComponent = new int[map.getHeight()][map.getWidth()];
         for(int i=0;i<map.getHeight();i++)
             for(int j=0;j<map.getWidth();j++)
                 myComponent[i][j] = 0;

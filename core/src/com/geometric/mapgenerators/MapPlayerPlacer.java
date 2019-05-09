@@ -7,12 +7,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class MapPlayerPlacer {
-    private final GameMap map;
+    private GameMap map;
     private int botCount;
     private int totalPlayersCount;
 
-    public MapPlayerPlacer(GameMap map){
-        this.map = map;
+    public MapPlayerPlacer(int totalPlayersCount, int botCount) {
+        setPlayerCount(totalPlayersCount,botCount);
     }
 
     public MapPlayerPlacer setPlayerCount(int totalPlayersCount, int botCount) {
@@ -24,7 +24,8 @@ public class MapPlayerPlacer {
         return this;
     }
 
-    void place(){
+    void place(GameMap map){
+        this.map = map;
         ArrayList<GameMap.WeightedPoint> emptyCells = new ArrayList<>();
         for(int i=0;i<map.getHeight();i++){
             for(int j=0;j<map.getWidth();j++){

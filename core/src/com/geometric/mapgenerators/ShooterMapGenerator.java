@@ -9,7 +9,7 @@ public class ShooterMapGenerator {
 
     private GameMap map;
     private int steps = 2;
-    private float startingWallChance = 0.6f;
+    private float startingWallChance = 0.5f;
     private float intoEmptyThreshold = 0.7f, intoWallThreshold = 0.7f;
     private float intoEmptyBound = 1f, intoWallBound = 0.9f;
 
@@ -18,14 +18,18 @@ public class ShooterMapGenerator {
 
     private void setNeighbours() {
         ArrayList<GameMap.WeightedPoint> neighboursList = new ArrayList<>();
-        for(int i=-1;i<=1;i++)
-            for(int j=-1;j<=1;j++)
-                if(i != 0 || j != 0) {
-                    if(i == 0 || j == 0)
-                        neighboursList.add(new GameMap.WeightedPoint(i, j, 3));
-                    else
-                        neighboursList.add(new GameMap.WeightedPoint(i, j, 1));
-                }
+        neighboursList.add(new GameMap.WeightedPoint(-1,0,3));
+        neighboursList.add(new GameMap.WeightedPoint(1,0,3));
+        neighboursList.add(new GameMap.WeightedPoint(0,1,3));
+        neighboursList.add(new GameMap.WeightedPoint(0,-1,3));
+        neighboursList.add(new GameMap.WeightedPoint(-2,0,2));
+        neighboursList.add(new GameMap.WeightedPoint(2,0,2));
+        neighboursList.add(new GameMap.WeightedPoint(0,2,2));
+        neighboursList.add(new GameMap.WeightedPoint(0,-2,2));
+        neighboursList.add(new GameMap.WeightedPoint(-3,0,1));
+        neighboursList.add(new GameMap.WeightedPoint(3,0,1));
+        neighboursList.add(new GameMap.WeightedPoint(0,3,1));
+        neighboursList.add(new GameMap.WeightedPoint(0,-3,1));
 
         neighbours = new GameMap.WeightedPoint[neighboursList.size()];
         int ct=0;
@@ -35,12 +39,15 @@ public class ShooterMapGenerator {
 
 
     public ShooterMapGenerator generate(int width, int height) {
-        map = new GameMap(width,height);
+        map = new GameMap(width*3,height*4);
         setNeighbours();
         createRandomMap();
         for(int i=0;i<steps;i++){
             nextMapStep();
         }
+
+        MapSizeCompressor compressor = new MapSizeCompressor(map);
+        compressor.compress(width,height);
 
         MapConnector connector = new MapConnector(map);
         connector.connectAllComponents(20);
@@ -80,6 +87,7 @@ public class ShooterMapGenerator {
                     }
                 }
                 int emptiesWeightSum = totalWeightSum - wallsWeightSum;
+                float random = MathUtils.random(1f);
                 if(map.isWall(i,j)) {
                     if(emptiesWeightSum*1f/totalWeightSum >= intoEmptyThreshold && emptiesWeightSum*1f/totalWeightSum <= intoEmptyBound) {
                         newMap.putEmpty(i,j);
@@ -125,7 +133,7 @@ public class ShooterMapGenerator {
 
     public static void main(String[] args) {
         ShooterMapGenerator generator = new ShooterMapGenerator();
-        generator.generate(20,20).saveAs("map4",true);
+        generator.generate(13,13).saveAs("map3",true);
 
     }
 }

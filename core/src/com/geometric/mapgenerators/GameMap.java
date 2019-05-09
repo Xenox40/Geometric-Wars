@@ -29,7 +29,12 @@ public class GameMap {
         }
     }
 
-    public GameMap(int width, int height) {
+    /**
+     * package access prevents from creating in other ways than with builder
+     * @param width map width
+     * @param height map height
+     */
+    GameMap(int width, int height) {
         this.width = width;
         this.height = height;
         map = new char[height][width];
@@ -93,7 +98,6 @@ public class GameMap {
             File file = new File("android/assets/maps/" + simpleNameWithoutExt + ".txt");
             if(file.createNewFile() || overwrite) {
                 FileOutputStream outputStream = new FileOutputStream(file, false);
-                System.out.println("pp");
                 outputStream.write(this.toString().getBytes());
                 outputStream.close();
             }

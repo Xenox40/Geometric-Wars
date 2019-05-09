@@ -14,6 +14,17 @@ public class ShooterMapGenerator implements MapGenerator{
 
     private GameMap.WeightedPoint[] neighbours;
 
+    @Override
+    public GameMap generate(int width, int height) {
+        map = new GameMap(width*3,height*4);
+        setNeighbours();
+        createRandomMap();
+        for(int i=0;i<steps;i++){
+            nextMapStep();
+        }
+        return map;
+    }
+
     private void setNeighbours() {
         ArrayList<GameMap.WeightedPoint> neighboursList = new ArrayList<>();
         neighboursList.add(new GameMap.WeightedPoint(-1,0,3));
@@ -33,17 +44,6 @@ public class ShooterMapGenerator implements MapGenerator{
         int ct=0;
         for(GameMap.WeightedPoint p : neighboursList)
             neighbours[ct++] = p;
-    }
-
-
-    public GameMap generate(int width, int height) {
-        map = new GameMap(width*3,height*4);
-        setNeighbours();
-        createRandomMap();
-        for(int i=0;i<steps;i++){
-            nextMapStep();
-        }
-        return map;
     }
 
 

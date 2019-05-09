@@ -1,26 +1,22 @@
 package com.geometric.mapgenerators;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 public class MapBuilder {
     private MapGenerator generator;
-    private MapSizeCompressor compressor;
-    private MapConnector connector;
-    private MapPlayerPlacer playerPlacer;
+    private CuttingMapSizeCompressor compressor;
+    private DefaultMapConnector connector;
+    private CornerMapPlayerPlacer playerPlacer;
     private int scaleW, scaleH;
 
     public MapBuilder setGenerator(MapGenerator generator) {
         this.generator = generator;
         return this;
     }
-    public MapBuilder setConnector(MapConnector connector) {
+    public MapBuilder setConnector(DefaultMapConnector connector) {
         this.connector = connector;
         return this;
     }
 
-    public MapBuilder setCompressor(MapSizeCompressor compressor, int scaleW, int scaleH) {
+    public MapBuilder setCompressor(CuttingMapSizeCompressor compressor, int scaleW, int scaleH) {
         this.compressor = compressor;
         this.scaleW = scaleW;
         this.scaleH = scaleH;
@@ -28,7 +24,7 @@ public class MapBuilder {
         return this;
     }
 
-    public MapBuilder setPlayerPlacer(MapPlayerPlacer playerPlacer) {
+    public MapBuilder setPlayerPlacer(CornerMapPlayerPlacer playerPlacer) {
         this.playerPlacer = playerPlacer;
         return this;
     }
@@ -57,7 +53,7 @@ public class MapBuilder {
 
     public static void main(String[] args) {
         MapBuilder builder = new MapBuilder();
-        builder.setGenerator(new ShooterMapGenerator()).setCompressor(new MapSizeCompressor(),3,3).setConnector(new MapConnector(10)).setPlayerPlacer(new MapPlayerPlacer(4,3));
+        builder.setGenerator(new ShooterMapGenerator()).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(10)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
         builder.build(20,40).saveAs("map3",true);
 
 

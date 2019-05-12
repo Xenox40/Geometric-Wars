@@ -67,10 +67,6 @@ public class ShootingPlayersCube extends PlayersCube {
 
     @Override
     public void onCollisionWith(DynamicBody object) {
-        if(object instanceof Bullet) {
-            object.onCollisionWith(this);
-            return;
-        }
         super.onCollisionWith(object);
     }
 }

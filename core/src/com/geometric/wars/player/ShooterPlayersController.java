@@ -1,29 +1,17 @@
 package com.geometric.wars.player;
 
-import com.badlogic.gdx.math.Vector3;
-import com.geometric.wars.utils.Direction3D;
-import com.geometric.wars.cube.CubeFace;
-import com.geometric.wars.cube.mountables.MountableGun;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
 
 public class ShooterPlayersController extends PlayersController {
-
-    private int healthPoints;
-    private int ammo;
-    private MountableGun gun;
-
     /**
      * @param x               - x coordinate of dynamicCube on a grid
      * @param y               - y coordinate of dynamicCube on a grid
      */
     public ShooterPlayersController(int x, int y, PlayersCubeFactory cubeFactory) {
         super(1,cubeFactory, new int[]{x}, new int[]{y});
-
-        for(int i=0;i<6;i++){
-            CubeFace face = getCube().dynamicCube.getFaceAt(Direction3D.values()[i]);
-            if(face.getMountedObject() != null && face.getMountedObject() instanceof MountableGun) {
-                gun = (MountableGun) face.getMountedObject();
-                break;
-            }
+        if(!(getCube() instanceof  ShootingPlayersCube)) {
+            throw new RuntimeException("ShooterPlayersController cannot controll "+getCube());
         }
     }
 
@@ -31,26 +19,18 @@ public class ShooterPlayersController extends PlayersController {
         return cubes.get(0);
     }
 
-    public void shoot() {
-        if(gun == null)
-            return;
-        Direction3D shootingDirection = getCube().dynamicCube.getFaceOrientation(gun.getFaceMountedAt());
-        Vector3 gunPosition = new Vector3(getCube().dynamicCube.getApproachingPosition().x,0,getCube().dynamicCube.getApproachingPosition().y).add(shootingDirection.toVector3());
-        // TODO implement shooting
-    }
-
     @Override
     public void update() {
+        if(!((ShootingPlayersCube) getCube()).isAlive())
+            return;
         super.update();
     }
 
-    public boolean isAlive() {
-        return healthPoints > 0;
-    }
-
-    public void takeHp(int hp) {
-        healthPoints -= hp;
-        if (healthPoints < 0)
-            healthPoints = 0;
+    @Override
+    public void render(ModelBatch batch, Environment environment) {
+        if(getCube() instanceof ShootingPlayersCube &&
+                !((ShootingPlayersCube) getCube()).isAlive())
+            return;
+        super.render(batch, environment);
     }
 }

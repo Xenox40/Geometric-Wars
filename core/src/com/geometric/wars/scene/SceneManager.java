@@ -40,6 +40,10 @@ public class SceneManager {
         return getCurrentScene().getMapService();
     }
 
+    public ShootingService getCurrentShootingService() {
+        return getCurrentScene().getShootingService();
+    }
+
     public SceneManager setGame(GeometricWars game) {
         this.game = game;
         return this;

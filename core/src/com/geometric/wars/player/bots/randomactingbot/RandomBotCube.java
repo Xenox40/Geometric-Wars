@@ -1,20 +1,11 @@
 package com.geometric.wars.player.bots.randomactingbot;
 
-import com.badlogic.gdx.graphics.Color;
-import com.geometric.wars.utils.Direction3D;
-import com.geometric.wars.cube.DynamicCubeBuilder;
-import com.geometric.wars.cube.mountables.guns.SimpleGun;
-import com.geometric.wars.player.PlayersCube;
 
-public class RandomBotCube extends PlayersCube {
-    public RandomBotCube()  {
-        DynamicCubeBuilder builder = new DynamicCubeBuilder();
-        dynamicCube = builder.createCube(Color.PURPLE).addMountable(Direction3D.TOP, new SimpleGun()).build();
-        dynamicCubeController = new DynamicCubeRandomController(dynamicCube);
-    }
+import com.geometric.wars.cube.DynamicCubeController;
+import com.geometric.wars.player.ShootingPlayersCube;
 
-    public RandomBotCube(int x, int y) {
-        this();
-        setPosition(x, y);
+public class RandomBotCube extends ShootingPlayersCube {
+    public RandomBotCube(DynamicCubeController controller) {
+        super(controller);
     }
 }

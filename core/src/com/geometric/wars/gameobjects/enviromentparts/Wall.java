@@ -1,17 +1,14 @@
-package com.geometric.wars.enviromentparts;
+package com.geometric.wars.gameobjects.enviromentparts;
 
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelCache;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
-import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.collisions.DynamicBody;
-import com.geometric.wars.gameobjects.DynamicGameObject;
-import com.geometric.wars.player.PlayersController;
-import com.geometric.wars.utils.Values;
 import com.geometric.wars.gameobjects.StaticGameObject;
 import com.geometric.wars.models.WallModel;
+import com.geometric.wars.utils.Values;
 
 /**
  * Represents a Wall as an not-interactive model instance.
@@ -46,4 +43,9 @@ public class Wall extends ModelInstance implements StaticGameObject {
 
     @Override
     public void onCollisionWith(DynamicBody object) {}
+
+    @Override
+    public boolean exists() {
+        return true;
+    }
 }

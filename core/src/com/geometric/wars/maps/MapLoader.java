@@ -4,16 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.collisions.Collidable;
-import com.geometric.wars.player.PlayersController;
-import com.geometric.wars.utils.Values;
-import com.geometric.wars.enviromentparts.Floor;
-import com.geometric.wars.enviromentparts.Wall;
+import com.geometric.wars.gameobjects.enviromentparts.Floor;
+import com.geometric.wars.gameobjects.enviromentparts.Wall;
 import com.geometric.wars.input.InputController;
+import com.geometric.wars.player.PlayersController;
 import com.geometric.wars.player.ShooterPlayersController;
 import com.geometric.wars.player.bots.randomactingbot.RandomBotFactory;
-import com.geometric.wars.player.person.PersonsCubeFactory;
+import com.geometric.wars.player.persons.shooting.ShootingPersonsCubeFactory;
 import com.geometric.wars.scene.Scene;
 import com.geometric.wars.scene.SceneManager;
+import com.geometric.wars.utils.Values;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -109,9 +109,9 @@ public class MapLoader {
         y *= Values.unit;
         if(inputController == null)
             throw new IOException("No inputController provided");
-        PlayersController controller = new ShooterPlayersController(x, y, new PersonsCubeFactory(inputController));
+        PlayersController controller = new ShooterPlayersController(x, y, new ShootingPersonsCubeFactory(inputController));
         scene.addDynamicGameObject(controller);
-        objects.add(controller.getCube(0).getCollidableCube());
+        objects.add(controller.getCube(0));
     }
 
     private void addRandomBot(Array<Collidable> objects, int x, int y) {
@@ -120,7 +120,7 @@ public class MapLoader {
         PlayersController controller = new ShooterPlayersController(x, y, new RandomBotFactory());
         scene.addDynamicGameObject(controller);
         SceneManager.getInstance().getCurrentMapService();
-        objects.add(controller.getCube(0).getCollidableCube());
+        objects.add(controller.getCube(0));
     }
 
     private void addFloorObject(Array<Collidable> objects, int x, int y) {

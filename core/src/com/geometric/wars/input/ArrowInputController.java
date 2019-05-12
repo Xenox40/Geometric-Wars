@@ -36,6 +36,12 @@ public class ArrowInputController implements InputController {
     }
 
     @Override
+    public boolean shoot() {
+        return Gdx.input.isKeyPressed(Input.Keys.SPACE);
+    }
+
+
+    @Override
     public void endOnProcessingInput() {}
 
     @Override

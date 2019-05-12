@@ -5,4 +5,5 @@ interface DirectionListener {
     void onRight();
     void onUp();
     void onDown();
+    void onTap();
 }

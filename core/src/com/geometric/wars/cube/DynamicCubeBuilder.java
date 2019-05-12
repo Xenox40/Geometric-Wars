@@ -6,21 +6,21 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.geometric.wars.utils.Direction3D;
-import com.geometric.wars.utils.Values;
 import com.geometric.wars.cube.mountables.Mountable;
 import com.geometric.wars.models.BoxBuilder;
 import com.geometric.wars.models.DynamicCubeModelDisposer;
+import com.geometric.wars.utils.Direction3D;
+import com.geometric.wars.utils.Values;
 
 
 public class DynamicCubeBuilder {
-    private CollidableDynamicCube cube;
+    private DynamicCube cube;
     private Color coreColor;
     private ModelBuilder builder;
     private static final float cubeSize = Values.unit;
 
-    public DynamicCubeBuilder() {
-        cube = new CollidableDynamicCube();
+    public DynamicCubeBuilder(DynamicCube cube) {
+        this.cube = cube;
     }
 
 
@@ -37,7 +37,7 @@ public class DynamicCubeBuilder {
     }
 
 
-    public CollidableDynamicCube build() {
+    public DynamicCube build() {
         builder.begin();
         BoxBuilder.addColoredBoxNode(builder,"core", coreColor,cubeSize,cubeSize,cubeSize);
         for(int i=0;i<cube.faces.size;i++) {

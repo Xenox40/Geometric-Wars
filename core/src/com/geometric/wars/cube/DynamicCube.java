@@ -5,14 +5,14 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.geometric.wars.math.RotationCalculator;
 import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.utils.Direction3D;
-import com.geometric.wars.math.RotationCalculator;
 
 
 public class DynamicCube {
 
-    DynamicCube() {
+    public DynamicCube() {
         faces = new Array<>(6);
         for(int i=0;i<6;i++) {
             faces.add(new CubeFace());

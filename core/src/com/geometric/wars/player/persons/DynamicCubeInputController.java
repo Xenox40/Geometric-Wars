@@ -1,16 +1,16 @@
-package com.geometric.wars.player.person;
+package com.geometric.wars.player.persons;
 
-import com.geometric.wars.utils.Direction2D;
-import com.geometric.wars.cube.DynamicCube;
 import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.input.InputController;
+import com.geometric.wars.player.ShootingPlayersCube;
+import com.geometric.wars.utils.Direction2D;
 
 public class DynamicCubeInputController extends DynamicCubeController {
 
     private InputController inputController;
 
-    public DynamicCubeInputController(DynamicCube dynamicCube, InputController inputController) {
-        super(dynamicCube);
+    public DynamicCubeInputController(InputController inputController) {
+        super();
         this.inputController = inputController;
     }
 
@@ -27,6 +27,11 @@ public class DynamicCubeInputController extends DynamicCubeController {
         }
         else if(inputController.moveLeft()) {
             dynamicCube.move(Direction2D.LEFT);
+        }
+        else if(inputController.shoot()) {
+            if(dynamicCube instanceof ShootingPlayersCube) {
+                ((ShootingPlayersCube) dynamicCube).shoot();
+            }
         }
     }
 

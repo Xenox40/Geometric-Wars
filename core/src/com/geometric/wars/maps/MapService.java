@@ -3,11 +3,7 @@ package com.geometric.wars.maps;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.collisions.DynamicBody;
-import com.geometric.wars.cube.DynamicCube;
-import com.geometric.wars.player.person.PersonsCube;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MapService {
 
@@ -15,7 +11,7 @@ public class MapService {
         mapObjects = new Array<>();
     }
 
-    private Array<Array<List<Collidable>> > mapObjects;
+    public Array<Array<Array<Collidable>> > mapObjects;
 
     private int width;
     private int height;
@@ -47,11 +43,11 @@ public class MapService {
 
         for(int i=0;i<height;i++) {
             if (mapObjects.get(i) == null)
-                mapObjects.set(i, new Array<List<Collidable>>());
+                mapObjects.set(i, new Array<Array<Collidable>>());
             mapObjects.get(i).setSize(width);
             for(int j=0;j<width;j++) {
                 if(mapObjects.get(i).get(j) == null)
-                    mapObjects.get(i).set(j,new ArrayList<Collidable>());
+                    mapObjects.get(i).set(j,new Array<Collidable>());
             }
         }
     }
@@ -68,7 +64,6 @@ public class MapService {
     public boolean isMoveAllowed(DynamicBody dynamicBody, int newX, int newY) {
         if(newX < 0 || newY < 0 ||  newX >= getWidth() || newY >= getHeight())
             return false;
-
         for(Collidable c : mapObjects.get(newY).get(newX)) {
             if(!c.canCollideWith(dynamicBody)) {
                 return false;
@@ -79,16 +74,21 @@ public class MapService {
 
 
     public void extendCollisionArea(DynamicBody dynamicBody, int x, int y) {
-        if(!mapObjects.get(y).get(x).contains(dynamicBody)) {
-            mapObjects.get(y).get(x).add(dynamicBody);
-
-            for (Collidable c : mapObjects.get(y).get(x))
+        if(x < 0 || y < 0 ||  x >= getWidth() || y >= getHeight())
+            return;
+        if(!mapObjects.get(y).get(x).contains(dynamicBody,true)) {
+            for (Collidable c : mapObjects.get(y).get(x)) {
                 c.onCollisionWith(dynamicBody);
+            }
+            if(dynamicBody.exists())
+                mapObjects.get(y).get(x).add(dynamicBody);
         }
     }
 
     public void decreaseCollisionArea(DynamicBody dynamicBody, int x, int y) {
-        mapObjects.get(y).get(x).remove(dynamicBody);
+        if(x < 0 || y < 0 ||  x >= getWidth() || y >= getHeight())
+            return;
+        mapObjects.get(y).get(x).removeValue(dynamicBody,true);
     }
 
 

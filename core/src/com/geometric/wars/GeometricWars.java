@@ -19,7 +19,7 @@ public class GeometricWars extends ApplicationAdapter {
 
     public GeometricWars() {
     	typeOfGame = TypeOfGame.MOCK_GAME;
-		mapName = "map1.txt";
+		mapName = "map2.txt";
 	}
 
 	public GeometricWars(TypeOfGame typeOfGame, String mapName) {

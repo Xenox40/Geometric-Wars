@@ -10,6 +10,8 @@ import com.geometric.wars.gameobjects.Bullet;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction3D;
 
+import java.io.BufferedReader;
+
 public class ShootingPlayersCube extends PlayersCube {
     public ShootingPlayersCube(DynamicCubeController controller) {
         super(controller);
@@ -25,7 +27,7 @@ public class ShootingPlayersCube extends PlayersCube {
         }
     }
 
-    private int healthPoints = 50;
+    private int healthPoints = 25;
     private long lastShootTimeInMillis;
     private MountableGun gun;
 
@@ -59,6 +61,8 @@ public class ShootingPlayersCube extends PlayersCube {
 
     @Override
     public boolean canCollideWith(DynamicBody object) {
+        if(!isAlive())
+            return true;
         if(object instanceof Bullet) {
             return true;
         }
@@ -67,6 +71,11 @@ public class ShootingPlayersCube extends PlayersCube {
 
     @Override
     public void onCollisionWith(DynamicBody object) {
+        if(!isAlive())
+            return;
+        if(object instanceof Bullet) {
+            ((Bullet) object).onHit(this);
+        }
         super.onCollisionWith(object);
     }
 }

@@ -16,7 +16,7 @@ public class ShootingPlayersCube extends PlayersCube {
     }
 
     private void findGun() {
-        for(int i=0;i<6;i++){
+        for(int i=0;i<6;i++) {
             CubeFace face = getFaceAt(Direction3D.values()[i]);
             if(face.getMountedObject() != null && face.getMountedObject() instanceof MountableGun) {
                 gun = (MountableGun) face.getMountedObject();
@@ -59,7 +59,7 @@ public class ShootingPlayersCube extends PlayersCube {
 
     @Override
     public boolean canCollideWith(DynamicBody object) {
-        if(object instanceof Bullet){
+        if(object instanceof Bullet) {
             return true;
         }
         return super.canCollideWith(object);
@@ -67,8 +67,8 @@ public class ShootingPlayersCube extends PlayersCube {
 
     @Override
     public void onCollisionWith(DynamicBody object) {
-        if(object instanceof Bullet){
-            ((Bullet)object).onCollisionWith(this);
+        if(object instanceof Bullet) {
+            object.onCollisionWith(this);
             return;
         }
         super.onCollisionWith(object);

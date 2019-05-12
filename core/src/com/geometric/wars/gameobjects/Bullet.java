@@ -43,7 +43,7 @@ public class Bullet extends ModelInstance implements DynamicBody {
         this.startX = this.px = this.lastX = x;
         this.startY = this.py = this.lastY = y;
         this.damage = damage;
-        this.speed = speed;
+        this.speed = 0f; //Bullet isn't shoot yet
     }
 
     public void shoot(float speed, Direction3D shootingDirection) {
@@ -83,8 +83,6 @@ public class Bullet extends ModelInstance implements DynamicBody {
 
     @Override
     public boolean canCollideWith(DynamicBody object) {
-        if (object instanceof Wall)
-            return false;
         return true;
     }
 
@@ -92,7 +90,7 @@ public class Bullet extends ModelInstance implements DynamicBody {
     public void onCollisionWith(DynamicBody object) {
         if(!exists())
             return;
-        if(object instanceof ShootingPlayersCube){
+        if(object instanceof ShootingPlayersCube) {
             ((ShootingPlayersCube) object).takeHp(damage);
             destroy();
             return;

@@ -1,5 +1,8 @@
 package com.geometric.wars.player;
 
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+
 public class ShooterPlayersController extends PlayersController {
     /**
      * @param x               - x coordinate of dynamicCube on a grid
@@ -16,14 +19,18 @@ public class ShooterPlayersController extends PlayersController {
         return cubes.get(0);
     }
 
-    public void shoot() {
-        ((ShootingPlayersCube)getCube()).shoot();
-    }
-
     @Override
     public void update() {
+        if(!((ShootingPlayersCube) getCube()).isAlive())
+            return;
         super.update();
     }
 
-
+    @Override
+    public void render(ModelBatch batch, Environment environment) {
+        if(getCube() instanceof ShootingPlayersCube &&
+                !((ShootingPlayersCube) getCube()).isAlive())
+            return;
+        super.render(batch, environment);
+    }
 }

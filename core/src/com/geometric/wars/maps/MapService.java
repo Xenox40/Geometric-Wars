@@ -4,9 +4,6 @@ import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.collisions.DynamicBody;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class MapService {
 

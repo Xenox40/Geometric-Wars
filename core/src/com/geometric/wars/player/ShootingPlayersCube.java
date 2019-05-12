@@ -10,8 +10,6 @@ import com.geometric.wars.gameobjects.Bullet;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction3D;
 
-import java.io.BufferedReader;
-
 public class ShootingPlayersCube extends PlayersCube {
     public ShootingPlayersCube(DynamicCubeController controller) {
         super(controller);

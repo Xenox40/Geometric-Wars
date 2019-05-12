@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 import com.geometric.wars.collisions.DynamicBody;
-import com.geometric.wars.gameobjects.enviromentparts.Wall;
 import com.geometric.wars.models.BulletModel;
 import com.geometric.wars.player.ShootingPlayersCube;
 import com.geometric.wars.scene.SceneManager;

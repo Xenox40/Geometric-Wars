@@ -1,9 +1,9 @@
 package com.geometric.wars.player.bots.randomactingbot;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.player.ShootingPlayersCube;
 import com.geometric.wars.utils.Direction2D;
-import com.geometric.wars.cube.DynamicCubeController;
 
 
 public class DynamicCubeRandomController extends DynamicCubeController {

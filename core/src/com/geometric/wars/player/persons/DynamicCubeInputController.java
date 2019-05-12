@@ -1,10 +1,9 @@
 package com.geometric.wars.player.persons;
 
-import com.geometric.wars.player.ShootingPlayersCube;
-import com.geometric.wars.utils.Direction2D;
-import com.geometric.wars.cube.DynamicCube;
 import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.input.InputController;
+import com.geometric.wars.player.ShootingPlayersCube;
+import com.geometric.wars.utils.Direction2D;
 
 public class DynamicCubeInputController extends DynamicCubeController {
 

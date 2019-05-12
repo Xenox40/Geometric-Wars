@@ -3,9 +3,9 @@ package com.geometric.wars.cube;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.geometric.wars.math.RotationCalculator;
 import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.utils.Values;
-import com.geometric.wars.math.RotationCalculator;
 
 /**
  * should be built only with DynamicCubeBuilder

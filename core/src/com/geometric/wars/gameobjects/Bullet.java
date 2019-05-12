@@ -81,22 +81,24 @@ public class Bullet extends ModelInstance implements DynamicBody {
         destroyed = true;
     }
 
+    /**
+     * Bullet hit someone
+     * @param shootingPlayersCube
+     */
+    public void onHit(ShootingPlayersCube shootingPlayersCube) {
+        if(!exists())
+            return;
+        shootingPlayersCube.takeHp(damage);
+        destroy();
+    }
+
     @Override
     public boolean canCollideWith(DynamicBody object) {
         return true;
     }
 
     @Override
-    public void onCollisionWith(DynamicBody object) {
-        if(!exists())
-            return;
-        if(object instanceof ShootingPlayersCube) {
-            System.out.println(object.toString()+" took dmg: "+damage);
-            ((ShootingPlayersCube) object).takeHp(damage);
-            destroy();
-            return;
-        }
-    }
+    public void onCollisionWith(DynamicBody object) { }
 
     @Override
     public boolean exists() {

@@ -35,8 +35,4 @@ public class SimpleGun extends MountableGun {
         return 20f;
     }
 
-    @Override
-    public float getBulletSpeed() {
-        return 20f;
-    }
 }

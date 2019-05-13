@@ -15,9 +15,13 @@
             android:text="Play"
             android:id="@+id/play_button"/>
 
-    <ImageView android:layout_width="match_parent"
+
+
+    <com.geometric.wars.SquareImageView android:layout_width="match_parent"
                android:layout_height="wrap_content"
                 android:layout_margin="32dp"
+               android:id="@+id/preview_image"
+               android:scaleType="fitXY"
                 />
 
     <Button style="@style/MenuButton"

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.geometric.mapgenerators.GameMap;
 import com.geometric.wars.GeometricWars;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.axes.CoordinateAxes3D;
@@ -24,6 +25,19 @@ public class GameScreen extends AbstractScreen {
         axes = new CoordinateAxes3D();
         sceneManager = SceneManager.getInstance();
         sceneManager.setGame(game).loadGame(mapName);
+
+        camera.position.set(sceneManager.getCurrentMapService().getHeight() / 2f, 21f,
+                sceneManager.getCurrentMapService().getHeight() * 7 / 4f);
+        camera.lookAt(sceneManager.getCurrentMapService().getHeight() / 2.0f, 0.5f,
+                sceneManager.getCurrentMapService().getHeight() / 2.0f);
+        camera.update();
+    }
+
+    public GameScreen(GeometricWars game, GameMap map) {
+        super(game);
+        axes = new CoordinateAxes3D();
+        sceneManager = SceneManager.getInstance();
+        sceneManager.setGame(game).loadGame(map);
 
         camera.position.set(sceneManager.getCurrentMapService().getHeight() / 2f, 21f,
                 sceneManager.getCurrentMapService().getHeight() * 7 / 4f);

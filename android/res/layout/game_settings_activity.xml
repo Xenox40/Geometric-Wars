@@ -4,20 +4,24 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+
     <TextView android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="Choose your game"
               android:textSize="28sp"
               android:layout_margin="16dp"/>
 
+    <Button style="@style/MenuButton"
+            android:text="Play"
+            android:id="@+id/play_button"/>
+
     <ImageView android:layout_width="match_parent"
                android:layout_height="wrap_content"
                 android:layout_margin="32dp"
                 />
 
-    <Button android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <Button style="@style/MenuButton"
             android:text="Generate Map"
-            android:layout_margin="32dp"/>
+            android:id="@+id/generate_map_button"/>
 
 </LinearLayout>

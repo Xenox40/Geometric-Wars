@@ -3,32 +3,35 @@ package com.geometric.wars;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.geometric.mapgenerators.GameMap;
 import com.geometric.wars.input.ArrowInputController;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
 import com.geometric.wars.models.*;
 import com.geometric.wars.screens.GameScreen;
 import com.geometric.wars.screens.SplashScreen;
-import com.geometric.wars.utils.TypeOfGame;
 
 public class GeometricWars extends ApplicationAdapter {
 	private SplashScreen splashScreen;
 	private GameScreen gameScreen;
-	private InputController inputController;
-	private TypeOfGame typeOfGame;
-	private String mapName;
-	private float gameTime;
+    private InputController inputController;
+    private String mapName;
+    private GameMap map;
+    private float gameTime;
 
-	public GeometricWars() {
-		typeOfGame = TypeOfGame.MOCK_GAME;
+    public GeometricWars() {
 		mapName = "map2.txt";
 		gameTime = 0f;
 	}
 
-	public GeometricWars(TypeOfGame typeOfGame, String mapName) {
-		this.typeOfGame = typeOfGame;
+	public GeometricWars(String mapName) {
 		this.mapName = mapName;
 		this.gameTime = 0f;
+	}
+
+	public GeometricWars(GameMap map) {
+    	this.map = map;
+        this.gameTime = 0f;
 	}
 
 	@Override
@@ -39,7 +42,12 @@ public class GeometricWars extends ApplicationAdapter {
 			inputController = ArrowInputController.getInstance();
 
 		splashScreen = new SplashScreen(this);
-		gameScreen = new GameScreen(this, mapName);
+        if (map != null) {
+        	gameScreen = new GameScreen(this, map);
+		}
+        else {
+			gameScreen = new GameScreen(this, mapName);
+		}
 	}
 
 	@Override

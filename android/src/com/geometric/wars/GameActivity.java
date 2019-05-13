@@ -16,6 +16,7 @@ public class GameActivity extends FragmentActivity implements AndroidFragmentApp
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         gameFragment = new GameFragment();
+        gameFragment.setArguments(getIntent().getExtras());
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.game_fragment_container, gameFragment)

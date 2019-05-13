@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
+import com.geometric.mapgenerators.CornerMapPlayerPlacer;
+import com.geometric.mapgenerators.DefaultMapGenerator;
+import com.geometric.mapgenerators.GameMap;
 
 public class GameFragment extends AndroidFragmentApplication {
 
@@ -13,7 +16,11 @@ public class GameFragment extends AndroidFragmentApplication {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        game = new GeometricWars();
+        if (getArguments() != null && getArguments().containsKey("MAP"))
+            game = new GeometricWars((GameMap) getArguments().getSerializable("MAP"));
+        else
+            game = new GeometricWars();
+
         return initializeForView(game);
     }
 

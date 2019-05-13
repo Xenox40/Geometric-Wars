@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Choose your game"
+              android:textSize="28sp"
+              android:layout_margin="16dp"/>
+
+    <Button style="@style/MenuButton"
+            android:text="Play"
+            android:id="@+id/play_button"/>
+
+
+
+    <com.geometric.wars.SquareImageView android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+                android:layout_margin="32dp"
+               android:id="@+id/preview_image"
+               android:scaleType="fitCenter"
+                />
+
+    <Button style="@style/MenuButton"
+            android:text="Generate Map"
+            android:id="@+id/generate_map_button"/>
+
+    <Button style="@style/MenuButton"
+            android:text="Map Settings"
+            android:id="@+id/map_settings"/>
+
+</LinearLayout>

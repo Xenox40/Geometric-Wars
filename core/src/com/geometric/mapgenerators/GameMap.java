@@ -3,8 +3,9 @@ package com.geometric.mapgenerators;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class GameMap {
+public class GameMap implements Serializable {
     private final char wall = '#', empty = '.', person = 'P', bot = 'B';
     private int width;
     private int height;
@@ -40,8 +41,11 @@ public class GameMap {
         map = new char[height][width];
     }
 
-    char get(int i, int j) {
+    public char get(int i, int j) {
         return map[i][j];
+    }
+    public String getRow(int i) {
+        return new String(map[i]);
     }
     void put(int i,int j, char c) {
         map[i][j] = c;

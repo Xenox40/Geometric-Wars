@@ -3,10 +3,32 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <Button android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="16dp"
+              android:textSize="56sp"
+              android:text="Geometric Wars"/>
+
+    <Button style="@style/MenuButton"
             android:text="Play!"
             android:id="@+id/play_button"/>
+
+    <Button style="@style/MenuButton"
+            android:text="Custom Game"
+            android:id="@+id/custom_game_button"/>
+
+    <Button style="@style/MenuButton"
+            android:text="How to play?"
+            android:id="@+id/how_to_play_button"/>
+
+    <Button style="@style/MenuButton"
+            android:text="About"
+            android:id="@+id/about_button"/>
+
+    <Button style="@style/MenuButton"
+            android:layout_gravity="bottom"
+            android:text="Exit"
+            android:id="@+id/exit_button"/>
 
 </LinearLayout>

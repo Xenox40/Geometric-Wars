@@ -68,7 +68,7 @@ public class MapLoader {
 
     }
 
-    private void addObjectsToMap(String line, int row, Array<Collidable> objects) throws IOException {
+    void addObjectsToMap(String line, int row, Array<Collidable> objects) throws IOException {
         int col = 0;
         for (char item: line.toCharArray()) {
             switch (item) {
@@ -89,7 +89,7 @@ public class MapLoader {
         }
     }
 
-    private void addFloor(int height, int width) {
+    void addFloor(int height, int width) {
         Floor floor = new Floor(0,0);
         floor.transform.translate((width- Values.unit)/2f,0,(height-Values.unit)/2f);
         floor.transform.scale((float)width,1f,(float)height);

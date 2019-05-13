@@ -16,6 +16,9 @@ public class DefaultMapGenerator implements MapGenerator{
     private float intoEmptyThreshold = 0.7f, intoWallThreshold = 0.7f;
     private float intoEmptyBound = 1f, intoWallBound = 0.9f;
 
+    public void setStartingWallChance(float startingWallChance) {
+        this.startingWallChance = startingWallChance;
+    }
 
     private GameMap.WeightedPoint[] neighbours;
 

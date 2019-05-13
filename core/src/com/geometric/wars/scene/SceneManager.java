@@ -1,6 +1,8 @@
 package com.geometric.wars.scene;
 
+import com.geometric.mapgenerators.GameMap;
 import com.geometric.wars.GeometricWars;
+import com.geometric.wars.maps.GeneratedMapLoader;
 import com.geometric.wars.maps.MapLoader;
 import com.geometric.wars.maps.MapService;
 
@@ -19,11 +21,9 @@ public class SceneManager {
 
     private GeometricWars game;
     private GameScene currentScene;
-    private MapLoader mapLoader;
 
     public void loadGame(String mapName) {
-        if (mapLoader == null)
-            mapLoader = new MapLoader();
+        MapLoader mapLoader = new MapLoader();
         currentScene = new GameScene();
 
         mapLoader.setFileName("maps/"+mapName)
@@ -47,5 +47,13 @@ public class SceneManager {
     public SceneManager setGame(GeometricWars game) {
         this.game = game;
         return this;
+    }
+
+    public void loadGame(GameMap map) {
+        MapLoader mapLoader = new GeneratedMapLoader(map);
+        currentScene = new GameScene();
+        mapLoader.setInputController(game.getInputController())
+                .setScene(currentScene)
+                .load();
     }
 }

@@ -21,11 +21,15 @@
                android:layout_height="wrap_content"
                 android:layout_margin="32dp"
                android:id="@+id/preview_image"
-               android:scaleType="fitXY"
+               android:scaleType="fitCenter"
                 />
 
     <Button style="@style/MenuButton"
             android:text="Generate Map"
             android:id="@+id/generate_map_button"/>
+
+    <Button style="@style/MenuButton"
+            android:text="Map Settings"
+            android:id="@+id/map_settings"/>
 
 </LinearLayout>

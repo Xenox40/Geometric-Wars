@@ -32,10 +32,8 @@ public abstract class AbstractScreen implements Screen {
 
         createCamera();
         cameraController = new CameraInputController(camera);
-        /*
-         * if (Gdx.app.getType() == Application.ApplicationType.Desktop)
-         * Gdx.input.setInputProcessor(cameraController);
-         */
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop)
+             Gdx.input.setInputProcessor(cameraController);
 
         viewport = new ExtendViewport(1, 1, camera);
     }

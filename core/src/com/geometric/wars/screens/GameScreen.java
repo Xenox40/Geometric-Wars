@@ -35,6 +35,9 @@ public class GameScreen extends AbstractScreen {
 
     public GameScreen(GeometricWars game, GameMap map) {
         super(game);
+        batch = new ModelBatch();
+        spriteBatch = new SpriteBatch();
+
         axes = new CoordinateAxes3D();
         sceneManager = SceneManager.getInstance();
         sceneManager.setGame(game).loadGame(map);
@@ -48,7 +51,11 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     protected void createCamera() {
-        camera = new PerspectiveCamera(55, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        if(game.isAndroidPlatform())
+            camera = new PerspectiveCamera(65, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        else
+            camera = new PerspectiveCamera(35, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         camera.near = 1f;
         camera.far = 300f;
         camera.update();

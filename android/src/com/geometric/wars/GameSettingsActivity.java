@@ -23,8 +23,8 @@ public class GameSettingsActivity extends Activity {
     SeekBar heightSlider;
     SeekBar wallThresholdSlider;
 
-    private int width = 20;
-    private int height = 20;
+    private int width = 13;
+    private int height = 13;
     private float wallThreshold = .5f;
 
     MapBuilder builder = new MapBuilder();

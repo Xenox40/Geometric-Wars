@@ -36,7 +36,7 @@ public class GeometricWars extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		if (Gdx.app.getType() == Application.ApplicationType.Android)
+		if (isAndroidPlatform())
 			inputController = SwipeInputController.getInstance();
 		else
 			inputController = ArrowInputController.getInstance();
@@ -76,5 +76,9 @@ public class GeometricWars extends ApplicationAdapter {
 
 	public InputController getInputController() {
 		return inputController;
+	}
+
+	public boolean isAndroidPlatform() {
+    	return Gdx.app.getType() == Application.ApplicationType.Android;
 	}
 }

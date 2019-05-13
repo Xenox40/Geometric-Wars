@@ -1,16 +1,22 @@
 package com.geometric.wars.scene;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelCache;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.gameobjects.StaticGameObject;
+import com.geometric.wars.models.HealthBarModel;
+import com.geometric.wars.player.ShooterPlayersController;
 
 public class Scene {
     private Array<StaticGameObject> staticMapObjects;
     private Array<DynamicGameObject> dynamicMapObjects;
     private ModelCache staticModelsCache;
+    private HealthBarModel healthBarModel;
+    private BitmapFont font;
 
     private boolean areStaticObjectsCacheUpdated;
 
@@ -18,6 +24,8 @@ public class Scene {
         staticMapObjects = new Array<>();
         dynamicMapObjects = new Array<>();
         staticModelsCache = new ModelCache();
+        healthBarModel = new HealthBarModel();
+        font = new BitmapFont();
     }
 
 
@@ -39,6 +47,20 @@ public class Scene {
             updateStaticObjectCache();
     }
 
+    public void renderGUI(SpriteBatch batch) {
+        float posX = 20, posY = 40;
+        for(DynamicGameObject dynamicGameObject : dynamicMapObjects) {
+            if(dynamicGameObject instanceof ShooterPlayersController) {
+                int hp = ((ShooterPlayersController) dynamicGameObject).getCubeHealthPoints();
+                if(hp > 0) {
+                    font.draw(batch, dynamicGameObject.toString().substring(26), posX, posY+10f);
+                    healthBarModel.getBar().draw(batch, posX+250f, posY, 5f*hp, 10f);
+                    posY += 30f;
+                }
+            }
+        }
+    }
+
     public void render(ModelBatch modelBatch, Environment environment) {
         modelBatch.render(staticModelsCache, environment);
 
@@ -49,6 +71,8 @@ public class Scene {
 
     public void dispose() {
         staticModelsCache.dispose();
+        healthBarModel.dispose();
+        font.dispose();
     }
 
     private void updateStaticObjectCache() {

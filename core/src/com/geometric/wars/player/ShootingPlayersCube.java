@@ -33,6 +33,10 @@ public class ShootingPlayersCube extends PlayersCube {
         return healthPoints > 0;
     }
 
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
     public void takeHp(int hp) {
         healthPoints -= hp;
         if (healthPoints < 0)

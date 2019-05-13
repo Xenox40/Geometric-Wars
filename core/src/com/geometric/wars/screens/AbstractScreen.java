@@ -3,10 +3,9 @@ package com.geometric.wars.screens;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
@@ -18,9 +17,8 @@ public abstract class AbstractScreen implements Screen {
 
     protected GeometricWars game;
     protected CameraInputController cameraController;
-    protected PerspectiveCamera camera;
+    protected Camera camera;
 
-    protected ModelBatch batch;
     protected Environment environment;
 
     protected Viewport viewport;
@@ -34,20 +32,15 @@ public abstract class AbstractScreen implements Screen {
 
         createCamera();
         cameraController = new CameraInputController(camera);
-        if (Gdx.app.getType() == Application.ApplicationType.Desktop)
-            Gdx.input.setInputProcessor(cameraController);
+        /*
+         * if (Gdx.app.getType() == Application.ApplicationType.Desktop)
+         * Gdx.input.setInputProcessor(cameraController);
+         */
 
-        batch = new ModelBatch();
-
-        viewport = new ExtendViewport(1,1,camera);
+        viewport = new ExtendViewport(1, 1, camera);
     }
 
-    private void createCamera() {
-        camera = new PerspectiveCamera(55, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.near = 1f;
-        camera.far = 300f;
-        camera.update();
-    }
+    protected abstract void createCamera();
 
     @Override
     public void render(float delta) {
@@ -58,25 +51,25 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void pause() {
-        //TODO: pause state handling
+        // TODO: pause state handling
     }
 
     @Override
     public void resume() {
-        //TODO: pause state handling
+        // TODO: pause state handling
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
     }
 
     @Override
-    public void show() { }
+    public void show() {
+    }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width,height);
+        viewport.update(width, height);
         camera.update();
     }
 

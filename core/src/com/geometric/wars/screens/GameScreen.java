@@ -80,6 +80,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
+        sceneManager.getCurrentScene().dispose();
         batch.dispose();
         spriteBatch.dispose();
         sceneManager.getCurrentScene().dispose();

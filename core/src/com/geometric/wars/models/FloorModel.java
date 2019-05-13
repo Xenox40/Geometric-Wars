@@ -44,5 +44,7 @@ public class FloorModel {
             instance.dispose();
             texture.dispose();
         }
+        instance = null;
+        texture = null;
     }
 }

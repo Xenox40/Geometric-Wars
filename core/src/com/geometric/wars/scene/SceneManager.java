@@ -22,8 +22,12 @@ public class SceneManager {
     private GeometricWars game;
     private GameScene currentScene;
 
+
     public void loadGame(String mapName) {
         MapLoader mapLoader = new MapLoader();
+        if(currentScene != null) {
+            currentScene.dispose();
+        }
         currentScene = new GameScene();
 
         mapLoader.setFileName("maps/"+mapName)
@@ -50,6 +54,11 @@ public class SceneManager {
     }
 
     public void loadGame(GameMap map) {
+        if(currentScene != null) {
+            currentScene.dispose();
+            currentScene = null;
+        }
+
         MapLoader mapLoader = new GeneratedMapLoader(map);
         currentScene = new GameScene();
         mapLoader.setInputController(game.getInputController())

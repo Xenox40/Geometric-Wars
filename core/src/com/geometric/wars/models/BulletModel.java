@@ -16,8 +16,8 @@ public class BulletModel {
     private BulletModel() { }
     private static Model instance = null;
 
-    private final static Color color = Color.BROWN;
-    private final static float radius = 0.2f;
+    private final static Color color = Color.BLACK;
+    private final static float radius = 0.35f;
     /**
      * @return simple model of line from (0,0,0) to (unit,0,0)
      */

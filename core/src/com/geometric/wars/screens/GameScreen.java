@@ -2,8 +2,6 @@ package com.geometric.wars.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,16 +15,12 @@ public class GameScreen extends AbstractScreen {
     private Stage stage;
     private SpriteBatch spriteBatch;
     private ModelBatch batch;
-    private NinePatch health;
-    private Texture bad;
 
     public GameScreen(GeometricWars game, String mapName) {
         super(game);
         batch = new ModelBatch();
         spriteBatch = new SpriteBatch();
-        bad = new Texture(Gdx.files.internal("healthBar.jpg"));
 
-        health = new NinePatch(bad, 0, 0, 0, 0);
         axes = new CoordinateAxes3D();
         sceneManager = SceneManager.getInstance();
         sceneManager.setGame(game).loadGame(mapName);
@@ -59,14 +53,13 @@ public class GameScreen extends AbstractScreen {
         sceneManager.getCurrentScene().render(batch, environment);
         batch.end();
         spriteBatch.begin();
-        health.draw(spriteBatch, 100f, 100f, 80f, 20f);
+        sceneManager.getCurrentScene().renderGUI(spriteBatch);
         spriteBatch.end();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        bad.dispose();
         batch.dispose();
         spriteBatch.dispose();
         sceneManager.getCurrentScene().dispose();

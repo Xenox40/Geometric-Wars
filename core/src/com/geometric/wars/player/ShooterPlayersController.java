@@ -1,5 +1,6 @@
 package com.geometric.wars.player;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 
@@ -15,9 +16,9 @@ public class ShooterPlayersController extends PlayersController {
         }
     }
 
-    private PlayersCube getCube() {
-        return cubes.get(0);
-    }
+    private ShootingPlayersCube getCube() { return (ShootingPlayersCube) cubes.get(0); }
+
+    public int getCubeHealthPoints() { return getCube().getHealthPoints(); }
 
     @Override
     public void update() {
@@ -33,4 +34,5 @@ public class ShooterPlayersController extends PlayersController {
             return;
         super.render(batch, environment);
     }
+
 }

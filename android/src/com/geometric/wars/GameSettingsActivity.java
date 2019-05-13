@@ -10,9 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
-import com.geometric.mapgenerators.CornerMapPlayerPlacer;
-import com.geometric.mapgenerators.DefaultMapGenerator;
-import com.geometric.mapgenerators.GameMap;
+import com.geometric.mapgenerators.*;
 
 public class GameSettingsActivity extends Activity {
 
@@ -25,12 +23,11 @@ public class GameSettingsActivity extends Activity {
     SeekBar heightSlider;
     SeekBar wallThresholdSlider;
 
-    private int width = 10;
-    private int height = 10;
+    private int width = 20;
+    private int height = 20;
     private float wallThreshold = .5f;
 
-    private DefaultMapGenerator mapGenerator = new DefaultMapGenerator(2, wallThreshold);
-    private CornerMapPlayerPlacer playerPlacer = new CornerMapPlayerPlacer(3, 3);
+    MapBuilder builder = new MapBuilder();
     private GameMap map;
 
     @Override
@@ -68,8 +65,8 @@ public class GameSettingsActivity extends Activity {
     }
 
     private void generateMap() {
-        map = mapGenerator.generate(width, height);
-        playerPlacer.place(map);
+        builder.setGenerator(new DefaultMapGenerator(100,wallThreshold)).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(5)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+        map = builder.build(width,height);
 
         updatePreview();
     }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 
-class DefaultMapConnector implements MapConnector{
+public class DefaultMapConnector implements MapConnector{
     private int [][] myComponent;
     private GameMap map;
     private int iterations;

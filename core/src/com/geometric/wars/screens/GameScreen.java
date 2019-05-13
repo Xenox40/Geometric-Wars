@@ -59,7 +59,6 @@ public class GameScreen extends AbstractScreen {
         camera.near = 1f;
         camera.far = 300f;
         camera.update();
-
     }
 
     @Override

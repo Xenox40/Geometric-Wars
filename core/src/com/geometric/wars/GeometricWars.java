@@ -14,6 +14,7 @@ import com.geometric.wars.screens.SplashScreen;
 public class GeometricWars extends ApplicationAdapter {
 	private SplashScreen splashScreen;
 	private GameScreen gameScreen;
+
     private InputController inputController;
     private String mapName;
     private GameMap map;

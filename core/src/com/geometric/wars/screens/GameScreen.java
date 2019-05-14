@@ -1,9 +1,11 @@
 package com.geometric.wars.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.geometric.mapgenerators.GameMap;
 import com.geometric.wars.GeometricWars;
@@ -28,8 +30,12 @@ public class GameScreen extends AbstractScreen {
 
         camera.position.set(sceneManager.getCurrentMapService().getHeight() / 2f, 21f,
                 sceneManager.getCurrentMapService().getHeight() * 7 / 4f);
-        camera.lookAt(sceneManager.getCurrentMapService().getHeight() / 2.0f, 0.5f,
-                sceneManager.getCurrentMapService().getHeight() / 2.0f);
+
+        Vector3 lootAtPoint = new Vector3(sceneManager.getCurrentMapService().getHeight() / 2f, 0.5f,
+                sceneManager.getCurrentMapService().getHeight() / 2f);
+
+        camera.lookAt(lootAtPoint);
+        cameraController.target = lootAtPoint;
         camera.update();
     }
 
@@ -44,9 +50,15 @@ public class GameScreen extends AbstractScreen {
 
         camera.position.set(sceneManager.getCurrentMapService().getHeight() / 2f, 21f,
                 sceneManager.getCurrentMapService().getHeight() * 7 / 4f);
-        camera.lookAt(sceneManager.getCurrentMapService().getHeight() / 2.0f, 0.5f,
-                sceneManager.getCurrentMapService().getHeight() / 2.0f);
+
+        Vector3 lootAtPoint = new Vector3(sceneManager.getCurrentMapService().getHeight() / 2f, 0.5f,
+                sceneManager.getCurrentMapService().getHeight() / 2f);
+
+        camera.lookAt(lootAtPoint);
+        cameraController.target = lootAtPoint;
         camera.update();
+
+
     }
 
     @Override
@@ -80,6 +92,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
+        sceneManager.getCurrentScene().dispose();
         batch.dispose();
         spriteBatch.dispose();
         sceneManager.getCurrentScene().dispose();

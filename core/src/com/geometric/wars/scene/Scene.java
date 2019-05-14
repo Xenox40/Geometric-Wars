@@ -70,6 +70,8 @@ public class Scene {
     }
 
     public void dispose() {
+        staticMapObjects.clear();
+        dynamicMapObjects.clear();
         staticModelsCache.dispose();
         healthBarModel.dispose();
         font.dispose();

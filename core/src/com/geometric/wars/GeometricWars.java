@@ -67,6 +67,7 @@ public class GeometricWars extends ApplicationAdapter {
 
 	@Override
 	public void dispose() {
+    	gameScreen.dispose();
 		DynamicCubeModelDisposer.dispose();
 		FloorModel.dispose();
 		WallModel.dispose();

@@ -158,7 +158,7 @@ public class GameMap implements Serializable {
 
         }
         catch (IOException e){
-            System.out.println(e);
+            throw new RuntimeException("IO exception in map saving");
         }
     }
     public void saveAs(String simpleNameWithoutExt){

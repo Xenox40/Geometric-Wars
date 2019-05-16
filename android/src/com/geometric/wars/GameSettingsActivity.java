@@ -64,7 +64,7 @@ public class GameSettingsActivity extends Activity {
     }
 
     private void generateMap() {
-        builder.setGenerator(new DefaultMapGenerator(100,wallThreshold)).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(5)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+        builder.setGenerator(new DefaultMapGenerator(15,wallThreshold)).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(5)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
         map = builder.build(width,height);
 
         updatePreview();
@@ -118,7 +118,7 @@ public class GameSettingsActivity extends Activity {
 
         widthSlider.setProgress(width-5);
         heightSlider.setProgress(height-5);
-        wallThresholdSlider.setProgress((int)(wallThreshold*100f));
+        wallThresholdSlider.setProgress((int)(wallThreshold*100f-40f));
 
         Button ok = popupView.findViewById(R.id.ok_button);
         ok.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +135,6 @@ public class GameSettingsActivity extends Activity {
     private void updateThings() {
         width = widthSlider.getProgress() + 5;
         height = heightSlider.getProgress() + 5;
-        wallThreshold = wallThresholdSlider.getProgress() / 100f;
-        System.out.println(width+" "+height+" "+wallThreshold+" "+wallThresholdSlider.getProgress() );
+        wallThreshold = (wallThresholdSlider.getProgress()+40f) / 100f;
     }
 }

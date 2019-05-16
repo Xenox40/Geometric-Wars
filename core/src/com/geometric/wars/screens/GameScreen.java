@@ -28,10 +28,10 @@ public class GameScreen extends AbstractScreen {
         sceneManager = SceneManager.getInstance();
         sceneManager.setGame(game).loadGame(mapName);
 
-        camera.position.set(sceneManager.getCurrentMapService().getHeight() / 2f, 21f,
+        camera.position.set(sceneManager.getCurrentMapService().getWidth() / 2f, 21f,
                 sceneManager.getCurrentMapService().getHeight() * 7 / 4f);
 
-        Vector3 lootAtPoint = new Vector3(sceneManager.getCurrentMapService().getHeight() / 2f, 0.5f,
+        Vector3 lootAtPoint = new Vector3(sceneManager.getCurrentMapService().getWidth() / 2f, 0.5f,
                 sceneManager.getCurrentMapService().getHeight() / 2f);
 
         camera.lookAt(lootAtPoint);
@@ -48,10 +48,10 @@ public class GameScreen extends AbstractScreen {
         sceneManager = SceneManager.getInstance();
         sceneManager.setGame(game).loadGame(map);
 
-        camera.position.set(sceneManager.getCurrentMapService().getHeight() / 2f, 21f,
+        camera.position.set(sceneManager.getCurrentMapService().getWidth() / 2f, 21f,
                 sceneManager.getCurrentMapService().getHeight() * 7 / 4f);
 
-        Vector3 lootAtPoint = new Vector3(sceneManager.getCurrentMapService().getHeight() / 2f, 0.5f,
+        Vector3 lootAtPoint = new Vector3(sceneManager.getCurrentMapService().getWidth() / 2f, 0.5f,
                 sceneManager.getCurrentMapService().getHeight() / 2f);
 
         camera.lookAt(lootAtPoint);

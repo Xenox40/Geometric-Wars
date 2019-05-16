@@ -14,6 +14,7 @@ public class GameMap implements Serializable {
     public void setTo(GameMap other) {
         this.width = other.width;
         this.height = other.height;
+        map = new char[height][width];
         for(int i=0;i<height;i++) {
             for(int j=0;j<width;j++)
                 map[i][j] = other.map[i][j];

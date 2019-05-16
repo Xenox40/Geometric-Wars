@@ -27,6 +27,7 @@ public class SceneManager {
         MapLoader mapLoader = new MapLoader();
         if(currentScene != null) {
             currentScene.dispose();
+            currentScene = null;
         }
         currentScene = new GameScene();
 

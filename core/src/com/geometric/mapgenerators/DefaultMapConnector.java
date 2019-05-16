@@ -140,7 +140,7 @@ public class DefaultMapConnector implements MapConnector{
 
     private <T> void randomShuffle(ArrayList<T> list){
         for (int i=list.size()-1; i>0; i--) {
-            int index = MathUtils.random(i+1);
+            int index = MathUtils.random(i);
 
             T a = list.get(index);
             list.set(index,list.get(i));

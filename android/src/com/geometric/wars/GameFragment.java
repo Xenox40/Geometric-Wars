@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
-import com.geometric.mapgenerators.CornerMapPlayerPlacer;
-import com.geometric.mapgenerators.DefaultMapGenerator;
-import com.geometric.mapgenerators.GameMap;
+import com.geometric.wars.maps.GameMap;
 
 public class GameFragment extends AndroidFragmentApplication {
 

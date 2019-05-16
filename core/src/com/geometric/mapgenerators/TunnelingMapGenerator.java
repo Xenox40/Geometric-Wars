@@ -1,6 +1,7 @@
 package com.geometric.mapgenerators;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.geometric.wars.maps.GameMap;
 
 public class TunnelingMapGenerator implements MapGenerator {
     private GameMap map;

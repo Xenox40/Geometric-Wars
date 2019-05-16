@@ -3,7 +3,7 @@ package com.geometric.wars;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.geometric.mapgenerators.GameMap;
+import com.geometric.wars.maps.GameMap;
 import com.geometric.wars.input.ArrowInputController;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
@@ -11,32 +11,28 @@ import com.geometric.wars.models.*;
 import com.geometric.wars.screens.GameScreen;
 import com.geometric.wars.screens.SplashScreen;
 
+
+
 public class GeometricWars extends ApplicationAdapter {
 	private SplashScreen splashScreen;
 	private GameScreen gameScreen;
 
     private InputController inputController;
-    private String mapName;
     private GameMap map;
-    private float gameTime;
+    private String defaultMap = "map2";
+    private float gameTime = 0f;
 
-    public GeometricWars() {
-		mapName = "map2.txt";
-		gameTime = 0f;
-	}
 
-	public GeometricWars(String mapName) {
-		this.mapName = mapName;
-		this.gameTime = 0f;
-	}
+    public GeometricWars() {}
 
 	public GeometricWars(GameMap map) {
-    	this.map = map;
-        this.gameTime = 0f;
+		this.map = map;
 	}
 
 	@Override
 	public void create() {
+    	if(map == null)
+    		map = new GameMap(defaultMap);
 		if (isAndroidPlatform())
 			inputController = SwipeInputController.getInstance();
 		else
@@ -46,8 +42,8 @@ public class GeometricWars extends ApplicationAdapter {
         if (map != null) {
         	gameScreen = new GameScreen(this, map);
 		}
-        else {
-			gameScreen = new GameScreen(this, mapName);
+        else{
+        	throw new RuntimeException("map not set");
 		}
 	}
 
@@ -83,4 +79,5 @@ public class GeometricWars extends ApplicationAdapter {
 	public boolean isAndroidPlatform() {
     	return Gdx.app.getType() == Application.ApplicationType.Android;
 	}
+
 }

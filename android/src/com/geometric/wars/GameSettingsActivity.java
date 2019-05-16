@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import com.geometric.mapgenerators.*;
+import com.geometric.wars.maps.GameMap;
 
 public class GameSettingsActivity extends Activity {
 

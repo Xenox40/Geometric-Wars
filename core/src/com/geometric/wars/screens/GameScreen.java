@@ -1,13 +1,12 @@
 package com.geometric.wars.screens;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.geometric.mapgenerators.GameMap;
+import com.geometric.wars.maps.GameMap;
 import com.geometric.wars.GeometricWars;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.axes.CoordinateAxes3D;
@@ -19,25 +18,6 @@ public class GameScreen extends AbstractScreen {
     private SpriteBatch spriteBatch;
     private ModelBatch batch;
 
-    public GameScreen(GeometricWars game, String mapName) {
-        super(game);
-        batch = new ModelBatch();
-        spriteBatch = new SpriteBatch();
-
-        axes = new CoordinateAxes3D();
-        sceneManager = SceneManager.getInstance();
-        sceneManager.setGame(game).loadGame(mapName);
-
-        camera.position.set(sceneManager.getCurrentMapService().getWidth() / 2f, 21f,
-                sceneManager.getCurrentMapService().getHeight() * 7 / 4f);
-
-        Vector3 lootAtPoint = new Vector3(sceneManager.getCurrentMapService().getWidth() / 2f, 0.5f,
-                sceneManager.getCurrentMapService().getHeight() / 2f);
-
-        camera.lookAt(lootAtPoint);
-        cameraController.target = lootAtPoint;
-        camera.update();
-    }
 
     public GameScreen(GeometricWars game, GameMap map) {
         super(game);

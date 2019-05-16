@@ -15,7 +15,6 @@ import com.geometric.mapgenerators.*;
 public class GameSettingsActivity extends Activity {
 
     private Button playButton;
-    private Button generateMap;
     private ImageView previewImage;
     private Button mapSettings;
 
@@ -45,8 +44,7 @@ public class GameSettingsActivity extends Activity {
             }
         });
 
-        generateMap = findViewById(R.id.generate_map_button);
-        generateMap.setOnClickListener(new View.OnClickListener() {
+        previewImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 generateMap();
@@ -72,6 +70,7 @@ public class GameSettingsActivity extends Activity {
     }
 
     private void updatePreview() {
+
         Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
         Bitmap bmp = Bitmap.createBitmap(map.getWidth(), map.getHeight(), conf); // this creates a MUTABLE bitmap
 
@@ -105,9 +104,9 @@ public class GameSettingsActivity extends Activity {
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.settings_popup, null);
 
-        final int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+        final int layoutWidth = LinearLayout.LayoutParams.MATCH_PARENT;
+        final int layoutHeight = LinearLayout.LayoutParams.MATCH_PARENT;
+        final PopupWindow popupWindow = new PopupWindow(popupView, layoutWidth, layoutHeight, true);
 
         popupWindow.showAtLocation(playButton, Gravity.CENTER, 0, 0);
 
@@ -116,10 +115,15 @@ public class GameSettingsActivity extends Activity {
         heightSlider = popupView.findViewById(R.id.height_slider);
         wallThresholdSlider = popupView.findViewById(R.id.wall_threshold);
 
+        widthSlider.setProgress(width-5);
+        heightSlider.setProgress(height-5);
+        wallThresholdSlider.setProgress((int)(wallThreshold*100f));
+
         Button ok = popupView.findViewById(R.id.ok_button);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 updateThings();
                 popupWindow.dismiss();
             }
@@ -130,6 +134,7 @@ public class GameSettingsActivity extends Activity {
     private void updateThings() {
         width = widthSlider.getProgress() + 5;
         height = heightSlider.getProgress() + 5;
-        wallThreshold = wallThresholdSlider.getProgress() / 100;
+        wallThreshold = wallThresholdSlider.getProgress() / 100f;
+        System.out.println(width+" "+height+" "+wallThreshold+" "+wallThresholdSlider.getProgress() );
     }
 }

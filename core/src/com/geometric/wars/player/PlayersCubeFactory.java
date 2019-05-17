@@ -16,6 +16,7 @@ public abstract class PlayersCubeFactory {
         return res;
     }
 
+
     /**
      * will be called after updating all cubes
      */

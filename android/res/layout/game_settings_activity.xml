@@ -16,17 +16,12 @@
             android:id="@+id/play_button"/>
 
 
-
     <com.geometric.wars.SquareImageView android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-                android:layout_margin="32dp"
-               android:id="@+id/preview_image"
-               android:scaleType="fitCenter"
-                />
-
-    <Button style="@style/MenuButton"
-            android:text="Generate Map"
-            android:id="@+id/generate_map_button"/>
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="32dp"
+                                        android:id="@+id/preview_image"
+                                        android:scaleType="fitCenter"
+    />
 
     <Button style="@style/MenuButton"
             android:text="Map Settings"

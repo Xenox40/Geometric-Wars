@@ -1,11 +1,32 @@
-package com.geometric.mapgenerators;
+package com.geometric.wars.maps;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GameMap implements Serializable {
+
+    /**
+     * @param width map width
+     * @param height map height
+     */
+    public GameMap(int width, int height) {
+        this.width = width;
+        this.height = height;
+        map = new char[height][width];
+    }
+    public GameMap(String simpleNameWithoutExt) {
+        loadFromFile(simpleNameWithoutExt);
+    }
+
+
     private final char wall = '#', empty = '.', person = 'P', bot = 'B';
     private int width;
     private int height;
@@ -14,6 +35,7 @@ public class GameMap implements Serializable {
     public void setTo(GameMap other) {
         this.width = other.width;
         this.height = other.height;
+        map = new char[height][width];
         for(int i=0;i<height;i++) {
             for(int j=0;j<width;j++)
                 map[i][j] = other.map[i][j];
@@ -30,16 +52,7 @@ public class GameMap implements Serializable {
         }
     }
 
-    /**
-     * package access prevents from creating in other ways than with builder
-     * @param width map width
-     * @param height map height
-     */
-    GameMap(int width, int height) {
-        this.width = width;
-        this.height = height;
-        map = new char[height][width];
-    }
+
 
     public char get(int i, int j) {
         return map[i][j];
@@ -47,7 +60,7 @@ public class GameMap implements Serializable {
     public String getRow(int i) {
         return new String(map[i]);
     }
-    void put(int i,int j, char c) {
+    public void put(int i,int j, char c) {
         map[i][j] = c;
     }
 
@@ -97,6 +110,39 @@ public class GameMap implements Serializable {
         return builder.toString();
     }
 
+    public void loadFromFile(String simpleNameWithoutExt) {
+        FileHandle handle;
+        Scanner scanner;
+
+        ArrayList<String> lines = new ArrayList<>();
+        int lineWidth = -1;
+        try {
+            handle = Gdx.files.internal("maps/"+simpleNameWithoutExt+".txt");
+            scanner = new Scanner(handle.reader(15));
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (lineWidth == -1)
+                    lineWidth = line.length();
+                if(line.length() != lineWidth)
+                    throw new IOException("Wrong scene width in: "+simpleNameWithoutExt);
+
+                lines.add(line);
+            }
+            scanner.close();
+
+            this.width = lineWidth;
+            this.height = lines.size();
+            this.map = new char[height][width];
+            for(int i=0;i<lines.size();i++)
+                for(int j=0;j<lines.get(i).length();j++)
+                    map[i][j] = lines.get(i).charAt(j);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void saveAs(String simpleNameWithoutExt, boolean overwrite) {
         try {
             File file = new File("android/assets/maps/" + simpleNameWithoutExt + ".txt");
@@ -112,7 +158,7 @@ public class GameMap implements Serializable {
 
         }
         catch (IOException e){
-            System.out.println(e);
+            throw new RuntimeException("IO exception in map saving");
         }
     }
     public void saveAs(String simpleNameWithoutExt){

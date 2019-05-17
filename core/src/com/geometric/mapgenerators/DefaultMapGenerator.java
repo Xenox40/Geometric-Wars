@@ -1,6 +1,8 @@
 package com.geometric.mapgenerators;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.geometric.wars.maps.GameMap;
+
 import java.util.ArrayList;
 
 public class DefaultMapGenerator implements MapGenerator{

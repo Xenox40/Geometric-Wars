@@ -23,11 +23,7 @@ public class MapLoader {
     private InputController inputController;
     private Scene scene;
 
-
-    public void load() {
-        FileHandle handle;
-        Scanner scanner;
-
+    public void load(GameMap map) {
         MapService service  = SceneManager
                 .getInstance()
                 .getCurrentMapService();
@@ -38,17 +34,12 @@ public class MapLoader {
         int height = 0;
         int width = -1;
         try {
-            handle = Gdx.files.internal(fileName);
-            scanner = new Scanner(handle.reader(15));
             int row = 0;
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
+            for (int i = 0; i < map.getHeight(); i++) {
+                String line = map.getRow(i);
                 Array<Collidable> objects = new Array<>();
                 if (width == -1)
                     width = line.length();
-                if(line.length() != width)
-                    throw new IOException("Wrong scene width in: "+fileName);
 
                 addObjectsToMap(line, row, objects);
 
@@ -56,7 +47,6 @@ public class MapLoader {
                 row ++;
                 collidables.add(objects);
             }
-            scanner.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

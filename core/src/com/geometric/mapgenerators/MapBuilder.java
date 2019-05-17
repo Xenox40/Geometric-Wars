@@ -1,5 +1,7 @@
 package com.geometric.mapgenerators;
 
+import com.geometric.wars.maps.GameMap;
+
 public class MapBuilder {
     private MapGenerator generator;
     private CuttingMapSizeCompressor compressor;

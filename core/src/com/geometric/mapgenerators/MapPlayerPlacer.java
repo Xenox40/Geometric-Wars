@@ -1,5 +1,7 @@
 package com.geometric.mapgenerators;
 
+import com.geometric.wars.maps.GameMap;
+
 /**
  * places players on map
  */

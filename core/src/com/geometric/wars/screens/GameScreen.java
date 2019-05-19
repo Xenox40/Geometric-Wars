@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.geometric.wars.maps.GameMap;
 import com.geometric.wars.GeometricWars;
+import com.geometric.wars.player.ColorAndNameGiver;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.axes.CoordinateAxes3D;
 
@@ -30,7 +31,6 @@ public class GameScreen extends AbstractScreen {
 
     public GameScreen(GeometricWars game) {
         super(game);
-
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
@@ -52,6 +52,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        ColorAndNameGiver.clearUsed();
 
         if (Gdx.app.getType() == Application.ApplicationType.Desktop)
             Gdx.input.setInputProcessor(cameraController);

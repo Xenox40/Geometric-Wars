@@ -14,6 +14,8 @@ public class SwipeInputController implements InputController {
     private boolean right;
     private boolean left;
     private boolean tapped;
+    private DirectionGestureDetector gestureDetector;
+
 
     public static SwipeInputController getInstance() {
         if (instance == null)
@@ -49,9 +51,14 @@ public class SwipeInputController implements InputController {
         up = right = down = left = tapped =false;
     }
 
-    private SwipeInputController() {
-        DirectionGestureDetector gestureDetector = new DirectionGestureDetector(createDirectionListener());
+    @Override
+    public void activate() {
         Gdx.input.setInputProcessor(gestureDetector);
+    }
+
+    private SwipeInputController() {
+        gestureDetector = new DirectionGestureDetector(createDirectionListener());
+
     }
 
     private DirectionListener createDirectionListener() {

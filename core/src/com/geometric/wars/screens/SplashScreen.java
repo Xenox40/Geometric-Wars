@@ -36,6 +36,7 @@ public class SplashScreen extends AbstractMenuScreen {
 
     @Override
     public void show() {
+        super.show();
         elapsedTimeInMillis = 0;
     }
 

@@ -18,21 +18,14 @@ public abstract class AbstractScreen implements Screen {
     protected GeometricWars game;
     protected CameraInputController cameraController;
     protected Camera camera;
-
-    protected Environment environment;
-
     protected Viewport viewport;
 
     public AbstractScreen(GeometricWars game) {
         this.game = game;
 
-        environment = new Environment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
-
         createCamera();
         cameraController = new CameraInputController(camera);
-        viewport = new ExtendViewport(1, 1, camera);
+
     }
 
     protected abstract void createCamera();
@@ -64,7 +57,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        viewport.update(width,height);
         camera.update();
     }
 

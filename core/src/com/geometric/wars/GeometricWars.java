@@ -6,7 +6,6 @@ import com.geometric.wars.input.ArrowInputController;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
 import com.geometric.wars.models.*;
-import com.geometric.wars.screens.AbstractScreen;
 import com.geometric.wars.screens.GameScreen;
 import com.geometric.wars.screens.MainMenuScreen;
 import com.geometric.wars.screens.SplashScreen;
@@ -34,10 +33,11 @@ public class GeometricWars extends Game{
 	public void create() {
     	if(map == null)
     		map = new GameMap(defaultMap);
-		if (isAndroidPlatform())
+		//if (isAndroidPlatform())
 			inputController = SwipeInputController.getInstance();
-		else
-			inputController = ArrowInputController.getInstance();
+		//else
+		//	inputController = ArrowInputController.getInstance();
+
 
 		mainMenuScreen = new MainMenuScreen(this);
 		splashScreen = new SplashScreen(this);
@@ -58,12 +58,15 @@ public class GeometricWars extends Game{
 
 	@Override
 	public void resize(int x, int y) {
-		gameScreen.resize(x, y);
+		getScreen().resize(x, y);
 	}
 
 	@Override
 	public void dispose() {
     	gameScreen.dispose();
+    	mainMenuScreen.dispose();
+    	splashScreen.dispose();
+
 		DynamicCubeModelDisposer.dispose();
 		FloorModel.dispose();
 		WallModel.dispose();

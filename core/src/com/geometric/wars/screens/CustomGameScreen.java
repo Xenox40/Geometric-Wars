@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -44,11 +41,23 @@ public class CustomGameScreen extends AbstractMenuScreen{
         final Table table = new Table();
         table.setFillParent(true);
         table.top();
-        TextButton playButton = new TextButton("Play!", skin);
+
+
+
         final Slider widthSlider = new Slider(5,25,1,false,skin);
         widthSlider.setValue(width);
+        final Label widthSliderLabel = new Label("Width",skin);
+
         final Slider heightSlider = new Slider(5,25,1,false,skin);
         heightSlider.setValue(height);
+        final Label heightSliderLabel = new Label("Height",skin);
+
+        final Slider wallThresholdSlider = new Slider(0.4f,0.6f,0.01f,false,skin);
+        wallThresholdSlider.setValue(wallThreshold);
+        final Label wallThresholdSliderLabel = new Label("Walls",skin);
+
+
+        TextButton playButton = new TextButton("Play!", skin);
         TextButton backButton = new TextButton("Back", skin);
 
 
@@ -56,7 +65,6 @@ public class CustomGameScreen extends AbstractMenuScreen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 width = (int)widthSlider.getValue();
-                //show();
             }
         });
 
@@ -64,7 +72,13 @@ public class CustomGameScreen extends AbstractMenuScreen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 height = (int)heightSlider.getValue();
-               // show();
+            }
+        });
+
+        wallThresholdSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                wallThreshold= wallThresholdSlider.getValue();
             }
         });
 
@@ -85,13 +99,22 @@ public class CustomGameScreen extends AbstractMenuScreen{
 
         Table buttonsTable = new Table();
         buttonsTable.top();
-        buttonsTable.add(playButton).minSize(300,60).expand();
+        buttonsTable.add(playButton).minSize(300,60).colspan(2).expand();
         buttonsTable.row();
-        buttonsTable.add(widthSlider).minSize(300,60);
+
+        buttonsTable.add(widthSliderLabel).minHeight(60).expandX();
+        buttonsTable.add(widthSlider).minSize(200,60).expandX();
         buttonsTable.row();
-        buttonsTable.add(heightSlider).minSize(300,60);
+
+        buttonsTable.add(heightSliderLabel).minHeight(60).expandX();
+        buttonsTable.add(heightSlider).minSize(200,60).expandX();
         buttonsTable.row();
-        buttonsTable.add(backButton).minSize(300,60).expand();
+
+        buttonsTable.add(wallThresholdSliderLabel).minHeight(60).expandX();
+        buttonsTable.add(wallThresholdSlider).minSize(200,60).expandX();
+        buttonsTable.row();
+
+        buttonsTable.add(backButton).minSize(300,60).colspan(2).expand();
         buttonsTable.row();
 
 

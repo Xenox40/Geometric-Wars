@@ -13,6 +13,10 @@ public class DefaultMapConnector implements MapConnector{
     private int componentCount = 1;
     private char fakeEmpty = ',';
 
+    /**
+    used for time optimization
+     */
+    private int maxConnectionLength1D = 15;
 
     public DefaultMapConnector(int iterations){
         this.iterations = iterations;
@@ -33,8 +37,8 @@ public class DefaultMapConnector implements MapConnector{
         ArrayList<VerticesPair> verticesPairs = new ArrayList<>();
         for(int i=0;i<map.getHeight();i++){
             for(int j=0;j<map.getWidth();j++) {
-                for(int p=i-15;p<i+15;p++) {
-                    for (int q = j-15; q < j+15; q++) {
+                for(int p=i-maxConnectionLength1D;p<i+maxConnectionLength1D;p++) {
+                    for (int q = j-maxConnectionLength1D; q < j+maxConnectionLength1D; q++) {
                         if(map.isIn(p,q) && i <= p && j <= q && (i != p || j != q) && map.isEmpty(i,j)
                                 && map.isEmpty(p,q) && myComponent[i][j] != myComponent[p][q])
                             verticesPairs.add(new VerticesPair(i,j,myComponent[i][j],p,q,myComponent[p][q],-map.getWidth()/5,map.getWidth()/5));
@@ -54,10 +58,22 @@ public class DefaultMapConnector implements MapConnector{
     }
 
     private void end(){
+        slowlyConnectIfNotConnected();
+
         for(int i=0;i<map.getHeight();i++)
             for(int j=0;j<map.getWidth();j++)
                 if(map.get(i,j) == fakeEmpty)
                     map.putEmpty(i,j);
+    }
+
+    private void slowlyConnectIfNotConnected() {
+        connect();
+        if(componentCount > 1) {
+            int maxConnectionLength1DCp = maxConnectionLength1D;
+            maxConnectionLength1D = map.getHeight() + map.getWidth();
+            connect();
+            maxConnectionLength1D = maxConnectionLength1DCp;
+        }
     }
 
     private void findComponents() {

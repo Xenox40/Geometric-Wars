@@ -2,6 +2,8 @@ package com.geometric.mapgenerators;
 
 import com.geometric.wars.maps.GameMap;
 
+//TODO retry generating if fail (for example when whole map is in walls)
+
 public class MapBuilder {
     private MapGenerator generator;
     private CuttingMapSizeCompressor compressor;

@@ -3,10 +3,13 @@ package com.geometric.wars.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.mapgenerators.*;
@@ -38,12 +41,32 @@ public class CustomGameScreen extends AbstractMenuScreen{
         generateMap();
 
 
-        Table table = new Table();
+        final Table table = new Table();
         table.setFillParent(true);
         table.top();
         TextButton playButton = new TextButton("Play!", skin);
-        TextButton customGameButton = new TextButton("Map settings", skin);
+        final Slider widthSlider = new Slider(5,25,1,false,skin);
+        widthSlider.setValue(width);
+        final Slider heightSlider = new Slider(5,25,1,false,skin);
+        heightSlider.setValue(height);
         TextButton backButton = new TextButton("Back", skin);
+
+
+        widthSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                width = (int)widthSlider.getValue();
+                //show();
+            }
+        });
+
+        heightSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                height = (int)heightSlider.getValue();
+               // show();
+            }
+        });
 
         playButton.addListener(new ClickListener(){
             @Override
@@ -64,19 +87,29 @@ public class CustomGameScreen extends AbstractMenuScreen{
         buttonsTable.top();
         buttonsTable.add(playButton).minSize(300,60).expand();
         buttonsTable.row();
-        buttonsTable.add(customGameButton).minSize(300,60).expand();
+        buttonsTable.add(widthSlider).minSize(300,60);
+        buttonsTable.row();
+        buttonsTable.add(heightSlider).minSize(300,60);
         buttonsTable.row();
         buttonsTable.add(backButton).minSize(300,60).expand();
         buttonsTable.row();
 
 
-        Table imageTable = new Table();
+        final Table imageTable = new Table();
+
+        imageTable.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(game.customGameScreen);
+            }
+        });
+
         imageTable.top();
 
         int cellSize = (int)(mapPreviewWidth/map.getWidth() < mapPreviewHeight/map.getHeight() ? mapPreviewWidth/map.getWidth() : mapPreviewHeight/map.getHeight());
 
         for(int i=0;i<map.getHeight();i++) {
-            for(int j=0;j<map.getHeight();j++)
+            for(int j=0;j<map.getWidth();j++)
                 imageTable.add(images.get(i).get(j)).minSize(cellSize,cellSize);
             imageTable.row();
         }
@@ -110,7 +143,9 @@ public class CustomGameScreen extends AbstractMenuScreen{
                     images.get(i).get(j).setColor(Color.BLACK);
             }
         }
+
     }
+
 
     @Override
     public void dispose() {

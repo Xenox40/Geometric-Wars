@@ -28,6 +28,7 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        stage.clear();
         Gdx.input.setInputProcessor(stage);
     }
 

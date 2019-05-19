@@ -14,8 +14,8 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
 
     protected Stage stage;
     protected SpriteBatch spriteBatch;
-    protected static TextureAtlas skinAtlas;
-    protected static Skin skin;
+    private TextureAtlas skinAtlas;
+    protected Skin skin;
 
     public AbstractMenuScreen(GeometricWars game) {
         super(game);
@@ -49,6 +49,8 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
         super.dispose();
         spriteBatch.dispose();
         stage.dispose();
+        skin.dispose();
+        skinAtlas.dispose();
     }
 
     @Override

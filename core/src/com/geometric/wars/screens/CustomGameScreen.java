@@ -1,18 +1,16 @@
 package com.geometric.wars.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.geometric.wars.GeometricWars;
 
-public class MainMenuScreen extends AbstractMenuScreen {
+public class CustomGameScreen extends AbstractMenuScreen{
 
-
-
-    public MainMenuScreen(GeometricWars game) {
+    public CustomGameScreen(GeometricWars game) {
         super(game);
+
     }
 
     @Override
@@ -23,10 +21,8 @@ public class MainMenuScreen extends AbstractMenuScreen {
         table.top();
 
         TextButton playButton = new TextButton("Play!", skin);
-        TextButton customGameButton = new TextButton("Custom game", skin);
-        TextButton howToPlayButton = new TextButton("How to play", skin);
-        TextButton aboutButton = new TextButton("About", skin);
-        TextButton exitButton = new TextButton("Exit", skin);
+        TextButton customGameButton = new TextButton("Map settings", skin);
+        TextButton backButton = new TextButton("Back", skin);
 
         playButton.addListener(new ClickListener(){
             @Override
@@ -35,19 +31,10 @@ public class MainMenuScreen extends AbstractMenuScreen {
                 game.splashScreen.setNextScreen(game.gameScreen);
             }
         });
-
-        customGameButton.addListener(new ClickListener(){
+        backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.customGameScreen);
-                game.splashScreen.setNextScreen(game.gameScreen);
-            }
-        });
-
-        exitButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
+                game.setScreen(game.mainMenuScreen);
             }
         });
 
@@ -55,13 +42,8 @@ public class MainMenuScreen extends AbstractMenuScreen {
         table.row();
         table.add(customGameButton).minSize(500,80).expand();
         table.row();
-        table.add(howToPlayButton).minSize(500,80).expand();
-        table.row();
-        table.add(aboutButton).minSize(500,80).expand();
-        table.row();
-        table.add(exitButton).minSize(500,80).expand();
+        table.add(backButton).minSize(500,80).expand();
 
-        //Add table to stage
         stage.addActor(table);
     }
 

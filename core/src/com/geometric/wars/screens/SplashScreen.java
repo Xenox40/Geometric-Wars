@@ -20,14 +20,13 @@ public class SplashScreen extends AbstractMenuScreen {
     private long durationInMillis = 2000;
     private AbstractScreen nextScreen;
 
+    public void setDuration(long millis){
+        this.durationInMillis = millis;
+    }
+
     public SplashScreen(GeometricWars game) {
         super(game);
-
         texture = new Texture(Gdx.files.internal("splash.png"));
-        image = new Image(texture);
-        image.setPosition(0, 0);
-        image.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.addActor(image);
     }
 
     public void setNextScreen(AbstractScreen nextScreen) {
@@ -38,6 +37,10 @@ public class SplashScreen extends AbstractMenuScreen {
     public void show() {
         super.show();
         elapsedTimeInMillis = 0;
+        image = new Image(texture);
+        image.setPosition(0, 0);
+        image.setSize(viewport.getScreenWidth(),viewport.getScreenHeight());
+        stage.addActor(image);
     }
 
     @Override

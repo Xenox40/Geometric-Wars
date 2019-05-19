@@ -41,9 +41,6 @@ public class GeometricWars extends Game{
 			inputController = ArrowInputController.getInstance();
 
 
-		mainMenuScreen = new MainMenuScreen(this);
-		splashScreen = new SplashScreen(this);
-		customGameScreen = new CustomGameScreen(this);
         if (map != null) {
         	gameScreen = new GameScreen(this);
         	gameScreen.setMap(map);
@@ -51,7 +48,15 @@ public class GeometricWars extends Game{
         else{
         	throw new RuntimeException("map not set");
 		}
-		setScreen(mainMenuScreen);
+		if(!isAndroidPlatform()) {
+			mainMenuScreen = new MainMenuScreen(this);
+			splashScreen = new SplashScreen(this);
+			customGameScreen = new CustomGameScreen(this);
+			splashScreen.setNextScreen(mainMenuScreen);
+			setScreen(splashScreen);
+		}
+		else
+			setScreen(gameScreen);
 	}
 
 	@Override
@@ -66,10 +71,14 @@ public class GeometricWars extends Game{
 
 	@Override
 	public void dispose() {
-    	gameScreen.dispose();
-    	mainMenuScreen.dispose();
-    	splashScreen.dispose();
-    	customGameScreen.dispose();
+    	if(gameScreen != null)
+    		gameScreen.dispose();
+    	if(mainMenuScreen != null)
+    		mainMenuScreen.dispose();
+    	if(splashScreen != null)
+    		splashScreen.dispose();
+    	if(customGameScreen != null)
+    		customGameScreen.dispose();
 
 		DynamicCubeModelDisposer.dispose();
 		FloorModel.dispose();

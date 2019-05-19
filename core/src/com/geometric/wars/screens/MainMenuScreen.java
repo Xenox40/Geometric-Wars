@@ -31,8 +31,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.splashScreen);
-                game.splashScreen.setNextScreen(game.gameScreen);
+                game.setScreen(game.gameScreen);
             }
         });
 
@@ -40,7 +39,6 @@ public class MainMenuScreen extends AbstractMenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(game.customGameScreen);
-                game.splashScreen.setNextScreen(game.gameScreen);
             }
         });
 

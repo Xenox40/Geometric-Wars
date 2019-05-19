@@ -85,9 +85,8 @@ public class CustomGameScreen extends AbstractMenuScreen{
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.splashScreen);
                 game.gameScreen.setMap(map);
-                game.splashScreen.setNextScreen(game.gameScreen);
+                game.setScreen(game.gameScreen);
             }
         });
         backButton.addListener(new ClickListener(){

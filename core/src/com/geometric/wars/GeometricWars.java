@@ -1,26 +1,27 @@
 package com.geometric.wars;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.*;
 import com.geometric.wars.maps.GameMap;
 import com.geometric.wars.input.ArrowInputController;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
 import com.geometric.wars.models.*;
+import com.geometric.wars.screens.AbstractScreen;
 import com.geometric.wars.screens.GameScreen;
+import com.geometric.wars.screens.MainMenuScreen;
 import com.geometric.wars.screens.SplashScreen;
 
 
+public class GeometricWars extends Game{
 
-public class GeometricWars extends ApplicationAdapter {
-	private SplashScreen splashScreen;
-	private GameScreen gameScreen;
+	public MainMenuScreen mainMenuScreen;
+	public SplashScreen splashScreen;
+	public GameScreen gameScreen;
+
 
     private InputController inputController;
     private GameMap map;
     private String defaultMap = "map2";
-    private float gameTime = 0f;
 
 
     public GeometricWars() {}
@@ -38,23 +39,22 @@ public class GeometricWars extends ApplicationAdapter {
 		else
 			inputController = ArrowInputController.getInstance();
 
+		mainMenuScreen = new MainMenuScreen(this);
 		splashScreen = new SplashScreen(this);
         if (map != null) {
-        	gameScreen = new GameScreen(this, map);
+        	gameScreen = new GameScreen(this);
+        	gameScreen.setMap(map);
 		}
         else{
         	throw new RuntimeException("map not set");
 		}
+		setScreen(mainMenuScreen);
 	}
 
 	@Override
 	public void render() {
-		if (gameTime < 2f) {
-			gameTime += Gdx.graphics.getDeltaTime();
-			splashScreen.render(1 / 30f);
-		} else
-			gameScreen.render(1 / 30f);
-	}
+		getScreen().render(1/30f);
+    }
 
 	@Override
 	public void resize(int x, int y) {

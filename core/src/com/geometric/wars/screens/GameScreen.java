@@ -1,5 +1,6 @@
 package com.geometric.wars.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,15 +20,23 @@ public class GameScreen extends AbstractScreen {
     private ModelBatch batch;
 
 
-    public GameScreen(GeometricWars game, GameMap map) {
+    public GameScreen(GeometricWars game) {
         super(game);
         batch = new ModelBatch();
         spriteBatch = new SpriteBatch();
 
         axes = new CoordinateAxes3D();
         sceneManager = SceneManager.getInstance();
-        sceneManager.setGame(game).loadGame(map);
+    }
 
+    public void setMap(GameMap map) {
+        sceneManager.setGame(game).loadGame(map);
+    }
+
+    @Override
+    public void show() {
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop)
+            Gdx.input.setInputProcessor(cameraController);
         camera.position.set(sceneManager.getCurrentMapService().getWidth() / 2f, 21f,
                 sceneManager.getCurrentMapService().getHeight() * 7 / 4f);
 
@@ -37,8 +46,6 @@ public class GameScreen extends AbstractScreen {
         camera.lookAt(lootAtPoint);
         cameraController.target = lootAtPoint;
         camera.update();
-
-
     }
 
     @Override

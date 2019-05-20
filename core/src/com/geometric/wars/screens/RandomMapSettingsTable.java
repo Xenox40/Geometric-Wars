@@ -1,10 +1,8 @@
 package com.geometric.wars.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class RandomMapSettingsTable {
     private CustomGameScreen screen;
@@ -14,6 +12,17 @@ public class RandomMapSettingsTable {
     }
 
     public Cell<Table> addTo(Table outerTable) {
+
+        final SelectBox<String> templateSelectBox = new SelectBox<String>(screen.skin);
+        templateSelectBox.setItems("Default", "Tunnels");
+        templateSelectBox.setSelected(screen.getMapTemplate());
+        templateSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                screen.setBuilderTemplate(templateSelectBox.getSelected());
+            }
+        });
+
 
         final Slider widthSlider = new Slider(5, 25, 1, false, screen.skin);
         widthSlider.setValue(screen.width);
@@ -48,6 +57,9 @@ public class RandomMapSettingsTable {
 
         final Table table = new Table();
         table.top();
+
+        table.add(templateSelectBox).minSize(200,60).colspan(2).expandX();
+        table.row();
 
         table.add(widthSliderLabel).minHeight(60).expandX();
         table.add(widthSlider).minSize(200,60).expandX();

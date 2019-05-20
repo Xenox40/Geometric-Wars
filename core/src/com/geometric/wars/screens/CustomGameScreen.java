@@ -18,9 +18,27 @@ public class CustomGameScreen extends AbstractMenuScreen{
     int width = 13;
     int height = 13;
     float wallThreshold = .5f;
-    boolean customizeMap = false;
+    private boolean customizeMap = false;
 
     MapBuilder builder = new MapBuilder();
+    private String template;
+    String getMapTemplate() {return template;}
+    void setBuilderTemplate(String template) {
+        this.template = template;
+        if(template.equals("Default")){
+            builder
+                    .setGenerator(new DefaultMapGenerator(15,wallThreshold))
+                    .setCompressor(new CuttingMapSizeCompressor(),3,3)
+                    .setConnector(new DefaultMapConnector(5))
+                    .setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+        }
+        if(template.equals("Tunnels")) {
+            builder
+                    .setGenerator(new TunnelingMapGenerator(wallThreshold, (map.getWidth() < map.getHeight() ? map.getWidth()*3/4 : map.getHeight()*3/4 )))
+                    .setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+        }
+    }
+
     private GameMap map;
 
     private Array<Array<Image> > images;
@@ -29,6 +47,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
 
     public CustomGameScreen(GeometricWars game) {
         super(game);
+        setBuilderTemplate("Default");
         texture = new Texture(Gdx.files.internal("mapPreviewTile.png"));
     }
 
@@ -134,7 +153,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
     }
 
     private void generateMap() {
-        builder.setGenerator(new DefaultMapGenerator(15,wallThreshold)).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(5)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+        setBuilderTemplate(getMapTemplate());
         map = builder.build(width,height);
         updatePreview();
     }

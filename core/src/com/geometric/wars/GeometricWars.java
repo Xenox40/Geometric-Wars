@@ -2,7 +2,7 @@ package com.geometric.wars;
 
 import com.badlogic.gdx.*;
 import com.geometric.wars.maps.GameMap;
-import com.geometric.wars.input.ArrowInputController;
+import com.geometric.wars.input.KeyboardInputController;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
 import com.geometric.wars.models.*;
@@ -36,10 +36,9 @@ public class GeometricWars extends Game{
     	if(map == null)
     		map = new GameMap(defaultMap);
 		if (isAndroidPlatform())
-			inputController = SwipeInputController.getInstance();
+			setInputController(SwipeInputController.getInstance());
 		else
-			inputController = ArrowInputController.getInstance();
-
+			setInputController(new KeyboardInputController(Input.Keys.UP,Input.Keys.DOWN,Input.Keys.RIGHT,Input.Keys.LEFT,Input.Keys.SPACE));
 
         if (map != null) {
         	gameScreen = new GameScreen(this);
@@ -57,6 +56,10 @@ public class GeometricWars extends Game{
 		}
 		else
 			setScreen(gameScreen);
+	}
+
+	public void setInputController(InputController inputController) {
+    	this.inputController = inputController;
 	}
 
 	@Override

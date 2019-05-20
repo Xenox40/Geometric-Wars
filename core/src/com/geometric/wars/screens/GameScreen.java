@@ -2,6 +2,7 @@ package com.geometric.wars.screens;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.geometric.wars.input.InputMethodGetter;
 import com.geometric.wars.maps.GameMap;
 import com.geometric.wars.GeometricWars;
 import com.geometric.wars.player.ColorAndNameGiver;
@@ -54,10 +56,12 @@ public class GameScreen extends AbstractScreen {
     public void show() {
         ColorAndNameGiver.clearUsed();
 
-        if (Gdx.app.getType() == Application.ApplicationType.Desktop)
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+            cameraController.rotateRightKey = cameraController.rotateLeftKey = cameraController.forwardKey = cameraController.backwardKey = Input.Keys.UNKNOWN;
             Gdx.input.setInputProcessor(cameraController);
+        }
         else
-            game.getInputController().activate();
+            InputMethodGetter.getInstance().activateAll();
 
         camera.position.set(sceneManager.getCurrentMapService().getWidth() / 2f, 21f,
                 sceneManager.getCurrentMapService().getHeight() * 7 / 4f);

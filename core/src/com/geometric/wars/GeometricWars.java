@@ -1,6 +1,7 @@
 package com.geometric.wars;
 
 import com.badlogic.gdx.*;
+import com.geometric.wars.input.InputMethodGetter;
 import com.geometric.wars.maps.GameMap;
 import com.geometric.wars.input.KeyboardInputController;
 import com.geometric.wars.input.InputController;
@@ -20,7 +21,6 @@ public class GeometricWars extends Game{
 	public CustomGameScreen customGameScreen;
 
 
-    private InputController inputController;
     private GameMap map;
     private String defaultMap = "map2";
 
@@ -36,9 +36,11 @@ public class GeometricWars extends Game{
     	if(map == null)
     		map = new GameMap(defaultMap);
 		if (isAndroidPlatform())
-			setInputController(SwipeInputController.getInstance());
-		else
-			setInputController(new KeyboardInputController(Input.Keys.UP,Input.Keys.DOWN,Input.Keys.RIGHT,Input.Keys.LEFT,Input.Keys.SPACE));
+			addInputController(SwipeInputController.getInstance());
+		else {
+			addInputController(new KeyboardInputController(Input.Keys.UP, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.LEFT, Input.Keys.SPACE));
+			addInputController(new KeyboardInputController(Input.Keys.W, Input.Keys.S, Input.Keys.D, Input.Keys.A, Input.Keys.G));
+		}
 
         if (map != null) {
         	gameScreen = new GameScreen(this);
@@ -58,8 +60,8 @@ public class GeometricWars extends Game{
 			setScreen(gameScreen);
 	}
 
-	public void setInputController(InputController inputController) {
-    	this.inputController = inputController;
+	private void addInputController(InputController inputController) {
+    	InputMethodGetter.getInstance().addInputMethod(inputController);
 	}
 
 	@Override
@@ -88,11 +90,7 @@ public class GeometricWars extends Game{
 		WallModel.dispose();
 		LineModel.dispose();
 		BulletModel.dispose();
-		inputController.dispose();
-	}
-
-	public InputController getInputController() {
-		return inputController;
+		InputMethodGetter.dispose();
 	}
 
 	public boolean isAndroidPlatform() {

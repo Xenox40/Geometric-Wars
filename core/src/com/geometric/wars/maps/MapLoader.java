@@ -7,6 +7,7 @@ import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.gameobjects.enviromentparts.Floor;
 import com.geometric.wars.gameobjects.enviromentparts.Wall;
 import com.geometric.wars.input.InputController;
+import com.geometric.wars.input.InputMethodGetter;
 import com.geometric.wars.player.PlayersController;
 import com.geometric.wars.player.ShooterPlayersController;
 import com.geometric.wars.player.bots.randomactingbot.RandomBotFactory;
@@ -20,9 +21,8 @@ import java.util.Scanner;
 
 public class MapLoader {
     private String fileName;
-    private InputController inputController;
     private Scene scene;
-
+    private int personsCount = 0;
     public void load(GameMap map) {
         MapService service  = SceneManager
                 .getInstance()
@@ -31,6 +31,7 @@ public class MapLoader {
         Array<Array<Collidable>> collidables;
         collidables = new Array<>();
 
+        personsCount = 0;
         int height = 0;
         int width = -1;
         try {
@@ -97,9 +98,8 @@ public class MapLoader {
     private void addPlayersController(Array<Collidable> objects, int x, int y) throws IOException {
         x *= Values.unit;
         y *= Values.unit;
-        if(inputController == null)
-            throw new IOException("No inputController provided");
-        PlayersController controller = new ShooterPlayersController(x, y, new ShootingPersonsCubeFactory(inputController));
+        //TODO throw exception if not enough distinct controllers
+        PlayersController controller = new ShooterPlayersController(x, y, new ShootingPersonsCubeFactory(InputMethodGetter.getInstance().getInputMethod(personsCount++)));
         scene.addDynamicGameObject(controller);
         objects.add(controller.getCube(0));
     }
@@ -124,10 +124,6 @@ public class MapLoader {
         return this;
     }
 
-    public MapLoader setInputController(InputController inputController) {
-        this.inputController = inputController;
-        return this;
-    }
 
     public MapLoader setScene(Scene scene) {
         this.scene = scene;

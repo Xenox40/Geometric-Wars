@@ -3,6 +3,7 @@ package com.geometric.wars.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -18,8 +19,10 @@ public class CustomGameScreen extends AbstractMenuScreen{
     int width = 13;
     int height = 13;
     float wallThreshold = .5f;
-    int persons;
-    int bots;
+    private int persons;
+    private int bots;
+
+
     private boolean customizeMap = false;
 
     private PlayersSettingsTable playersSettingsTable  = new PlayersSettingsTable(this);
@@ -42,7 +45,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
         builder.setPlayerPlacer(new CornerMapPlayerPlacer(persons+bots,bots));
     }
 
-    private GameMap map;
+    GameMap map;
 
     private Array<Array<Image> > images;
     Array<String> selectedPlayers;
@@ -69,6 +72,8 @@ public class CustomGameScreen extends AbstractMenuScreen{
 
         if(map == null)
             generateMap();
+        else
+            updatePreview();
 
         final Table table = new Table();
         table.setFillParent(true);
@@ -183,6 +188,38 @@ public class CustomGameScreen extends AbstractMenuScreen{
             }
         }
 
+    }
+
+    private void changePlayerOnMap(int ind, char before, char after) {
+        for(int i=0;i<map.getHeight();i++){
+            for(int j=0;j<map.getWidth();j++){
+                if (map.get(i,j) == before) {
+                    if (ind == 0){
+                        map.put(i,j,after);
+                        return;
+                    }
+                    ind--;
+                }
+            }
+        }
+    }
+
+    public void updatePlayersOnMap() {
+        int prevPersons = persons;
+        bots = persons = 0;
+        for(int i=0;i<selectedPlayers.size;i++) {
+            if(selectedPlayers.get(i).equals("Player"))
+                persons++;
+            else
+                bots++;
+        }
+        if(prevPersons < persons) {
+            changePlayerOnMap(MathUtils.random(bots),'B','P');
+        }
+        else{
+            changePlayerOnMap(MathUtils.random(persons),'P','B');
+        }
+        game.setScreen(this);
     }
 
 

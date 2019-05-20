@@ -48,7 +48,7 @@ public class SceneManager {
 
         MapLoader mapLoader = new MapLoader();
         currentScene = new GameScene();
-        mapLoader.setInputController(game.getInputController())
+        mapLoader
                 .setScene(currentScene)
                 .load(map);
     }

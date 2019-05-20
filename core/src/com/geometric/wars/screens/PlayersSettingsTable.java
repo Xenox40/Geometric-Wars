@@ -1,5 +1,6 @@
 package com.geometric.wars.screens;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -24,14 +25,9 @@ public class PlayersSettingsTable {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     screen.selectedPlayers.set(j, box.getSelected());
-                    screen.bots = screen.persons = 0;
-                    for(int i=0;i<screen.selectedPlayers.size;i++) {
-                        if(screen.selectedPlayers.get(i).equals("Player"))
-                            screen.persons++;
-                        else
-                            screen.bots++;
-                    }
+                    screen.updatePlayersOnMap();
                 }
+
             });
             playersTable.add(box).minSize(200,40).expand();
             playersTable.row();

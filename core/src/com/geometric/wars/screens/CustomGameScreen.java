@@ -3,10 +3,8 @@ package com.geometric.wars.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.mapgenerators.*;
@@ -17,14 +15,16 @@ import com.geometric.wars.maps.GameMap;
 public class CustomGameScreen extends AbstractMenuScreen{
     private static final float mapPreviewWidth = 600, mapPreviewHeight = 600;
 
-    private int width = 13;
-    private int height = 13;
-    private float wallThreshold = .5f;
+    int width = 13;
+    int height = 13;
+    float wallThreshold = .5f;
+    boolean customizeMap = false;
 
     MapBuilder builder = new MapBuilder();
     private GameMap map;
 
     private Array<Array<Image> > images;
+    Array<String> selectedPlayers;
     private Texture texture;
 
     public CustomGameScreen(GeometricWars game) {
@@ -35,8 +35,13 @@ public class CustomGameScreen extends AbstractMenuScreen{
     @Override
     public void show() {
         super.show();
-        generateMap();
+        if(map == null)
+            generateMap();
 
+        if(selectedPlayers == null)
+            selectedPlayers = new Array<>();
+        selectedPlayers.clear();
+        selectedPlayers.add("Player", "Bot", "Bot", "Bot");
 
         final Table table = new Table();
         table.setFillParent(true);
@@ -44,76 +49,62 @@ public class CustomGameScreen extends AbstractMenuScreen{
 
 
 
-        final Slider widthSlider = new Slider(5,25,1,false,skin);
-        widthSlider.setValue(width);
-        final Label widthSliderLabel = new Label("Width",skin);
-
-        final Slider heightSlider = new Slider(5,25,1,false,skin);
-        heightSlider.setValue(height);
-        final Label heightSliderLabel = new Label("Height",skin);
-
-        final Slider wallThresholdSlider = new Slider(0.4f,0.6f,0.01f,false,skin);
-        wallThresholdSlider.setValue(wallThreshold);
-        final Label wallThresholdSliderLabel = new Label("Walls",skin);
-
-
         TextButton playButton = new TextButton("Play!", skin);
+        TextButton randomMapOptionsButton = new TextButton("Random map options", skin);
         TextButton backButton = new TextButton("Back", skin);
 
 
-        widthSlider.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                width = (int)widthSlider.getValue();
-            }
-        });
-
-        heightSlider.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                height = (int)heightSlider.getValue();
-            }
-        });
-
-        wallThresholdSlider.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                wallThreshold= wallThresholdSlider.getValue();
-            }
-        });
-
-        playButton.addListener(new ClickListener(){
+        playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.gameScreen.setMap(map);
                 game.setScreen(game.gameScreen);
             }
         });
-        backButton.addListener(new ClickListener(){
+
+        randomMapOptionsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.mainMenuScreen);
+                customizeMap = true;
+                game.setScreen(game.customGameScreen);
+            }
+        });
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(customizeMap) {
+                    customizeMap = false;
+                    game.setScreen(game.customGameScreen);
+                }
+                else
+                    game.setScreen(game.mainMenuScreen);
             }
         });
 
         Table buttonsTable = new Table();
         buttonsTable.top();
-        buttonsTable.add(playButton).minSize(300,60).colspan(2).expand();
-        buttonsTable.row();
 
-        buttonsTable.add(widthSliderLabel).minHeight(60).expandX();
-        buttonsTable.add(widthSlider).minSize(200,60).expandX();
-        buttonsTable.row();
+        if(customizeMap){
+            RandomMapSettingsTable randomMapSettingsTable = new RandomMapSettingsTable( this);
+            randomMapSettingsTable.addTo(buttonsTable).minSize(300,400).expand();
 
-        buttonsTable.add(heightSliderLabel).minHeight(60).expandX();
-        buttonsTable.add(heightSlider).minSize(200,60).expandX();
-        buttonsTable.row();
+        }
+        else {
 
-        buttonsTable.add(wallThresholdSliderLabel).minHeight(60).expandX();
-        buttonsTable.add(wallThresholdSlider).minSize(200,60).expandX();
-        buttonsTable.row();
+            buttonsTable.add(playButton).minSize(300,60).expand();
+            buttonsTable.row();
 
-        buttonsTable.add(backButton).minSize(300,60).colspan(2).expand();
+            PlayersSettingsTable playersSettingsTable = new PlayersSettingsTable(this);
+            playersSettingsTable.addTo(buttonsTable).minSize(300,250).expand();
+            buttonsTable.row();
+
+            buttonsTable.add(randomMapOptionsButton).minSize(300,60).expand();
+            buttonsTable.row();
+
+        }
+        buttonsTable.row();
+        buttonsTable.add(backButton).minSize(300,60).expand();
         buttonsTable.row();
 
 
@@ -122,6 +113,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
         imageTable.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                generateMap();
                 game.setScreen(game.customGameScreen);
             }
         });

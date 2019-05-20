@@ -18,7 +18,12 @@ public class CustomGameScreen extends AbstractMenuScreen{
     int width = 13;
     int height = 13;
     float wallThreshold = .5f;
+    int persons;
+    int bots;
     private boolean customizeMap = false;
+
+    private PlayersSettingsTable playersSettingsTable  = new PlayersSettingsTable(this);
+    private RandomMapSettingsTable randomMapSettingsTable =  new RandomMapSettingsTable(this);
 
     MapBuilder builder = new MapBuilder();
     private String template;
@@ -29,14 +34,12 @@ public class CustomGameScreen extends AbstractMenuScreen{
             builder
                     .setGenerator(new DefaultMapGenerator(15,wallThreshold))
                     .setCompressor(new CuttingMapSizeCompressor(),3,3)
-                    .setConnector(new DefaultMapConnector(5))
-                    .setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+                    .setConnector(new DefaultMapConnector(5));
         }
         if(template.equals("Tunnels")) {
-            builder
-                    .setGenerator(new TunnelingMapGenerator(wallThreshold, (map.getWidth() < map.getHeight() ? map.getWidth()*3/4 : map.getHeight()*3/4 )))
-                    .setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+            builder.setGenerator(new TunnelingMapGenerator(wallThreshold, (map.getWidth() < map.getHeight() ? map.getWidth()*3/4 : map.getHeight()*3/4 )));
         }
+        builder.setPlayerPlacer(new CornerMapPlayerPlacer(persons+bots,bots));
     }
 
     private GameMap map;
@@ -51,16 +54,21 @@ public class CustomGameScreen extends AbstractMenuScreen{
         texture = new Texture(Gdx.files.internal("mapPreviewTile.png"));
     }
 
+
     @Override
     public void show() {
         super.show();
+
+        if(selectedPlayers == null) {
+            selectedPlayers = new Array<>();
+            selectedPlayers.clear();
+            selectedPlayers.add("Player", "Bot", "Bot", "Bot");
+            persons = 1;
+            bots = 3;
+        }
+
         if(map == null)
             generateMap();
-
-        if(selectedPlayers == null)
-            selectedPlayers = new Array<>();
-        selectedPlayers.clear();
-        selectedPlayers.add("Player", "Bot", "Bot", "Bot");
 
         final Table table = new Table();
         table.setFillParent(true);
@@ -105,7 +113,6 @@ public class CustomGameScreen extends AbstractMenuScreen{
         buttonsTable.top();
 
         if(customizeMap){
-            RandomMapSettingsTable randomMapSettingsTable = new RandomMapSettingsTable( this);
             randomMapSettingsTable.addTo(buttonsTable).minSize(300,400).expand();
 
         }
@@ -114,7 +121,6 @@ public class CustomGameScreen extends AbstractMenuScreen{
             buttonsTable.add(playButton).minSize(300,60).expand();
             buttonsTable.row();
 
-            PlayersSettingsTable playersSettingsTable = new PlayersSettingsTable(this);
             playersSettingsTable.addTo(buttonsTable).minSize(300,250).expand();
             buttonsTable.row();
 

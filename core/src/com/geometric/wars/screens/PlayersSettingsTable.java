@@ -24,6 +24,13 @@ public class PlayersSettingsTable {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     screen.selectedPlayers.set(j, box.getSelected());
+                    screen.bots = screen.persons = 0;
+                    for(int i=0;i<screen.selectedPlayers.size;i++) {
+                        if(screen.selectedPlayers.get(i).equals("Player"))
+                            screen.persons++;
+                        else
+                            screen.bots++;
+                    }
                 }
             });
             playersTable.add(box).minSize(200,40).expand();

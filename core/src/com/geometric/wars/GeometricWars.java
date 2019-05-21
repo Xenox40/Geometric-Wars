@@ -7,10 +7,7 @@ import com.geometric.wars.input.KeyboardInputController;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
 import com.geometric.wars.models.*;
-import com.geometric.wars.screens.CustomGameScreen;
-import com.geometric.wars.screens.GameScreen;
-import com.geometric.wars.screens.MainMenuScreen;
-import com.geometric.wars.screens.SplashScreen;
+import com.geometric.wars.screens.*;
 
 
 public class GeometricWars extends Game{
@@ -19,7 +16,10 @@ public class GeometricWars extends Game{
 	public SplashScreen splashScreen;
 	public GameScreen gameScreen;
 	public CustomGameScreen customGameScreen;
+	public OptionsScreen optionsScreen;
+	public ControlPickScreen controlPickScreen;
 
+	public Preferences prefs;
 
     private GameMap map;
     private String defaultMap = "map2";
@@ -33,6 +33,7 @@ public class GeometricWars extends Game{
 
 	@Override
 	public void create() {
+		prefs = Gdx.app.getPreferences("com.geometric.wars.config");
     	if(map == null)
     		map = new GameMap(defaultMap);
 		if (isAndroidPlatform())
@@ -52,8 +53,12 @@ public class GeometricWars extends Game{
 		if(!isAndroidPlatform()) {
 			mainMenuScreen = new MainMenuScreen(this);
 			splashScreen = new SplashScreen(this);
-			customGameScreen = new CustomGameScreen(this);
 			splashScreen.setNextScreen(mainMenuScreen);
+
+			customGameScreen = new CustomGameScreen(this);
+			optionsScreen = new OptionsScreen(this);
+			controlPickScreen = new ControlPickScreen(this);
+
 			setScreen(splashScreen);
 		}
 		else

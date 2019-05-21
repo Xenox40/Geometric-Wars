@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.GeometricWars;
 import com.geometric.wars.input.InputMethodGetter;
 import com.geometric.wars.input.KeyboardInputController;
@@ -24,11 +25,12 @@ public class ControlPickScreen extends AbstractMenuScreen {
             {Input.Keys.UP,Input.Keys.DOWN,Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.SPACE},
             {Input.Keys.W,Input.Keys.S,Input.Keys.A, Input.Keys.D, Input.Keys.F},
             {Input.Keys.I,Input.Keys.K,Input.Keys.J, Input.Keys.L, Input.Keys.SEMICOLON},
-            {Input.Keys.NUM_8,Input.Keys.NUM_5,Input.Keys.NUM_4, Input.Keys.NUM_6, Input.Keys.PLUS},
+            {Input.Keys.NUMPAD_8,Input.Keys.NUMPAD_5,Input.Keys.NUMPAD_4, Input.Keys.NUMPAD_6, Input.Keys.PLUS},
     };
 
-
+    private Array<Picker> pickers = new Array<>();
     private Picker currentlyPicked;
+
     private class Picker{
         final TextButton button;
         final Label label;
@@ -71,6 +73,7 @@ public class ControlPickScreen extends AbstractMenuScreen {
     private Cell<TextButton> addPicker(final Table table,final String name, String nameInPrefs) {
         Picker picker = new Picker(name,nameInPrefs);
         table.add(picker.label).minSize(200,100).expand();
+        pickers.add(picker);
         return table.add(picker.button);
     }
 
@@ -89,6 +92,8 @@ public class ControlPickScreen extends AbstractMenuScreen {
     }
 
     private void saveSettings() {
+        for(Picker picker : pickers)
+            picker.save();
         game.prefs.flush();
         InputMethodGetter.dispose();
         for(int playerId=0; playerId < defaultKeys.length; playerId++) {
@@ -105,6 +110,7 @@ public class ControlPickScreen extends AbstractMenuScreen {
     public void show() {
         super.show();
         resetPrefsToDefault(false);
+        pickers.clear();
         Table table = new Table();
         table.setFillParent(true);
         table.top();
@@ -138,7 +144,7 @@ public class ControlPickScreen extends AbstractMenuScreen {
 
         ScrollPane scrollPane = new ScrollPane(keysTable,skin);
 
-        table.add(scrollPane).fill();
+        table.add(scrollPane).colspan(2).fill();
         table.row();
 
         Button backButton = new TextButton("Back",skin);
@@ -149,8 +155,19 @@ public class ControlPickScreen extends AbstractMenuScreen {
                 game.setScreen(game.optionsScreen);
             }
         });
-        table.add(backButton).minSize(500,60).pad(50).expand();
+        Button resetButton = new TextButton("Reset to default",skin);
+        resetButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                resetPrefsToDefault(true);
+                for(Picker picker : pickers)
+                    picker.reset();
+                game.prefs.flush();
+            }
+        });
 
+        table.add(backButton).minSize(300,60).pad(50).expand();
+        table.add(resetButton).minSize(300,60).pad(50).expand();
 
         table.addListener(new InputListener(){
             @Override

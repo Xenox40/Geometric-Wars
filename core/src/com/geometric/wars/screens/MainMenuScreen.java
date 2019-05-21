@@ -2,10 +2,13 @@ package com.geometric.wars.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.GeometricWars;
+import com.geometric.wars.maps.GameMap;
 
 public class MainMenuScreen extends AbstractMenuScreen {
 
@@ -22,14 +25,15 @@ public class MainMenuScreen extends AbstractMenuScreen {
         table.setFillParent(true);
         table.top();
 
-        TextButton playButton = new TextButton("Play!", skin);
-        TextButton customGameButton = new TextButton("Custom game", skin);
-        TextButton optionsButton = new TextButton("Options", skin);
-        TextButton exitButton = new TextButton("Exit", skin);
+        final TextButton playButton = new TextButton("Play!", skin);
+        final TextButton customGameButton = new TextButton("Custom game", skin);
+        final TextButton optionsButton = new TextButton("Options", skin);
+        final TextButton exitButton = new TextButton("Exit", skin);
 
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                game.gameScreen.setMap(new GameMap("map2"));
                 game.setScreen(game.gameScreen);
             }
         });
@@ -55,13 +59,10 @@ public class MainMenuScreen extends AbstractMenuScreen {
             }
         });
 
-        table.add(playButton).minSize(500,80).expand();
-        table.row();
-        table.add(customGameButton).minSize(500,80).expand();
-        table.row();
-        table.add(optionsButton).minSize(500,80).expand();
-        table.row();
-        table.add(exitButton).minSize(500,80).expand();
+        for (Button button : new Button[]{playButton,customGameButton,optionsButton,exitButton}){
+            table.add(button).minSize(500, 80).expand();
+            table.row();
+        }
 
         stage.addActor(table);
     }

@@ -3,7 +3,6 @@ package com.geometric.wars;
 import com.badlogic.gdx.*;
 import com.geometric.wars.input.InputMethodGetter;
 import com.geometric.wars.maps.GameMap;
-import com.geometric.wars.input.KeyboardInputController;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
 import com.geometric.wars.models.*;
@@ -22,7 +21,6 @@ public class GeometricWars extends Game{
 	public Preferences prefs;
 
     private GameMap map;
-    private String defaultMap = "map2";
 
 
     public GeometricWars() {}
@@ -34,10 +32,11 @@ public class GeometricWars extends Game{
 	@Override
 	public void create() {
 		prefs = Gdx.app.getPreferences("com.geometric.wars.config");
-    	if(map == null)
-    		map = new GameMap(defaultMap);
+
 		if (isAndroidPlatform())
 			addInputController(SwipeInputController.getInstance());
+
+		gameScreen = new GameScreen(this);
 
 		if(!isAndroidPlatform()) {
 			mainMenuScreen = new MainMenuScreen(this);
@@ -50,15 +49,10 @@ public class GeometricWars extends Game{
 			controlPickScreen.setSettingsToDefaultIfNotPresent();
 			setScreen(splashScreen);
 		}
-		else
-			setScreen(gameScreen);
-
-		if (map != null) {
-			gameScreen = new GameScreen(this);
+		else {
+			if (map == null)
+				map = new GameMap("map2");
 			gameScreen.setMap(map);
-		}
-		else{
-			throw new RuntimeException("map not set");
 		}
 	}
 

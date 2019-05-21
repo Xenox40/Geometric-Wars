@@ -2,14 +2,13 @@ package com.geometric.mapgenerators;
 
 import com.geometric.wars.maps.GameMap;
 
-//TODO retry generating if fail (for example when whole map is in walls)
-
 public class MapBuilder {
     private MapGenerator generator;
     private CuttingMapSizeCompressor compressor;
     private DefaultMapConnector connector;
     private CornerMapPlayerPlacer playerPlacer;
     private int scaleW, scaleH;
+    private static final int maximumTries = 10;
 
     public MapBuilder setGenerator(MapGenerator generator) {
         this.generator = generator;
@@ -41,21 +40,30 @@ public class MapBuilder {
     public GameMap build(int width, int height){
         if(generator == null)
             throw new RuntimeException("Map generator for map builder must be specified");
-        GameMap map;
-        if(compressor != null) {
-            map = generator.generate(width*scaleW, height*scaleH);
-            compressor.compress(map,width,height);
-        }
-        else
-            map = generator.generate(width,height);
-        if(connector != null) {
-            connector.connectAllComponents(map);
-        }
-        if(playerPlacer != null) {
-            playerPlacer.place(map);
-        }
 
-        return map;
+        for(int i=0;i<maximumTries;i++) {
+            GameMap map;
+            if (compressor != null) {
+                map = generator.generate(width * scaleW, height * scaleH);
+                compressor.compress(map, width, height);
+            } else
+                map = generator.generate(width, height);
+            if (connector != null) {
+                connector.connectAllComponents(map);
+            }
+            if (playerPlacer != null) {
+                try {
+                    playerPlacer.place(map);
+                    return map;
+                } catch (NoFreeSpaceForPlayersException e) {
+                    if(i+1 == maximumTries)
+                        throw new RuntimeException(e);
+                }
+            }
+            else
+                return map;
+        }
+        return null;
     }
 
     public void clear() {

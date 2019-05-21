@@ -9,7 +9,7 @@ import java.util.Collections;
 public class DefaultMapConnector implements MapConnector{
     private int [][] myComponent;
     private GameMap map;
-    private int iterations;
+    private final int iterations;
     private int componentCount = 1;
     private char fakeEmpty = ',';
 
@@ -26,7 +26,7 @@ public class DefaultMapConnector implements MapConnector{
     public void connectAllComponents(GameMap map) {
         this.map = map;
 
-        while(iterations --> 0){
+        for(int i=0;i<iterations;i++){
             connect();
         }
         end();
@@ -37,12 +37,13 @@ public class DefaultMapConnector implements MapConnector{
         ArrayList<VerticesPair> verticesPairs = new ArrayList<>();
         for(int i=0;i<map.getHeight();i++){
             for(int j=0;j<map.getWidth();j++) {
-                for(int p=i-maxConnectionLength1D;p<i+maxConnectionLength1D;p++) {
+                for(int p=i;p<i+maxConnectionLength1D;p++) {
                     for (int q = j-maxConnectionLength1D; q < j+maxConnectionLength1D; q++) {
-                        if(map.isIn(p,q) && i <= p && j <= q && (i != p || j != q) && map.isEmpty(i,j)
-                                && map.isEmpty(p,q) && myComponent[i][j] != myComponent[p][q])
-                            verticesPairs.add(new VerticesPair(i,j,myComponent[i][j],p,q,myComponent[p][q],-map.getWidth()/5,map.getWidth()/5));
-                    }
+                        if(map.isIn(p,q) && (i != p || j != q) && !map.isWall(i,j)
+                                && !map.isWall(p,q) && myComponent[i][j] != myComponent[p][q]) {
+                            verticesPairs.add(new VerticesPair(i, j, myComponent[i][j], p, q, myComponent[p][q], -map.getWidth() / 5, map.getWidth() / 5));
+                        }
+                        }
                 }
             }
         }
@@ -58,6 +59,11 @@ public class DefaultMapConnector implements MapConnector{
     }
 
     private void end(){
+        for(int i=0;i<map.getHeight();i++)
+            for(int j=0;j<map.getWidth();j++)
+                if(map.get(i,j) == fakeEmpty)
+                    map.putEmpty(i,j);
+
         slowlyConnectIfNotConnected();
 
         for(int i=0;i<map.getHeight();i++)
@@ -77,7 +83,7 @@ public class DefaultMapConnector implements MapConnector{
     }
 
     private void findComponents() {
-        componentCount = 1;
+        componentCount = 0;
         myComponent = new int[map.getHeight()][map.getWidth()];
         for(int i=0;i<map.getHeight();i++)
             for(int j=0;j<map.getWidth();j++)
@@ -85,8 +91,10 @@ public class DefaultMapConnector implements MapConnector{
 
         for(int i=0;i<map.getHeight();i++) {
             for(int j=0;j<map.getWidth();j++){
-                if(myComponent[i][j] == 0)
-                    dfs(i,j,componentCount++);
+                if(myComponent[i][j] == 0 && !map.isWall(i,j)) {
+                    componentCount++;
+                    dfs(i, j, componentCount);
+                }
             }
         }
     }
@@ -102,13 +110,23 @@ public class DefaultMapConnector implements MapConnector{
      }
 
      private void drillPath(VerticesPair pair) {
-        pair.normalize();
-        for(int i=pair.i1; i != pair.i2;i++) {
-            map.put(i,pair.j1,fakeEmpty);
+        if(pair.i1 < pair.i2) {
+            for (int i = pair.i1; i != pair.i2; i++)
+                map.put(i, pair.j1, fakeEmpty);
         }
-        for(int j=pair.j1; j != pair.j2; j++) {
-            map.put(pair.i2,j,fakeEmpty);
+        else{
+            for (int i = pair.i1; i != pair.i2; i--)
+                map.put(i, pair.j1, fakeEmpty);
         }
+
+        if(pair.j1 < pair.j2) {
+             for(int j=pair.j1; j != pair.j2; j++)
+                 map.put(pair.i2, j, fakeEmpty);
+         }
+         else{
+            for(int j=pair.j1; j != pair.j2; j--)
+                map.put(pair.i2, j, fakeEmpty);
+         }
      }
 
     private static class VerticesPair implements Comparable<VerticesPair>{
@@ -136,18 +154,6 @@ public class DefaultMapConnector implements MapConnector{
             distance += MathUtils.random(miniAdd,maxiAdd);
         }
 
-        void normalize() {
-            if (i1 > i2) {
-                int tmp = i1;
-                i1 = i2;
-                i2 = tmp;
-            }
-            if(j1 > j2) {
-                int tmp = j1;
-                j1 = j2;
-                j2 = tmp;
-            }
-        }
 
         @Override
         public int compareTo(VerticesPair verticesPair) {

@@ -54,14 +54,15 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        super.show();
         ColorAndNameGiver.clearUsed();
 
         if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
             cameraController.rotateRightKey = cameraController.rotateLeftKey = cameraController.forwardKey = cameraController.backwardKey = Input.Keys.UNKNOWN;
             Gdx.input.setInputProcessor(cameraController);
         }
-        else
-            InputMethodGetter.getInstance().activateAll();
+
+        InputMethodGetter.getInstance().activateAll();
 
         camera.position.set(sceneManager.getCurrentMapService().getWidth() / 2f, 21f,
                 sceneManager.getCurrentMapService().getHeight() * 7 / 4f);

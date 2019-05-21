@@ -33,10 +33,19 @@ public class GeometricWars extends Game{
 	public void create() {
 		prefs = Gdx.app.getPreferences("com.geometric.wars.config");
 
-		if (isAndroidPlatform())
+		if (isAndroidPlatform()) {
 			addInputController(SwipeInputController.getInstance());
+			if (map == null)
+				map = new GameMap("map2");
+		}
 
 		gameScreen = new GameScreen(this);
+
+		if(isAndroidPlatform()){
+			gameScreen.setMap(map);
+			setScreen(gameScreen);
+		}
+
 
 		if(!isAndroidPlatform()) {
 			mainMenuScreen = new MainMenuScreen(this);
@@ -50,9 +59,7 @@ public class GeometricWars extends Game{
 			setScreen(splashScreen);
 		}
 		else {
-			if (map == null)
-				map = new GameMap("map2");
-			gameScreen.setMap(map);
+
 		}
 	}
 

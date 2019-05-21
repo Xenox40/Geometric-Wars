@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.geometric.wars.GeometricWars;
+import com.geometric.wars.input.InputMethodGetter;
+import com.geometric.wars.input.KeyboardInputController;
 
 
 public class ControlPickScreen extends AbstractMenuScreen {
@@ -15,6 +17,9 @@ public class ControlPickScreen extends AbstractMenuScreen {
     }
 
     private static final String[] keyNamesInPrefs = {".input.up",".input.down",".input.left",".input.right",".input.shoot"};
+    private String createKeyName(int playerId, int keyId){
+        return "player"+playerId+keyNamesInPrefs[keyId];
+    }
     private static final int[][] defaultKeys = {
             {Input.Keys.UP,Input.Keys.DOWN,Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.SPACE},
             {Input.Keys.W,Input.Keys.S,Input.Keys.A, Input.Keys.D, Input.Keys.F},
@@ -22,12 +27,8 @@ public class ControlPickScreen extends AbstractMenuScreen {
             {Input.Keys.NUM_8,Input.Keys.NUM_5,Input.Keys.NUM_4, Input.Keys.NUM_6, Input.Keys.PLUS},
     };
 
-    private String createKeyName(int playerId, int keyId){
-        return "player"+playerId+keyNamesInPrefs[keyId];
-    }
 
     private Picker currentlyPicked;
-
     private class Picker{
         final TextButton button;
         final Label label;
@@ -82,6 +83,24 @@ public class ControlPickScreen extends AbstractMenuScreen {
         }
     }
 
+    public void setSettingsToDefaultIfNotPresent() {
+        resetPrefsToDefault(false);
+        saveSettings();
+    }
+
+    private void saveSettings() {
+        game.prefs.flush();
+        InputMethodGetter.dispose();
+        for(int playerId=0; playerId < defaultKeys.length; playerId++) {
+            int[] keys = new int[defaultKeys[0].length];
+            for (int keyId = 0; keyId < defaultKeys[playerId].length; keyId++)
+                keys[keyId] = game.prefs.getInteger(createKeyName(playerId, keyId));
+            InputMethodGetter.getInstance().addInputMethod(new KeyboardInputController(keys[0],keys[1],keys[2],keys[3],keys[4]));
+        }
+
+    }
+
+
     @Override
     public void show() {
         super.show();
@@ -126,7 +145,7 @@ public class ControlPickScreen extends AbstractMenuScreen {
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.prefs.flush();
+                saveSettings();
                 game.setScreen(game.optionsScreen);
             }
         });

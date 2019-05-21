@@ -38,18 +38,7 @@ public class GeometricWars extends Game{
     		map = new GameMap(defaultMap);
 		if (isAndroidPlatform())
 			addInputController(SwipeInputController.getInstance());
-		else {
-			addInputController(new KeyboardInputController(Input.Keys.UP, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.LEFT, Input.Keys.SPACE));
-			addInputController(new KeyboardInputController(Input.Keys.W, Input.Keys.S, Input.Keys.D, Input.Keys.A, Input.Keys.G));
-		}
 
-        if (map != null) {
-        	gameScreen = new GameScreen(this);
-        	gameScreen.setMap(map);
-		}
-        else{
-        	throw new RuntimeException("map not set");
-		}
 		if(!isAndroidPlatform()) {
 			mainMenuScreen = new MainMenuScreen(this);
 			splashScreen = new SplashScreen(this);
@@ -58,11 +47,19 @@ public class GeometricWars extends Game{
 			customGameScreen = new CustomGameScreen(this);
 			optionsScreen = new OptionsScreen(this);
 			controlPickScreen = new ControlPickScreen(this);
-
+			controlPickScreen.setSettingsToDefaultIfNotPresent();
 			setScreen(splashScreen);
 		}
 		else
 			setScreen(gameScreen);
+
+		if (map != null) {
+			gameScreen = new GameScreen(this);
+			gameScreen.setMap(map);
+		}
+		else{
+			throw new RuntimeException("map not set");
+		}
 	}
 
 	private void addInputController(InputController inputController) {

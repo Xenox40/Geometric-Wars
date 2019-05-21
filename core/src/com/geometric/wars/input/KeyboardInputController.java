@@ -6,11 +6,11 @@ import com.badlogic.gdx.Input;
 public class KeyboardInputController implements InputController {
     private int upKey, downKey, rightKey, leftKey, shootKey;
 
-    public KeyboardInputController(int upKey, int downKey, int rightKey, int leftKey, int shootKey) {
+    public KeyboardInputController(int upKey, int downKey, int leftKey, int rightKey, int shootKey) {
         this.upKey = upKey;
         this.downKey = downKey;
-        this.rightKey = rightKey;
         this.leftKey = leftKey;
+        this.rightKey = rightKey;
         this.shootKey = shootKey;
     }
     @Override

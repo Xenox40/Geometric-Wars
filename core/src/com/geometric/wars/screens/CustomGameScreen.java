@@ -33,16 +33,22 @@ public class CustomGameScreen extends AbstractMenuScreen{
     String getMapTemplate() {return template;}
     void setBuilderTemplate(String template) {
         this.template = template;
+        builder.clear();
         if(template.equals("Default")){
+            builder.setGenerator(new StockMapPicker());
+        }
+        if(template.equals("Cellular")){
             builder
-                    .setGenerator(new DefaultMapGenerator(15,wallThreshold))
+                    .setGenerator(new CellularMapGenerator(15,wallThreshold))
                     .setCompressor(new CuttingMapSizeCompressor(),3,3)
-                    .setConnector(new DefaultMapConnector(5));
+                    .setConnector(new DefaultMapConnector(5))
+                    .setPlayerPlacer(new CornerMapPlayerPlacer(persons+bots,bots));
         }
         if(template.equals("Tunnels")) {
-            builder.setGenerator(new TunnelingMapGenerator(wallThreshold, (map.getWidth() < map.getHeight() ? map.getWidth()*3/4 : map.getHeight()*3/4 )));
+            builder
+                    .setGenerator(new TunnelingMapGenerator(wallThreshold, (map.getWidth() < map.getHeight() ? map.getWidth()*3/4 : map.getHeight()*3/4 )))
+                    .setPlayerPlacer(new CornerMapPlayerPlacer(persons+bots,bots));
         }
-        builder.setPlayerPlacer(new CornerMapPlayerPlacer(persons+bots,bots));
     }
 
     GameMap map;
@@ -82,7 +88,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
 
 
         TextButton playButton = new TextButton("Play!", skin);
-        TextButton randomMapOptionsButton = new TextButton("Random map options", skin);
+        TextButton randomMapOptionsButton = new TextButton("Map options", skin);
         TextButton backButton = new TextButton("Back", skin);
 
 

@@ -14,15 +14,15 @@ public class RandomMapSettingsTable {
     public Cell<Table> addTo(Table outerTable) {
 
         final SelectBox<String> templateSelectBox = new SelectBox<String>(screen.skin);
-        templateSelectBox.setItems("Default", "Tunnels");
+        templateSelectBox.setItems("Default","Cellular", "Tunnels");
         templateSelectBox.setSelected(screen.getMapTemplate());
         templateSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 screen.setBuilderTemplate(templateSelectBox.getSelected());
+                screen.game.setScreen(screen);
             }
         });
-
 
         final Slider widthSlider = new Slider(5, 25, 1, false, screen.skin);
         widthSlider.setValue(screen.width);
@@ -61,17 +61,19 @@ public class RandomMapSettingsTable {
         table.add(templateSelectBox).minSize(200,60).colspan(2).expandX();
         table.row();
 
-        table.add(widthSliderLabel).minHeight(60).expandX();
-        table.add(widthSlider).minSize(200,60).expandX();
-        table.row();
+        if(screen.builder.getGenerator().isSizeControllable()) {
+            table.add(widthSliderLabel).minHeight(60).expandX();
+            table.add(widthSlider).minSize(200, 60).expandX();
+            table.row();
 
-        table.add(heightSliderLabel).minHeight(60).expandX();
-        table.add(heightSlider).minSize(200,60).expandX();
-        table.row();
+            table.add(heightSliderLabel).minHeight(60).expandX();
+            table.add(heightSlider).minSize(200, 60).expandX();
+            table.row();
 
-        table.add(wallThresholdSliderLabel).minHeight(60).expandX();
-        table.add(wallThresholdSlider).minSize(200,60).expandX();
-        table.row();
+            table.add(wallThresholdSliderLabel).minHeight(60).expandX();
+            table.add(wallThresholdSlider).minSize(200, 60).expandX();
+            table.row();
+        }
 
         return outerTable.add(table);
     }

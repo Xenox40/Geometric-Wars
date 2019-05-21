@@ -64,7 +64,7 @@ public class GameSettingsActivity extends Activity {
     }
 
     private void generateMap() {
-        builder.setGenerator(new DefaultMapGenerator(15,wallThreshold)).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(5)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+        builder.setGenerator(new CellularMapGenerator(15,wallThreshold)).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(5)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
         map = builder.build(width,height);
 
         updatePreview();

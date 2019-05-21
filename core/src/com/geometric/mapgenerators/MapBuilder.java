@@ -15,6 +15,11 @@ public class MapBuilder {
         this.generator = generator;
         return this;
     }
+
+    public MapGenerator getGenerator(){
+        return generator;
+    }
+
     public MapBuilder setConnector(DefaultMapConnector connector) {
         this.connector = connector;
         return this;
@@ -46,19 +51,26 @@ public class MapBuilder {
         if(connector != null) {
             connector.connectAllComponents(map);
         }
-        if(playerPlacer != null)
+        if(playerPlacer != null) {
             playerPlacer.place(map);
+        }
 
         return map;
     }
 
-
+    public void clear() {
+        generator = null;
+        connector = null;
+        compressor = null;
+        playerPlacer = null;
+        scaleH = scaleW = 1;
+    }
 
 
     public static void main(String[] args) {
         MapBuilder builder = new MapBuilder();
 
-        builder.setGenerator(new DefaultMapGenerator(100,0.5f)).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(5)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+        builder.setGenerator(new CellularMapGenerator(100,0.5f)).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(5)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
         //builder.setGenerator(new TunnelingMapGenerator(0.55f, 4)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
         builder.build(30,30).saveAs("map3",true);
 

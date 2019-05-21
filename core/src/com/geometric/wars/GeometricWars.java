@@ -14,7 +14,7 @@ public class GeometricWars extends Game{
 	public MainMenuScreen mainMenuScreen;
 	public SplashScreen splashScreen;
 	public GameScreen gameScreen;
-	public CustomGameScreen customGameScreen;
+	public GameCustomizeScreen gameCustomizeScreen;
 	public OptionsScreen optionsScreen;
 	public ControlPickScreen controlPickScreen;
 
@@ -52,7 +52,7 @@ public class GeometricWars extends Game{
 			splashScreen = new SplashScreen(this);
 			splashScreen.setNextScreen(mainMenuScreen);
 
-			customGameScreen = new CustomGameScreen(this);
+			gameCustomizeScreen = new GameCustomizeScreen(this);
 			optionsScreen = new OptionsScreen(this);
 			controlPickScreen = new ControlPickScreen(this);
 			controlPickScreen.setSettingsToDefaultIfNotPresent();
@@ -85,8 +85,8 @@ public class GeometricWars extends Game{
     		mainMenuScreen.dispose();
     	if(splashScreen != null)
     		splashScreen.dispose();
-    	if(customGameScreen != null)
-    		customGameScreen.dispose();
+    	if(gameCustomizeScreen != null)
+    		gameCustomizeScreen.dispose();
 
 		DynamicCubeModelDisposer.dispose();
 		FloorModel.dispose();

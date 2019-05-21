@@ -3,7 +3,6 @@ package com.geometric.wars.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -13,7 +12,7 @@ import com.geometric.wars.GeometricWars;
 import com.geometric.wars.maps.GameMap;
 
 
-public class CustomGameScreen extends AbstractMenuScreen{
+public class GameCustomizeScreen extends AbstractMenuScreen{
     private static final float mapPreviewWidth = 600, mapPreviewHeight = 600;
 
     int width = 13;
@@ -57,7 +56,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
     Array<String> selectedPlayers;
     private Texture texture;
 
-    public CustomGameScreen(GeometricWars game) {
+    public GameCustomizeScreen(GeometricWars game) {
         super(game);
         setBuilderTemplate("Default");
         texture = new Texture(Gdx.files.internal("mapPreviewTile.png"));
@@ -104,7 +103,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 customizeMap = true;
-                game.setScreen(game.customGameScreen);
+                game.setScreen(game.gameCustomizeScreen);
             }
         });
 
@@ -113,7 +112,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
             public void clicked(InputEvent event, float x, float y) {
                 if(customizeMap) {
                     customizeMap = false;
-                    game.setScreen(game.customGameScreen);
+                    game.setScreen(game.gameCustomizeScreen);
                 }
                 else
                     game.setScreen(game.mainMenuScreen);
@@ -150,7 +149,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 generateMap();
-                game.setScreen(game.customGameScreen);
+                game.setScreen(game.gameCustomizeScreen);
             }
         });
 
@@ -172,6 +171,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
     private void generateMap() {
         setBuilderTemplate(getMapTemplate());
         map = builder.build(width,height);
+        updatePlayersOnMap();
         updatePreview();
     }
 
@@ -196,22 +196,7 @@ public class CustomGameScreen extends AbstractMenuScreen{
 
     }
 
-    private void changePlayerOnMap(int ind, char before, char after) {
-        for(int i=0;i<map.getHeight();i++){
-            for(int j=0;j<map.getWidth();j++){
-                if (map.get(i,j) == before) {
-                    if (ind == 0){
-                        map.put(i,j,after);
-                        return;
-                    }
-                    ind--;
-                }
-            }
-        }
-    }
-
     public void updatePlayersOnMap() {
-        int prevPersons = persons;
         bots = persons = 0;
         for(int i=0;i<selectedPlayers.size;i++) {
             if(selectedPlayers.get(i).equals("Player"))
@@ -219,12 +204,20 @@ public class CustomGameScreen extends AbstractMenuScreen{
             else
                 bots++;
         }
-        if(prevPersons < persons) {
-            changePlayerOnMap(MathUtils.random(bots),'B','P');
+
+        int ct = 0;
+        for(int i=0; i < map.getHeight(); i++) {
+            for (int j = 0; j < map.getWidth(); j++) {
+                if (map.get(i, j) == 'P' || map.get(i,j) == 'B') {
+                    if(selectedPlayers.get(ct).equals("Player"))
+                         map.put(i, j, 'P');
+                    else
+                        map.put(i, j, 'B');
+                    ct++;
+                }
+            }
         }
-        else{
-            changePlayerOnMap(MathUtils.random(persons),'P','B');
-        }
+
         game.setScreen(this);
     }
 

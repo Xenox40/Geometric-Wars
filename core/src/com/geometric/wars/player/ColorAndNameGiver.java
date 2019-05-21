@@ -29,7 +29,7 @@ public class ColorAndNameGiver {
         colors.put("Chartreuse",Color.CHARTREUSE);
         colors.put("Magenta",Color.MAGENTA);
         colors.put("White",Color.WHITE);
-        colors.put("Black",Color.BLACK);
+        colors.put("Black",new Color(0.25f,0.25f,0.25f,1));
     }
 
     public static String getRandomColorName() {

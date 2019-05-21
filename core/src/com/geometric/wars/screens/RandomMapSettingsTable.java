@@ -5,9 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class RandomMapSettingsTable {
-    private CustomGameScreen screen;
+    private GameCustomizeScreen screen;
 
-    RandomMapSettingsTable(CustomGameScreen screen){
+    RandomMapSettingsTable(GameCustomizeScreen screen){
         this.screen = screen;
     }
 

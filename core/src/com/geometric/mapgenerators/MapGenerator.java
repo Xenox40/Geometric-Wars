@@ -7,4 +7,5 @@ import com.geometric.wars.maps.GameMap;
  */
 public interface MapGenerator {
     GameMap generate(int mapWidth, int mapHeight);
+    boolean isSizeControllable();
 }

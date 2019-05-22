@@ -44,6 +44,11 @@ public class TunnelingMapGenerator implements MapGenerator {
         return map;
     }
 
+    @Override
+    public boolean isSizeControllable() {
+        return true;
+    }
+
 
     private void digTunnel(int len, int deltaX, int deltaY) {
         for(int i=0;i<len;i++){

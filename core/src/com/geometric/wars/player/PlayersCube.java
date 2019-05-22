@@ -17,6 +17,8 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
     private MapService service = SceneManager.getInstance().getCurrentMapService();
 
     protected DynamicCubeController dynamicCubeController;
+    private String name;
+
 
     public PlayersCube(DynamicCubeController controller) {
         super();
@@ -78,5 +80,12 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
         return true;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 

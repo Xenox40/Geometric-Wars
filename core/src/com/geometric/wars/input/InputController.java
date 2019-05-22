@@ -12,5 +12,11 @@ public interface InputController {
      */
     void endOnProcessingInput();
 
+    /**
+     * will be called when switching to screen where InputController is needed
+     * you can do here e.g. set gdx input processor
+     */
+    void activate();
+
     void dispose();
 }

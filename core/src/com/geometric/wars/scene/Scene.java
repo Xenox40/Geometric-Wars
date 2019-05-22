@@ -50,11 +50,12 @@ public class Scene {
     public void renderGUI(SpriteBatch batch) {
         float posX = 20, posY = 40;
         for(DynamicGameObject dynamicGameObject : dynamicMapObjects) {
+
             if(dynamicGameObject instanceof ShooterPlayersController) {
                 int hp = ((ShooterPlayersController) dynamicGameObject).getCubeHealthPoints();
                 if(hp > 0) {
-                    font.draw(batch, dynamicGameObject.toString().substring(26), posX, posY+10f);
-                    healthBarModel.getBar().draw(batch, posX+250f, posY, 5f*hp, 10f);
+                    font.draw(batch, ((ShooterPlayersController) dynamicGameObject).getCube(0).getName(), posX, posY+10f);
+                    healthBarModel.getBar().draw(batch, posX+120f, posY, 5f*hp, 10f);
                     posY += 30f;
                 }
             }

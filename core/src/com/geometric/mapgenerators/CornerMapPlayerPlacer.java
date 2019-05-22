@@ -12,6 +12,9 @@ public class CornerMapPlayerPlacer implements MapPlayerPlacer{
     private int botCount;
     private int totalPlayersCount;
 
+    private int currentTotalPlayersCount;
+    private int currentBotCount;
+
     public CornerMapPlayerPlacer(int totalPlayersCount, int botCount) {
         setPlayerCount(totalPlayersCount,botCount);
     }
@@ -26,8 +29,10 @@ public class CornerMapPlayerPlacer implements MapPlayerPlacer{
     }
 
     @Override
-    public void place(GameMap map){
+    public void place(GameMap map) throws NoFreeSpaceForPlayersException {
         this.map = map;
+        this.currentBotCount = botCount;
+        this.currentTotalPlayersCount = totalPlayersCount;
         ArrayList<GameMap.WeightedPoint> emptyCells = new ArrayList<>();
         for(int i=0;i<map.getHeight();i++){
             for(int j=0;j<map.getWidth();j++){
@@ -36,7 +41,7 @@ public class CornerMapPlayerPlacer implements MapPlayerPlacer{
             }
         }
         if(emptyCells.size() < totalPlayersCount) {
-            throw new RuntimeException("not enough empty cells for "+totalPlayersCount+" players");
+            throw new NoFreeSpaceForPlayersException("not enough empty cells for "+totalPlayersCount+" players, available: "+emptyCells.size());
         }
 
         ArrayList<GameMap.WeightedPoint> emptyCellsDiagonallySorted = new ArrayList<>(emptyCells);
@@ -72,7 +77,7 @@ public class CornerMapPlayerPlacer implements MapPlayerPlacer{
         }
 
 
-        while (totalPlayersCount > 4) {
+        while (currentTotalPlayersCount > 4) {
             int ind = MathUtils.random(emptyCells.size());
             GameMap.WeightedPoint cell = emptyCells.get(ind);
             if(map.isEmpty(cell.x,cell.y)) {
@@ -84,9 +89,9 @@ public class CornerMapPlayerPlacer implements MapPlayerPlacer{
     private boolean putPlayerOrFalse(int x,int y) {
         if(!map.isEmpty(x,y))
             return false;
-        if(botCount == 0)
+        if(currentBotCount == 0)
             putPerson(x,y);
-        else if(botCount == totalPlayersCount)
+        else if(currentBotCount == currentTotalPlayersCount)
             putBot(x,y);
         else if(MathUtils.randomBoolean())
             putBot(x,y);
@@ -95,13 +100,13 @@ public class CornerMapPlayerPlacer implements MapPlayerPlacer{
         return true;
     }
     private void putBot(int x, int y){
-        totalPlayersCount--;
-        botCount--;
+        currentTotalPlayersCount--;
+        currentBotCount--;
         map.putBot(x,y);
     }
 
     private void putPerson(int x, int y){
-        totalPlayersCount--;
+        currentTotalPlayersCount--;
         map.putPerson(x,y);
     }
 

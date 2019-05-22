@@ -5,9 +5,9 @@ import com.geometric.wars.maps.GameMap;
 
 import java.util.ArrayList;
 
-public class DefaultMapGenerator implements MapGenerator{
+public class CellularMapGenerator implements MapGenerator{
 
-    public DefaultMapGenerator(int steps, float startingWallChance) {
+    public CellularMapGenerator(int steps, float startingWallChance) {
         this.steps = steps;
         this.startingWallChance = startingWallChance;
     }
@@ -33,6 +33,11 @@ public class DefaultMapGenerator implements MapGenerator{
             nextMapStep();
         }
         return map;
+    }
+
+    @Override
+    public boolean isSizeControllable() {
+        return true;
     }
 
     private void setNeighbours() {

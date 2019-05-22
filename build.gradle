@@ -11,8 +11,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
-        
-
     }
 }
 
@@ -46,6 +44,7 @@ project(":desktop") {
 
     dependencies {
         implementation project(":core")
+        implementation "com.esotericsoftware:kryonet:2.22.0-RC1"
         implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         
@@ -75,6 +74,7 @@ project(":core") {
 
 
     dependencies {
+        implementation "com.esotericsoftware:kryonet:2.22.0-RC1"
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
     }
 }

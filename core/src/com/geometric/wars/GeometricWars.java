@@ -1,26 +1,26 @@
 package com.geometric.wars;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.*;
+import com.geometric.wars.input.InputMethodGetter;
 import com.geometric.wars.maps.GameMap;
-import com.geometric.wars.input.ArrowInputController;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
 import com.geometric.wars.models.*;
-import com.geometric.wars.screens.GameScreen;
-import com.geometric.wars.screens.SplashScreen;
+import com.geometric.wars.screens.*;
 
 
+public class GeometricWars extends Game{
 
-public class GeometricWars extends ApplicationAdapter {
-	private SplashScreen splashScreen;
-	private GameScreen gameScreen;
+	public MainMenuScreen mainMenuScreen;
+	public SplashScreen splashScreen;
+	public GameScreen gameScreen;
+	public GameCustomizeScreen gameCustomizeScreen;
+	public OptionsScreen optionsScreen;
+	public ControlPickScreen controlPickScreen;
 
-    private InputController inputController;
+	public Preferences prefs;
+
     private GameMap map;
-    private String defaultMap = "map2";
-    private float gameTime = 0f;
 
 
     public GeometricWars() {}
@@ -31,49 +31,69 @@ public class GeometricWars extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-    	if(map == null)
-    		map = new GameMap(defaultMap);
-		if (isAndroidPlatform())
-			inputController = SwipeInputController.getInstance();
-		else
-			inputController = ArrowInputController.getInstance();
+		prefs = Gdx.app.getPreferences("com.geometric.wars.config");
 
-		splashScreen = new SplashScreen(this);
-        if (map != null) {
-        	gameScreen = new GameScreen(this, map);
+		if (isAndroidPlatform()) {
+			addInputController(SwipeInputController.getInstance());
+			if (map == null)
+				map = new GameMap("map2");
 		}
-        else{
-        	throw new RuntimeException("map not set");
+
+		gameScreen = new GameScreen(this);
+
+		if(isAndroidPlatform()){
+			gameScreen.setMap(map);
+			setScreen(gameScreen);
 		}
+
+
+		if(!isAndroidPlatform()) {
+			mainMenuScreen = new MainMenuScreen(this);
+			splashScreen = new SplashScreen(this);
+			splashScreen.setNextScreen(mainMenuScreen);
+
+			gameCustomizeScreen = new GameCustomizeScreen(this);
+			optionsScreen = new OptionsScreen(this);
+			controlPickScreen = new ControlPickScreen(this);
+			controlPickScreen.setSettingsToDefaultIfNotPresent();
+			setScreen(splashScreen);
+		}
+		else {
+
+		}
+	}
+
+	private void addInputController(InputController inputController) {
+    	InputMethodGetter.getInstance().addInputMethod(inputController);
 	}
 
 	@Override
 	public void render() {
-		if (gameTime < 2f) {
-			gameTime += Gdx.graphics.getDeltaTime();
-			splashScreen.render(1 / 30f);
-		} else
-			gameScreen.render(1 / 30f);
-	}
+		getScreen().render(1/30f);
+    }
 
 	@Override
 	public void resize(int x, int y) {
-		gameScreen.resize(x, y);
+		getScreen().resize(x, y);
 	}
 
 	@Override
 	public void dispose() {
-    	gameScreen.dispose();
+    	if(gameScreen != null)
+    		gameScreen.dispose();
+    	if(mainMenuScreen != null)
+    		mainMenuScreen.dispose();
+    	if(splashScreen != null)
+    		splashScreen.dispose();
+    	if(gameCustomizeScreen != null)
+    		gameCustomizeScreen.dispose();
+
 		DynamicCubeModelDisposer.dispose();
 		FloorModel.dispose();
 		WallModel.dispose();
 		LineModel.dispose();
 		BulletModel.dispose();
-		inputController.dispose();
-	}
-
-	public InputController getInputController() {
-		return inputController;
+		InputMethodGetter.dispose();
 	}
 
 	public boolean isAndroidPlatform() {

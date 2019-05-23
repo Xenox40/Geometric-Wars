@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.geometric.wars.cube.mountables.Mountable;
 import com.geometric.wars.models.BoxBuilder;
-import com.geometric.wars.models.DynamicCubeModelDisposer;
+import com.geometric.wars.utils.GameResourceDisposer;
 import com.geometric.wars.utils.Direction3D;
 import com.geometric.wars.utils.Values;
 
@@ -47,7 +47,7 @@ public class DynamicCubeBuilder {
         }
 
         Model model = builder.end();
-        DynamicCubeModelDisposer.addModel(model);
+        GameResourceDisposer.addResource(model);
         cube.dynamicCubeView = new DynamicCubeView(model);
         return cube;
     }

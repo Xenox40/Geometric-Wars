@@ -59,7 +59,7 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
     public GameCustomizeScreen(GeometricWars game) {
         super(game);
         setBuilderTemplate("Default");
-        texture = new Texture(Gdx.files.internal("mapPreviewTile.png"));
+        texture = new Texture(Gdx.files.internal("pixel.png"));
     }
 
 

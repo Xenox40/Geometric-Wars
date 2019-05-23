@@ -1,6 +1,8 @@
 package com.geometric.wars.player.bots.randomactingbot;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.geometric.wars.cube.DynamicCubeBuilder;
+import com.geometric.wars.cube.mountables.guns.DoubleRifledGun;
 import com.geometric.wars.cube.mountables.guns.SimpleGun;
 import com.geometric.wars.player.ColorAndNameGiver;
 import com.geometric.wars.player.PlayersCubeFactory;
@@ -16,7 +18,12 @@ public class RandomBotFactory extends PlayersCubeFactory {
     @Override
     public RandomBotCube createCube() {
         String name = ColorAndNameGiver.getRandomUnusedColorName();
-        RandomBotCube cube = (RandomBotCube) builder.createCube(ColorAndNameGiver.getColorByName(name)).addMountable(Direction3D.DOWN, new SimpleGun()).build();
+        builder.createCube(ColorAndNameGiver.getColorByName(name));
+        if(MathUtils.randomBoolean())
+            builder.addMountable(Direction3D.DOWN, new SimpleGun());
+        else
+            builder.addMountable(Direction3D.DOWN,new DoubleRifledGun());
+        RandomBotCube cube = (RandomBotCube)builder.build();
         cube.setName(name);
         return cube;
     }

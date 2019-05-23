@@ -13,10 +13,15 @@ import java.util.Iterator;
 public class ShootingService implements DynamicGameObject {
     private Array<Bullet> bullets = new Array<>();
 
+    public boolean canShoot(MountableGun gun, long lastShootingTime) {
+        return OverheatCalculator.canShoot(gun,lastShootingTime);
+    }
+
     public void shootBullet(MountableGun gun, int startX, int startY, Direction2D direction2D) {
         Bullet bullet = new Bullet(startX,startY,gun.getDamage());
         SceneManager.getInstance().getCurrentMapService().extendCollisionArea(bullet,startX,startY);
         bullet.shoot(gun.getBulletSpeed(), direction2D.toDirection3D());
+        gun.setHeatLevel(OverheatCalculator.getHeatLevelAfterShoot(gun));
         bullets.add(bullet);
     }
 

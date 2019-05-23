@@ -18,7 +18,7 @@ public abstract class MountableGun extends Mountable {
 
 
     public float getOverheatRelativeGrowth() {return 0.06f; }
-    public float getOverheatAbsoluteGrowth() {return 0.20f; }
+    public float getOverheatAbsoluteGrowth() {return 0.08f; }
 
     public float getHeatLevel() {
         return heatLevel;

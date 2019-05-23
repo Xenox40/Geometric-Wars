@@ -36,5 +36,8 @@ public class SimpleGun extends MountableGun {
     }
 
     @Override
-    public float getOverheatGrowth() { return 0.03f; }
+    public float getOverheatAbsoluteGrowth() { return 0.06f; }
+
+    @Override
+    public float getOverheatRelativeGrowth() { return 0.20f; }
 }

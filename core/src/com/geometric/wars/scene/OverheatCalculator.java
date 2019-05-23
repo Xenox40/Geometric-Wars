@@ -3,27 +3,34 @@ package com.geometric.wars.scene;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.geometric.wars.cube.mountables.MountableGun;
 
+/**
+ * singleton
+ */
 public class OverheatCalculator {
-    private static final double coolingPerSecond = 0.08;
+    private OverheatCalculator(){}
 
-    public boolean canShoot(MountableGun gun, long lastShootTimeInMillis) {
+    /**
+     * calculates if given gun can shoot including heat level and waiting time
+     */
+    public static boolean canShoot(MountableGun gun, long lastShootTimeInMillis) {
         long deltaTime = TimeUtils.timeSinceMillis(lastShootTimeInMillis);
-        long requiredTime = (long)(gun.getWaitingTimeInMillis()*(1+gun.getHeatLevel()*3)*(1+gun.getHeatLevel()*3));
+        long requiredTime = (long)(gun.getWaitingTimeInMillis()*(1+gun.getHeatLevel()*1.2)*(1+gun.getHeatLevel()*1.2));
         return deltaTime >= requiredTime;
     }
 
-    public float getHeatLevelAfterShoot(MountableGun gun, float currentHeatLevel) {
-        return (currentHeatLevel+gun.getOverheatGrowth() >= 1 ? 1 : currentHeatLevel+gun.getOverheatGrowth());
+    public static float getHeatLevelAfterShoot(MountableGun gun) {
+        float newHeatLevel = (gun.getHeatLevel()+gun.getOverheatAbsoluteGrowth())*(1+gun.getOverheatRelativeGrowth());
+        return (newHeatLevel >= 1 ? 1 :newHeatLevel);
     }
 
     /**
      * decreases gun's heat level
      * @param gun gun
-     * @param lastCoolingTimeInMillis last cooling time
+     * @param deltaTime delta time in seconds between last frame
      * @return heat level after cooling
      */
-    public float getHeatLevelAfterCooling(MountableGun gun, long lastCoolingTimeInMillis) {
-        long deltaTime = TimeUtils.timeSinceMillis(lastCoolingTimeInMillis);
-        return (float)(gun.getHeatLevel()-(coolingPerSecond*deltaTime/1000));
+    public static float getHeatLevelAfterCooling(MountableGun gun, double deltaTime) {
+        double newHeatLevel =  gun.getHeatLevel() - (0.1*deltaTime);
+        return newHeatLevel <= 0 ? 0 : (float)newHeatLevel;
     }
 }

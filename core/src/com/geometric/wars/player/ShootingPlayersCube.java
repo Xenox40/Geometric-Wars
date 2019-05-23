@@ -1,5 +1,6 @@
 package com.geometric.wars.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.geometric.wars.collisions.DynamicBody;
@@ -7,6 +8,7 @@ import com.geometric.wars.cube.CubeFace;
 import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.cube.mountables.MountableGun;
 import com.geometric.wars.gameobjects.Bullet;
+import com.geometric.wars.scene.OverheatCalculator;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction3D;
 
@@ -23,11 +25,19 @@ public class ShootingPlayersCube extends PlayersCube {
                 break;
             }
         }
+        if(gun == null)
+            throw new RuntimeException("trying to get gun before it's created");
     }
 
     private int healthPoints = 25;
     private long lastShootTimeInMillis;
     private MountableGun gun;
+
+    private MountableGun getGun() {
+        if(gun == null)
+            findGun();
+        return gun;
+    }
 
     public boolean isAlive() {
         return healthPoints > 0;
@@ -44,22 +54,24 @@ public class ShootingPlayersCube extends PlayersCube {
     }
 
     public void shoot() {
-        if(gun == null)
-            findGun();
-
-        if(isMoving() || TimeUtils.timeSinceMillis(lastShootTimeInMillis) < gun.getWaitingTimeInMillis())
+        if(isMoving() || !SceneManager.getInstance().getCurrentShootingService().canShoot(getGun(),lastShootTimeInMillis))
             return;
-
         lastShootTimeInMillis = TimeUtils.millis();
 
-        Direction3D shootingDirection = getFaceOrientation(gun.getFaceMountedAt());
+        Direction3D shootingDirection = getFaceOrientation(getGun().getFaceMountedAt());
         Vector3 gunPosition = new Vector3(getApproachingPosition().x,0,getApproachingPosition().y).add(shootingDirection.toVector3());
 
         if(shootingDirection != Direction3D.BOTTOM && shootingDirection != Direction3D.TOP) {
-            SceneManager.getInstance().getCurrentShootingService().shootBullet(gun, (int) gunPosition.x, (int) gunPosition.z, shootingDirection.toDirection2D());
+            SceneManager.getInstance().getCurrentShootingService().shootBullet(getGun(), (int) gunPosition.x, (int) gunPosition.z, shootingDirection.toDirection2D());
         }
     }
 
+    @Override
+    public  void update() {
+        super.update();
+        System.out.println(this.getName()+" "+getGun().getHeatLevel());
+        getGun().setHeatLevel(OverheatCalculator.getHeatLevelAfterCooling(getGun(), Gdx.graphics.getDeltaTime()));
+    }
 
     @Override
     public boolean canCollideWith(DynamicBody object) {

@@ -20,7 +20,7 @@ public class ShootingPersonsCubeFactory extends PlayersCubeFactory {
     @Override
     public ShootingPersonsCube createCube() {
         String name = ColorAndNameGiver.getRandomUnusedColorName();
-        ShootingPersonsCube cube = (ShootingPersonsCube) builder.createCube(ColorAndNameGiver.getColorByName(name)).addMountable(Direction3D.DOWN, new DoubleRifledGun()).build();
+        ShootingPersonsCube cube = (ShootingPersonsCube) builder.createCube(ColorAndNameGiver.getColorByName(name)).addMountable(Direction3D.DOWN, new SimpleGun()).build();
         cube.setName(name+" [P]");
         return cube;
     }

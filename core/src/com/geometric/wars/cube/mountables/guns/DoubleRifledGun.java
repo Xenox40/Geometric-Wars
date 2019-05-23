@@ -17,18 +17,15 @@ public class DoubleRifledGun extends MountableGun {
 
 
 
-
     public DoubleRifledGun() {
         this.view = new MountableView(new Vector3(rifleSize.x, rifleSize.y, 2*rifleSize.z+spaceBetweenRifles)) {
-            private TextureRegion rifleTextureRegion;
 
-            public TextureRegion getTextureRegion() {
+            private TextureRegion getTextureRegion() {
                 final String name = "rifleTexture";
                 if (!GameResourceDisposer.contains(name)){
                     GameResourceDisposer.addResource(name, new Texture(Gdx.files.internal("rifle.png")));
-                    rifleTextureRegion = new TextureRegion((Texture)GameResourceDisposer.getResource(name));
                 }
-                return rifleTextureRegion;
+                return new TextureRegion((Texture)GameResourceDisposer.getResource(name));
             }
 
             @Override
@@ -48,7 +45,7 @@ public class DoubleRifledGun extends MountableGun {
 
     @Override
     public int getDamage() {
-        return 5;
+        return 10;
     }
 
     @Override

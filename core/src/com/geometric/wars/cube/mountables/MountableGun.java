@@ -9,14 +9,16 @@ public abstract class MountableGun extends Mountable {
     /**
      * @return bullet speed in blocks per seconds
      */
-    public abstract float getBulletSpeed();
+    public float getBulletSpeed() {return 20f;}
 
     /**
      * an overheat growth causes longer waiting time, see OverheatCalculator
      * @return absolute overheat growth per shoot bullet, value should be in range [0,1.0]
      */
-    public abstract float getOverheatRelativeGrowth();
-    public abstract float getOverheatAbsoluteGrowth();
+
+
+    public float getOverheatRelativeGrowth() {return 0.06f; }
+    public float getOverheatAbsoluteGrowth() {return 0.20f; }
 
     public float getHeatLevel() {
         return heatLevel;

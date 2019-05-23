@@ -30,14 +30,4 @@ public class SimpleGun extends MountableGun {
         return 250;
     }
 
-    @Override
-    public float getBulletSpeed() {
-        return 20f;
-    }
-
-    @Override
-    public float getOverheatAbsoluteGrowth() { return 0.06f; }
-
-    @Override
-    public float getOverheatRelativeGrowth() { return 0.20f; }
 }

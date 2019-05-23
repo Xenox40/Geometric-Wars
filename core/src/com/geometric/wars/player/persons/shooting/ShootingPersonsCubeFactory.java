@@ -1,6 +1,7 @@
 package com.geometric.wars.player.persons.shooting;
 
 import com.geometric.wars.cube.DynamicCubeBuilder;
+import com.geometric.wars.cube.mountables.guns.DoubleRifledGun;
 import com.geometric.wars.cube.mountables.guns.SimpleGun;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.player.ColorAndNameGiver;
@@ -19,7 +20,7 @@ public class ShootingPersonsCubeFactory extends PlayersCubeFactory {
     @Override
     public ShootingPersonsCube createCube() {
         String name = ColorAndNameGiver.getRandomUnusedColorName();
-        ShootingPersonsCube cube = (ShootingPersonsCube) builder.createCube(ColorAndNameGiver.getColorByName(name)).addMountable(Direction3D.DOWN, new SimpleGun()).build();
+        ShootingPersonsCube cube = (ShootingPersonsCube) builder.createCube(ColorAndNameGiver.getColorByName(name)).addMountable(Direction3D.DOWN, new DoubleRifledGun()).build();
         cube.setName(name+" [P]");
         return cube;
     }

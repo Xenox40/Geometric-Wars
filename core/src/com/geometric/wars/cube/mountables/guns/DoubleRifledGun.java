@@ -9,22 +9,34 @@ import com.badlogic.gdx.math.Vector3;
 import com.geometric.wars.cube.mountables.MountableGun;
 import com.geometric.wars.cube.mountables.MountableView;
 import com.geometric.wars.models.BoxBuilder;
+import com.geometric.wars.utils.GameResourceDisposer;
 
 public class DoubleRifledGun extends MountableGun {
     private static final Vector3 rifleSize = new Vector3(0.45f,0.1f,0.1f);
     private static final float spaceBetweenRifles = 0.05f;
-    private static final Texture rifleTexture = new Texture(Gdx.files.internal("rifle.png"));
-    private static final TextureRegion rifleTextureRegion = new TextureRegion(rifleTexture);
+
+
+
 
     public DoubleRifledGun() {
         this.view = new MountableView(new Vector3(rifleSize.x, rifleSize.y, 2*rifleSize.z+spaceBetweenRifles)) {
+            private TextureRegion rifleTextureRegion;
+
+            public TextureRegion getTextureRegion() {
+                final String name = "rifleTexture";
+                if (!GameResourceDisposer.contains(name)){
+                    GameResourceDisposer.addResource(name, new Texture(Gdx.files.internal("rifle.png")));
+                    rifleTextureRegion = new TextureRegion((Texture)GameResourceDisposer.getResource(name));
+                }
+                return rifleTextureRegion;
+            }
 
             @Override
             public void buildMeshPart(ModelBuilder modelBuilder) {
                 super.createNode(modelBuilder);
                 node = modelBuilder.node();
-                Node rifle1 = BoxBuilder.addTexturedBoxNode(modelBuilder, "rifle1", rifleTextureRegion, rifleSize.x, rifleSize.y, rifleSize.z);
-                Node rifle2 = BoxBuilder.addTexturedBoxNode(modelBuilder, "rifle2", rifleTextureRegion, rifleSize.x, rifleSize.y, rifleSize.z);
+                Node rifle1 = BoxBuilder.addTexturedBoxNode(modelBuilder, "rifle1", getTextureRegion(), rifleSize.x, rifleSize.y, rifleSize.z);
+                Node rifle2 = BoxBuilder.addTexturedBoxNode(modelBuilder, "rifle2", getTextureRegion(), rifleSize.x, rifleSize.y, rifleSize.z);
                 rifle1.translation.add(0f,0f,-(rifleSize.z+spaceBetweenRifles)/2);
                 rifle2.translation.add(0f,-0f,(rifleSize.z+spaceBetweenRifles)/2);
                 node.addChild(rifle1);

@@ -6,6 +6,7 @@ import com.geometric.wars.maps.GameMap;
 import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.swipe.SwipeInputController;
 import com.geometric.wars.models.*;
+import com.geometric.wars.utils.GameResourceDisposer;
 import com.geometric.wars.screens.*;
 
 
@@ -88,7 +89,7 @@ public class GeometricWars extends Game{
     	if(gameCustomizeScreen != null)
     		gameCustomizeScreen.dispose();
 
-		DynamicCubeModelDisposer.dispose();
+		GameResourceDisposer.dispose();
 		FloorModel.dispose();
 		WallModel.dispose();
 		LineModel.dispose();

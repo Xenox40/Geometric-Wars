@@ -22,7 +22,7 @@ public class Scene {
     private NinePatch overheatBarModel;
     private BitmapFont font;
     private static final float barHeight = 10f;
-
+    protected boolean isEndOfScene;
     private boolean areStaticObjectsCacheUpdated;
 
     public Scene() {
@@ -93,5 +93,9 @@ public class Scene {
         for (StaticGameObject object: staticMapObjects)
             object.cache(staticModelsCache);
         staticModelsCache.end();
+    }
+
+    public boolean hasEnded() {
+        return isEndOfScene;
     }
 }

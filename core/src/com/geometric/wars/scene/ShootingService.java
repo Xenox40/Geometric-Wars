@@ -1,5 +1,6 @@
 package com.geometric.wars.scene;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.Array;
@@ -31,6 +32,11 @@ public class ShootingService implements DynamicGameObject {
     public void render(ModelBatch modelBatch, Environment environment) {
         for(Bullet bullet : bullets)
             modelBatch.render(bullet,environment);
+    }
+
+    @Override
+    public void renderGUI(SpriteBatch batch) {
+
     }
 
     @Override

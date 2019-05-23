@@ -1,5 +1,6 @@
 package com.geometric.wars.player;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.geometric.wars.gameobjects.DynamicGameObject;
@@ -48,6 +49,9 @@ public class PlayersController implements DynamicGameObject {
         for (PlayersCube p : cubes)
             p.render(batch,environment);
     }
+
+    @Override
+    public void renderGUI(SpriteBatch batch) {}
 
     public PlayersCube getCube(int i) {
         return cubes.get(i);

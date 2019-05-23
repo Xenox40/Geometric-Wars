@@ -3,6 +3,7 @@ package com.geometric.wars.scene;
 import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.player.ShooterPlayersController;
+import com.geometric.wars.utils.Action;
 
 public class GameScene extends Scene {
 
@@ -17,8 +18,15 @@ public class GameScene extends Scene {
         shootingService = new ShootingService();
         respawningService = new RespawningService();
         scoreboard = new Scoreboard();
+        scoreboard.addActionOnEndOfGame(new Action(){
+            @Override
+            public void doAction() {
+                isEndOfScene = true;
+            }
+        });
         addDynamicGameObject(shootingService);
         addDynamicGameObject(respawningService);
+        addDynamicGameObject(scoreboard);
     }
 
     @Override

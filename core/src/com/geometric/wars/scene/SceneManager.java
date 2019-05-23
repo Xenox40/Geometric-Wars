@@ -4,6 +4,7 @@ import com.geometric.wars.maps.GameMap;
 import com.geometric.wars.GeometricWars;
 import com.geometric.wars.maps.MapLoader;
 import com.geometric.wars.maps.MapService;
+import com.geometric.wars.player.ShootingPlayersCube;
 
 public class SceneManager {
 
@@ -35,9 +36,6 @@ public class SceneManager {
         return getCurrentScene().getShootingService();
     }
 
-    public RespawningService getCurrentRespawningService() {
-        return getCurrentScene().getRespawningService();
-    }
 
     public SceneManager setGame(GeometricWars game) {
         this.game = game;
@@ -55,5 +53,11 @@ public class SceneManager {
         mapLoader
                 .setScene(currentScene)
                 .load(map);
+    }
+
+    public void reportKill(ShootingPlayersCube killer, ShootingPlayersCube victim) {
+        System.out.println(killer.getName()+" receives point");
+        getCurrentScene().getRespawningService().moveToKilledQueue(victim);
+        getCurrentScene().getScoreboard().addPoints(killer,1);
     }
 }

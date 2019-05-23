@@ -34,7 +34,7 @@ public class ShootingPlayersCube extends PlayersCube {
     private long lastShootTimeInMillis;
     private MountableGun gun;
 
-    private MountableGun getGun() {
+    public MountableGun getGun() {
         if(gun == null)
             findGun();
         return gun;
@@ -64,7 +64,6 @@ public class ShootingPlayersCube extends PlayersCube {
         healthPoints = hp;
         if (healthPoints <= 0) {
             healthPoints = 0;
-            onDeath();
         }
     }
 
@@ -77,13 +76,10 @@ public class ShootingPlayersCube extends PlayersCube {
         Vector3 gunPosition = new Vector3(getApproachingPosition().x,0,getApproachingPosition().y).add(shootingDirection.toVector3());
 
         if(shootingDirection != Direction3D.BOTTOM && shootingDirection != Direction3D.TOP) {
-            SceneManager.getInstance().getCurrentShootingService().shootBullet(getGun(), (int) gunPosition.x, (int) gunPosition.z, shootingDirection.toDirection2D());
+            SceneManager.getInstance().getCurrentShootingService().shootBullet(this, (int) gunPosition.x, (int) gunPosition.z, shootingDirection.toDirection2D());
         }
     }
 
-    private void onDeath() {
-        SceneManager.getInstance().getCurrentRespawningService().moveToKilledQueue(this);
-    }
 
     @Override
     public  void update() {

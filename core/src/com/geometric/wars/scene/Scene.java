@@ -44,6 +44,7 @@ public class Scene {
         dynamicMapObjects.add(object);
     }
 
+
     public void update() {
         for(DynamicGameObject dynamicGameObject : dynamicMapObjects) {
             dynamicGameObject.update();

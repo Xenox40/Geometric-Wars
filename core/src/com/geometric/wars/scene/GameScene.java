@@ -1,20 +1,31 @@
 package com.geometric.wars.scene;
 
+import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.maps.MapService;
+import com.geometric.wars.player.ShooterPlayersController;
 
 public class GameScene extends Scene {
 
     private MapService mapService;
     private ShootingService shootingService;
     private RespawningService respawningService;
+    private Scoreboard scoreboard;
 
     GameScene() {
         super();
         mapService = new MapService();
         shootingService = new ShootingService();
         respawningService = new RespawningService();
+        scoreboard = new Scoreboard();
         addDynamicGameObject(shootingService);
         addDynamicGameObject(respawningService);
+    }
+
+    @Override
+    public void addDynamicGameObject(DynamicGameObject object) {
+        super.addDynamicGameObject(object);
+        if(object instanceof ShooterPlayersController)
+            scoreboard.addPlayer((ShooterPlayersController)object);
     }
 
     public MapService getMapService() {
@@ -26,4 +37,5 @@ public class GameScene extends Scene {
     public RespawningService getRespawningService() {
         return respawningService;
     }
+    public Scoreboard getScoreboard() {return scoreboard;}
 }

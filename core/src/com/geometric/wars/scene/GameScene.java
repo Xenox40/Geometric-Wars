@@ -6,12 +6,15 @@ public class GameScene extends Scene {
 
     private MapService mapService;
     private ShootingService shootingService;
+    private RespawningService respawningService;
 
     GameScene() {
         super();
         mapService = new MapService();
         shootingService = new ShootingService();
+        respawningService = new RespawningService();
         addDynamicGameObject(shootingService);
+        addDynamicGameObject(respawningService);
     }
 
     public MapService getMapService() {
@@ -19,5 +22,8 @@ public class GameScene extends Scene {
     }
     public ShootingService getShootingService() {
         return shootingService;
+    }
+    public RespawningService getRespawningService() {
+        return respawningService;
     }
 }

@@ -13,6 +13,7 @@ import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction3D;
 
 public class ShootingPlayersCube extends PlayersCube {
+    public static final int startingHp = 25;
     public ShootingPlayersCube(DynamicCubeController controller) {
         super(controller);
     }
@@ -29,7 +30,7 @@ public class ShootingPlayersCube extends PlayersCube {
             throw new RuntimeException("trying to get gun before it's created");
     }
 
-    private int healthPoints = 25;
+    private int healthPoints = startingHp;
     private long lastShootTimeInMillis;
     private MountableGun gun;
 
@@ -43,6 +44,11 @@ public class ShootingPlayersCube extends PlayersCube {
         return healthPoints > 0;
     }
 
+
+    public void setGunHeatLevel(float heat) {
+        getGun().setHeatLevel(heat);
+    }
+
     public int getHealthPoints() {
         return healthPoints;
     }
@@ -52,9 +58,14 @@ public class ShootingPlayersCube extends PlayersCube {
     }
 
     public void takeHp(int hp) {
-        healthPoints -= hp;
-        if (healthPoints < 0)
+        setHealthPoints(getHealthPoints()-hp);
+    }
+    public void setHealthPoints(int hp) {
+        healthPoints = hp;
+        if (healthPoints <= 0) {
             healthPoints = 0;
+            onDeath();
+        }
     }
 
     public void shoot() {
@@ -70,7 +81,9 @@ public class ShootingPlayersCube extends PlayersCube {
         }
     }
 
-
+    private void onDeath() {
+        SceneManager.getInstance().getCurrentRespawningService().moveToKilledQueue(this);
+    }
 
     @Override
     public  void update() {

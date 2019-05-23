@@ -35,6 +35,10 @@ public class SceneManager {
         return getCurrentScene().getShootingService();
     }
 
+    public RespawningService getCurrentRespawningService() {
+        return getCurrentScene().getRespawningService();
+    }
+
     public SceneManager setGame(GeometricWars game) {
         this.game = game;
         return this;

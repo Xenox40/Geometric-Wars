@@ -15,14 +15,14 @@ import com.geometric.wars.player.ShooterPlayersController;
 import com.geometric.wars.player.ShootingPlayersCube;
 
 public class Scene {
-    protected Array<StaticGameObject> staticMapObjects;
-    protected Array<DynamicGameObject> dynamicMapObjects;
-    protected ModelCache staticModelsCache;
-    protected NinePatch healthBarModel;
-    protected NinePatch overheatBarModel;
-    protected BitmapFont font;
-    protected static final float barHeight = 10f;
-    protected boolean isEndOfScene;
+    Array<StaticGameObject> staticMapObjects;
+    Array<DynamicGameObject> dynamicMapObjects;
+    ModelCache staticModelsCache;
+    NinePatch healthBarModel;
+    NinePatch overheatBarModel;
+    BitmapFont font;
+    static final float barHeight = 10f;
+    boolean isEndOfScene;
     private boolean areStaticObjectsCacheUpdated;
 
     public Scene() {

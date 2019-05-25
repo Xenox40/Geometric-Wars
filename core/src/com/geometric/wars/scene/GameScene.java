@@ -1,11 +1,13 @@
 package com.geometric.wars.scene;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.player.ShooterPlayersController;
 import com.geometric.wars.player.ShootingPlayersCube;
 import com.geometric.wars.utils.Action;
+
 
 public class GameScene extends Scene {
 
@@ -34,7 +36,9 @@ public class GameScene extends Scene {
     @Override
     public void renderGUI(SpriteBatch batch) {
         float posX = 20, posY = 40;
-        for (Scoreboard.PlayerScore playerScore : scoreboard.getScores()) {
+        Array<Scoreboard.PlayerScore> scores = new Array<>(scoreboard.getScores());
+        scores.reverse();
+        for (Scoreboard.PlayerScore playerScore : scores) {
             ShootingPlayersCube cube = playerScore.controller.getCube();
             int hp = cube.getHealthPoints();
             float overheat = cube.getGunHeatLevel();

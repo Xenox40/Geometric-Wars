@@ -35,11 +35,6 @@ public class ShootingService implements DynamicGameObject {
     }
 
     @Override
-    public void renderGUI(SpriteBatch batch) {
-
-    }
-
-    @Override
     public void update() {
         for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();){
             Bullet bullet = it.next();

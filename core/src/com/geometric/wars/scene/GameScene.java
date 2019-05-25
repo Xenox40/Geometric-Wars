@@ -1,8 +1,10 @@
 package com.geometric.wars.scene;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.player.ShooterPlayersController;
+import com.geometric.wars.player.ShootingPlayersCube;
 import com.geometric.wars.utils.Action;
 
 public class GameScene extends Scene {
@@ -27,6 +29,22 @@ public class GameScene extends Scene {
         addDynamicGameObject(shootingService);
         addDynamicGameObject(respawningService);
         addDynamicGameObject(scoreboard);
+    }
+
+    @Override
+    public void renderGUI(SpriteBatch batch) {
+        float posX = 20, posY = 40;
+        for (Scoreboard.PlayerScore playerScore : scoreboard.getScores()) {
+            ShootingPlayersCube cube = playerScore.controller.getCube();
+            int hp = cube.getHealthPoints();
+            float overheat = cube.getGunHeatLevel();
+            font.draw(batch,playerScore.score+" " + cube.getName(), posX, posY+barHeight);
+            if(hp > 0) {
+                healthBarModel.draw(batch, posX+120f, posY, 5f*hp, barHeight);
+                overheatBarModel.draw(batch, posX+120,posY+barHeight*1.2f,5*overheat*35,barHeight);
+            }
+            posY += 2*barHeight+20;
+        }
     }
 
     @Override

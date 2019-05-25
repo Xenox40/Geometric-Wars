@@ -56,7 +56,6 @@ public class SceneManager {
     }
 
     public void reportKill(ShootingPlayersCube killer, ShootingPlayersCube victim) {
-        System.out.println(killer.getName()+" receives point");
         getCurrentScene().getRespawningService().moveToKilledQueue(victim);
         getCurrentScene().getScoreboard().addPoints(killer,1);
     }

@@ -11,41 +11,51 @@ import com.geometric.wars.utils.Action;
 
 
 public class Scoreboard implements DynamicGameObject {
+    public static class PlayerScore implements Comparable<PlayerScore>{
+        public PlayerScore(ShooterPlayersController controller, int score) {
+            this.controller = controller;
+            this.score = score;
+        }
+        ShooterPlayersController controller;
+        int score;
+
+        @Override
+        public int compareTo(PlayerScore other) {
+            return  -Integer.compare(score,other.score);
+        }
+    }
+
     private static final int scoreToWin = 3;
-    private Array<ShooterPlayersController> cubes = new Array<>();
-    private Array<Integer> scores  = new Array<>();
+    private Array<PlayerScore> scores = new Array<>();
     private Action endOfGameAction;
 
     void addPoints(ShootingPlayersCube killer, int points) {
-        for(int i=0;i<cubes.size;i++){
-            if(cubes.get(i).getCube().equals(killer))
-                scores.set(i,scores.get(i)+points);
+        for(int i=0;i<scores.size;i++){
+            if(scores.get(i).controller.getCube().equals(killer))
+                scores.get(i).score += points;
         }
+        scores.sort();
     }
 
     void addPlayer(ShooterPlayersController player) {
-        cubes.add(player);
-        scores.add(0);
-    }
-
-    private int getIndexWithMaximumScore(){
-        int maxIndex = 0;
-        for(int i=0;i<cubes.size;i++) {
-            if (scores.get(i) > scores.get(maxIndex))
-                maxIndex = i;
-        }
-        return maxIndex;
+        scores.add(new PlayerScore(player,0));
+        scores.sort();
     }
 
     public boolean isEndOfGame() {
-        return scores.get(getIndexWithMaximumScore()) >= scoreToWin;
+        return scores.get(0).score >= scoreToWin;
     }
 
     public ShooterPlayersController getWinner() {
         if(!isEndOfGame())
             return null;
-        return cubes.get(getIndexWithMaximumScore());
+        return scores.get(0).controller;
 
+
+    }
+
+    public Array<PlayerScore> getScores() {
+        return scores;
     }
 
     @Override
@@ -57,11 +67,6 @@ public class Scoreboard implements DynamicGameObject {
 
     @Override
     public void render(ModelBatch modelBatch, Environment environment) { }
-
-    @Override
-    public void renderGUI(SpriteBatch batch) {
-        //TODO render scoreboard
-    }
 
     public void addActionOnEndOfGame(Action action) {
         this.endOfGameAction = action;

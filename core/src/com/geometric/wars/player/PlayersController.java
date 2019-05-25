@@ -50,9 +50,6 @@ public class PlayersController implements DynamicGameObject {
             p.render(batch,environment);
     }
 
-    @Override
-    public void renderGUI(SpriteBatch batch) {}
-
     public PlayersCube getCube(int i) {
         return cubes.get(i);
     }

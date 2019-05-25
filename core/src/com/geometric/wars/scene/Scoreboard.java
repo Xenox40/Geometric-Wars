@@ -16,8 +16,8 @@ public class Scoreboard implements DynamicGameObject {
             this.controller = controller;
             this.score = score;
         }
-        ShooterPlayersController controller;
-        int score;
+        public ShooterPlayersController controller;
+        public int score;
 
         @Override
         public int compareTo(PlayerScore other) {

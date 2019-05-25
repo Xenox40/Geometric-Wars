@@ -18,6 +18,7 @@ public class GeometricWars extends Game{
 	public GameCustomizeScreen gameCustomizeScreen;
 	public OptionsScreen optionsScreen;
 	public ControlPickScreen controlPickScreen;
+	public GameResultScreen gameResultScreen;
 
 	public Preferences prefs;
 
@@ -41,7 +42,7 @@ public class GeometricWars extends Game{
 		}
 
 		gameScreen = new GameScreen(this);
-
+		gameResultScreen = new GameResultScreen(this);
 		if(isAndroidPlatform()){
 			gameScreen.setMap(map);
 			setScreen(gameScreen);

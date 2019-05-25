@@ -100,14 +100,9 @@ public class GameScreen extends AbstractScreen {
         sceneManager.getCurrentScene().renderGUI(spriteBatch);
         spriteBatch.end();
 
-        if(sceneManager.getCurrentScene().hasEnded()){
-            if(game.isAndroidPlatform()) {
-                Gdx.app.exit();
-                System.exit(0);
-            }
-            else
-                game.setScreen(game.mainMenuScreen);
-        }
+        if(sceneManager.getCurrentScene().hasEnded())
+            game.setScreen(game.gameResultScreen);
+
 
     }
 

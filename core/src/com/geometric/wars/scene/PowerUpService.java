@@ -3,9 +3,11 @@ package com.geometric.wars.scene;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelCache;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.powerups.PowerUp;
+import com.geometric.wars.utils.Position;
 
 import java.util.Iterator;
 
@@ -13,6 +15,11 @@ public class PowerUpService implements DynamicGameObject {
     Array<PowerUp> powerUps = new Array<>();
     private ModelCache powerUpCache = new ModelCache();
     private boolean cacheUpdatingRequired = false;
+
+
+    private static final int maxiPowerUpCountPer100emptyCells = 5;
+    private int relativeMaxiPowerUpCount = -1;
+
 
     public void addPowerUp(PowerUp powerUp, int x,int y) {
         powerUp.setPosition(y,x);
@@ -28,6 +35,12 @@ public class PowerUpService implements DynamicGameObject {
 
     @Override
     public void update() {
+        if(relativeMaxiPowerUpCount == -1)
+            updateMaxiPowerUpCount();
+
+        if(powerUps.size < relativeMaxiPowerUpCount) {
+            addRandomPowerUp();
+        }
 
         for(Iterator<PowerUp> it = powerUps.iterator(); it.hasNext();) {
             PowerUp powerUp = it.next();
@@ -40,6 +53,19 @@ public class PowerUpService implements DynamicGameObject {
         if(cacheUpdatingRequired) {
             updateCache();
         }
+    }
+
+    private void addRandomPowerUp() {
+        updateMaxiPowerUpCount();
+        if(powerUps.size < relativeMaxiPowerUpCount) {
+            Position position = SceneManager.getInstance().getCurrentMapService().getEmptyCells().random();
+            addPowerUp(new PowerUp(), position.x, position.y);
+        }
+    }
+
+    private void updateMaxiPowerUpCount() {
+        int emptyCells = SceneManager.getInstance().getCurrentMapService().getEmptyCells().size;
+        relativeMaxiPowerUpCount =  emptyCells*maxiPowerUpCountPer100emptyCells/100;
     }
 
     private void updateCache() {

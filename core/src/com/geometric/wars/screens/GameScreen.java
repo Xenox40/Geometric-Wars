@@ -42,7 +42,6 @@ public class GameScreen extends AbstractScreen {
         spriteBatch = new SpriteBatch();
 
 
-
         axes = new CoordinateAxes3D();
         sceneManager = SceneManager.getInstance();
     }
@@ -92,7 +91,6 @@ public class GameScreen extends AbstractScreen {
         super.render(delta);
 
         // System.out.println(" FPS: "+ Gdx.graphics.getFramesPerSecond());
-
         sceneManager.getCurrentScene().update();
 
         batch.begin(camera);
@@ -101,6 +99,11 @@ public class GameScreen extends AbstractScreen {
         spriteBatch.begin();
         sceneManager.getCurrentScene().renderGUI(spriteBatch);
         spriteBatch.end();
+
+        if(sceneManager.getCurrentScene().hasEnded())
+            game.setScreen(game.gameResultScreen);
+
+
     }
 
     @Override
@@ -108,7 +111,9 @@ public class GameScreen extends AbstractScreen {
         super.dispose();
         if(sceneManager.getCurrentScene() != null)
             sceneManager.getCurrentScene().dispose();
-        batch.dispose();
-        spriteBatch.dispose();
+        if(batch != null)
+            batch.dispose();
+        if(spriteBatch != null)
+            spriteBatch.dispose();
     }
 }

@@ -1,5 +1,6 @@
 package com.geometric.wars.player;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.geometric.wars.gameobjects.DynamicGameObject;

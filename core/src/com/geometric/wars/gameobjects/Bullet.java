@@ -18,7 +18,7 @@ public class Bullet extends ModelInstance implements DynamicBody {
     private float speed;
     private int damage;
     private int startX,startY;
-
+    private ShootingPlayersCube owner;
 
     /**
      * current position x and position y
@@ -88,6 +88,9 @@ public class Bullet extends ModelInstance implements DynamicBody {
         if(!exists())
             return;
         shootingPlayersCube.takeHp(damage);
+        if(!shootingPlayersCube.isAlive()){
+            SceneManager.getInstance().reportKill(owner,shootingPlayersCube);
+        }
         destroy();
     }
 
@@ -104,4 +107,7 @@ public class Bullet extends ModelInstance implements DynamicBody {
         return !destroyed;
     }
 
+    public void setOwner(ShootingPlayersCube owner) {
+        this.owner = owner;
+    }
 }

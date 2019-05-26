@@ -2,6 +2,7 @@ package com.geometric.wars.maps;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.geometric.wars.utils.Position;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,22 +38,10 @@ public class GameMap implements Serializable {
         this.height = other.height;
         map = new char[height][width];
         for(int i=0;i<height;i++) {
-            for(int j=0;j<width;j++)
-                map[i][j] = other.map[i][j];
+            if (width >= 0)
+                System.arraycopy(other.map[i], 0, map[i], 0, width);
         }
     }
-
-    public static class WeightedPoint{
-        public int x,y;
-        public int weight;
-        public WeightedPoint(int x,int y, int weight){
-            this.x = x;
-            this.y = y;
-            this.weight = weight;
-        }
-    }
-
-
 
     public char get(int i, int j) {
         return map[i][j];

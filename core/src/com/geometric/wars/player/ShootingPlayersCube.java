@@ -13,6 +13,7 @@ import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction3D;
 
 public class ShootingPlayersCube extends PlayersCube {
+    public static final int startingHp = 25;
     public ShootingPlayersCube(DynamicCubeController controller) {
         super(controller);
     }
@@ -29,11 +30,11 @@ public class ShootingPlayersCube extends PlayersCube {
             throw new RuntimeException("trying to get gun before it's created");
     }
 
-    private int healthPoints = 25;
+    private int healthPoints = startingHp;
     private long lastShootTimeInMillis;
     private MountableGun gun;
 
-    private MountableGun getGun() {
+    public MountableGun getGun() {
         if(gun == null)
             findGun();
         return gun;
@@ -41,6 +42,11 @@ public class ShootingPlayersCube extends PlayersCube {
 
     public boolean isAlive() {
         return healthPoints > 0;
+    }
+
+
+    public void setGunHeatLevel(float heat) {
+        getGun().setHeatLevel(heat);
     }
 
     public int getHealthPoints() {
@@ -52,9 +58,13 @@ public class ShootingPlayersCube extends PlayersCube {
     }
 
     public void takeHp(int hp) {
-        healthPoints -= hp;
-        if (healthPoints < 0)
+        setHealthPoints(getHealthPoints()-hp);
+    }
+    public void setHealthPoints(int hp) {
+        healthPoints = hp;
+        if (healthPoints <= 0) {
             healthPoints = 0;
+        }
     }
 
     public void shoot() {
@@ -66,10 +76,9 @@ public class ShootingPlayersCube extends PlayersCube {
         Vector3 gunPosition = new Vector3(getApproachingPosition().x,0,getApproachingPosition().y).add(shootingDirection.toVector3());
 
         if(shootingDirection != Direction3D.BOTTOM && shootingDirection != Direction3D.TOP) {
-            SceneManager.getInstance().getCurrentShootingService().shootBullet(getGun(), (int) gunPosition.x, (int) gunPosition.z, shootingDirection.toDirection2D());
+            SceneManager.getInstance().getCurrentShootingService().shootBullet(this, (int) gunPosition.x, (int) gunPosition.z, shootingDirection.toDirection2D());
         }
     }
-
 
 
     @Override

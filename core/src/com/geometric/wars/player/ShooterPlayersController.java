@@ -16,21 +16,19 @@ public class ShooterPlayersController extends PlayersController {
         }
     }
 
-    private ShootingPlayersCube getCube() { return (ShootingPlayersCube) cubes.get(0); }
+    public ShootingPlayersCube getCube() { return (ShootingPlayersCube) cubes.get(0); }
 
-    public int getCubeHealthPoints() { return getCube().getHealthPoints(); }
 
     @Override
     public void update() {
-        if(!((ShootingPlayersCube) getCube()).isAlive())
+        if(!(getCube()).isAlive())
             return;
         super.update();
     }
 
     @Override
     public void render(ModelBatch batch, Environment environment) {
-        if(getCube() instanceof ShootingPlayersCube &&
-                !((ShootingPlayersCube) getCube()).isAlive())
+        if (!(getCube().isAlive()))
             return;
         super.render(batch, environment);
     }

@@ -67,6 +67,7 @@ public class DynamicCube {
             finishRotating();
         this.ax = this.bx = x;
         this.az = this.bz = z;
+        rotationBeforeMove = rotationAfterMove = new Quaternion();
         dynamicCubeView.transform.setToTranslation(x,0,z);
     }
 

@@ -3,7 +3,7 @@ package com.geometric.wars.maps;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.collisions.DynamicBody;
-
+import com.geometric.wars.utils.Position;
 
 
 public class MapService {
@@ -61,6 +61,16 @@ public class MapService {
         return height;
     }
 
+    public Array<Position> getEmptyCells() {
+        Array<Position> emptyCells = new Array<>();
+        for(int i=0;i<mapObjects.size;i++) {
+            for(int j=0;j<mapObjects.get(i).size;j++) {
+                if(mapObjects.get(i).get(j).size == 0)
+                    emptyCells.add(new Position(i,j));
+            }
+        }
+        return emptyCells;
+    }
 
     public boolean isMoveAllowed(DynamicBody dynamicBody, int newX, int newY) {
         if(newX < 0 || newY < 0 ||  newX >= getWidth() || newY >= getHeight())

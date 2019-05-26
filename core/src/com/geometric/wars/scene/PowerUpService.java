@@ -3,8 +3,10 @@ package com.geometric.wars.scene;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelCache;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.gameobjects.DynamicGameObject;
+import com.geometric.wars.powerups.DoubleDamagePowerUp;
 import com.geometric.wars.powerups.EffectApplicator;
 import com.geometric.wars.powerups.NoOverHeatPowerUp;
 import com.geometric.wars.powerups.PowerUp;
@@ -62,8 +64,17 @@ public class PowerUpService implements DynamicGameObject {
     private void addRandomPowerUp() {
         updateMaxiPowerUpCount();
         if(powerUps.size < relativeMaxiPowerUpCount) {
+            PowerUp powerUp;
+            int rand = MathUtils.random(100);
+            if(rand <= 40) {
+                powerUp = new DoubleDamagePowerUp();
+            }
+            else {
+                powerUp = new NoOverHeatPowerUp();
+            }
+
             Position position = SceneManager.getInstance().getCurrentMapService().getEmptyCells().random();
-            addPowerUp(new NoOverHeatPowerUp(), position.x, position.y);
+            addPowerUp(powerUp,position.x,position.y);
         }
     }
 

@@ -17,11 +17,19 @@ public class EffectApplicator {
         return instance;
     }
 
+    public void clearEffectsOn(ShootingPlayersCube cube) {
+        if(effects.containsKey(cube)) {
+            for(TimeEffect e : effects.get(cube))
+                e.wasDestroyed = true;
+        }
+    }
+
 
     private static class TimeEffect implements Comparable<TimeEffect>{
         Effect effect;
         ShootingPlayersCube cube;
         long destroyTimeInMills;
+        boolean wasDestroyed = false;
         TimeEffect(Effect effect, ShootingPlayersCube cube, long destroyTime) {
             this.effect = effect;
             this.cube = cube;
@@ -30,7 +38,10 @@ public class EffectApplicator {
 
         @Override
         public int compareTo(TimeEffect timeEffect) {
-            return Long.compare(this.destroyTimeInMills,timeEffect.destroyTimeInMills);
+            int r1 = Long.compare(this.destroyTimeInMills,timeEffect.destroyTimeInMills);
+            if(r1 == 0)
+                return Long.compare(this.effect.hashCode(),timeEffect.effect.hashCode());
+            return r1;
         }
     }
 
@@ -44,9 +55,9 @@ public class EffectApplicator {
             effects.put(cube,new PriorityQueue<TimeEffect>());
         for(Iterator<TimeEffect> it = effects.get(cube).iterator(); it.hasNext();) {
             TimeEffect e = it.next();
-            if(e.effect.getClass().isInstance(effect.getClass())) {
+            if(e.effect.getClass().isInstance(effect) && ! e.wasDestroyed) {
                 e.effect.revert(e.cube);
-                it.remove();
+                e.wasDestroyed = true;
             }
         }
         TimeEffect timeEffect = new TimeEffect(effect,cube, TimeUtils.millis() + durationInMillis);
@@ -58,7 +69,9 @@ public class EffectApplicator {
 
     public void update() {
         while (timesOfUpdate.size() > 0 && timesOfUpdate.peek().destroyTimeInMills <= TimeUtils.millis()) {
-            timesOfUpdate.peek().effect.revert(timesOfUpdate.peek().cube);
+            if (!(timesOfUpdate.peek().wasDestroyed)) {
+                timesOfUpdate.peek().effect.revert(timesOfUpdate.peek().cube);
+            }
             effects.get(timesOfUpdate.peek().cube).poll();
             timesOfUpdate.poll();
         }

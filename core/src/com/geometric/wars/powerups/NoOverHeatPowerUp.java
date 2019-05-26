@@ -9,10 +9,6 @@ public class NoOverHeatPowerUp extends PowerUp{
         setColor(new Color(0.9f,0.1f,0.1f,1));
     }
 
-    @Override
-    public int getPower() {
-        return 2;
-    }
 
     @Override
     protected void applyEffectTo(ShootingPlayersCube cube) {

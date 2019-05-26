@@ -9,10 +9,6 @@ public class DoubleDamagePowerUp extends PowerUp {
         setColor(new Color(0.4f,0.6f,0.3f,0.4f));
     }
 
-    @Override
-    public int getPower() {
-        return 4;
-    }
 
     @Override
     protected void applyEffectTo(ShootingPlayersCube cube) {

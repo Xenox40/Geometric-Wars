@@ -3,7 +3,6 @@ package com.geometric.wars.powerups;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.geometric.wars.collisions.DynamicBody;
 import com.geometric.wars.gameobjects.StaticGameObject;
 import com.geometric.wars.models.PowerUpModel;
@@ -21,12 +20,6 @@ public abstract class PowerUp  extends ModelInstance implements StaticGameObject
     public void remove() {
         isAlive = false;
     }
-
-    /**
-     * the bigger power is, the less chance of spawning this powerUp have
-     * @return power (in range [1,10]
-     */
-    public abstract int getPower();
 
     protected abstract void applyEffectTo(ShootingPlayersCube cube);
 

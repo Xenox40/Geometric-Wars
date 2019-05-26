@@ -6,6 +6,7 @@ import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.player.ShooterPlayersController;
 import com.geometric.wars.player.ShootingPlayersCube;
+import com.geometric.wars.powerups.PowerUp;
 import com.geometric.wars.utils.Action;
 
 
@@ -27,7 +28,7 @@ public class GameScene extends Scene {
             public void doAction() {
                 isEndOfScene = true;
             }
-        });
+        });;
         addDynamicGameObject(shootingService);
         addDynamicGameObject(respawningService);
         addDynamicGameObject(scoreboard);

@@ -15,6 +15,11 @@ import com.geometric.wars.utils.Position;
 import java.util.Iterator;
 
 public class PowerUpService implements DynamicGameObject {
+    private EffectApplicator applicator = new EffectApplicator();
+    public PowerUpService() {
+
+    }
+
     Array<PowerUp> powerUps = new Array<>();
     private ModelCache powerUpCache = new ModelCache();
     private boolean cacheUpdatingRequired = false;
@@ -45,7 +50,7 @@ public class PowerUpService implements DynamicGameObject {
             addRandomPowerUp();
         }
 
-        EffectApplicator.getInstance().update();
+        applicator.update();
 
         for (Iterator<PowerUp> it = powerUps.iterator(); it.hasNext();) {
             PowerUp powerUp = it.next();
@@ -97,5 +102,9 @@ public class PowerUpService implements DynamicGameObject {
     private void dispose() {
         if(powerUpCache != null)
             powerUpCache.dispose();
+    }
+
+    public EffectApplicator getEffectApplicator() {
+        return applicator;
     }
 }

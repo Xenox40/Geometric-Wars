@@ -7,6 +7,7 @@ import com.geometric.wars.collisions.DynamicBody;
 import com.geometric.wars.gameobjects.StaticGameObject;
 import com.geometric.wars.models.PowerUpModel;
 import com.geometric.wars.player.ShootingPlayersCube;
+import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Position;
 import com.geometric.wars.utils.Values;
 
@@ -21,7 +22,7 @@ public abstract class PowerUp  extends ModelInstance implements StaticGameObject
         isAlive = false;
     }
 
-    protected abstract void applyEffectTo(ShootingPlayersCube cube);
+    protected abstract void applyEffectTo(ShootingPlayersCube cube, EffectApplicator applicator);
 
     @Override
     public void render(ModelBatch modelBatch, Environment environment) {
@@ -42,7 +43,7 @@ public abstract class PowerUp  extends ModelInstance implements StaticGameObject
     @Override
     public void onCollisionWith(DynamicBody object) {
         if(object instanceof ShootingPlayersCube) {
-            applyEffectTo((ShootingPlayersCube)object);
+            applyEffectTo((ShootingPlayersCube)object, SceneManager.getInstance().getCurrentScene().getPowerUpService().getEffectApplicator());
             remove();
         }
     }

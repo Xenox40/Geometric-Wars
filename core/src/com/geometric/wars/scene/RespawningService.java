@@ -18,7 +18,7 @@ public class RespawningService implements DynamicGameObject {
     public void moveToKilledQueue(ShootingPlayersCube cube) {
         SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(cube,(int)cube.getPosition().x,(int)cube.getPosition().y);
         SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(cube,(int)cube.getApproachingPosition().x,(int)cube.getApproachingPosition().y);
-        EffectApplicator.getInstance().clearEffectsOn(cube);
+        SceneManager.getInstance().getCurrentScene().getPowerUpService().getEffectApplicator().clearEffectsOn(cube);
         deadCubes.addLast(cube);
         lastDeathTimeInMillis.addLast(TimeUtils.millis());
     }

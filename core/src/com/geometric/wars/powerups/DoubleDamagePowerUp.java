@@ -11,8 +11,8 @@ public class DoubleDamagePowerUp extends PowerUp {
 
 
     @Override
-    protected void applyEffectTo(ShootingPlayersCube cube) {
-        EffectApplicator.getInstance().addEffect(cube,10000, new Effect(){
+    protected void applyEffectTo(ShootingPlayersCube cube,EffectApplicator applicator) {
+        applicator.addEffect(cube,10000, new Effect(){
             @Override
             public void apply(ShootingPlayersCube cube) {
                 cube.getGun().setDamage(cube.getGun().getDamage()*2);

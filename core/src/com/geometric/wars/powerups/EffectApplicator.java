@@ -9,21 +9,6 @@ import java.util.PriorityQueue;
 
 
 public class EffectApplicator {
-    private EffectApplicator(){}
-    static EffectApplicator instance;
-    public static EffectApplicator getInstance() {
-        if(instance == null)
-            instance = new EffectApplicator();
-        return instance;
-    }
-
-    public void clearEffectsOn(ShootingPlayersCube cube) {
-        if(effects.containsKey(cube)) {
-            for(TimeEffect e : effects.get(cube))
-                e.wasDestroyed = true;
-        }
-    }
-
 
     private static class TimeEffect implements Comparable<TimeEffect>{
         Effect effect;
@@ -49,6 +34,12 @@ public class EffectApplicator {
     private PriorityQueue<TimeEffect> timesOfUpdate = new PriorityQueue<>();
 
 
+    public void clearEffectsOn(ShootingPlayersCube cube) {
+        if(effects.containsKey(cube)) {
+            for(TimeEffect e : effects.get(cube))
+                e.wasDestroyed = true;
+        }
+    }
 
     void addEffect(ShootingPlayersCube cube, long durationInMillis, Effect effect) {
         if(!effects.containsKey(cube))
@@ -76,6 +67,5 @@ public class EffectApplicator {
             timesOfUpdate.poll();
         }
     }
-
 
 }

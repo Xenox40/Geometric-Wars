@@ -11,8 +11,8 @@ public class NoOverHeatPowerUp extends PowerUp{
 
 
     @Override
-    protected void applyEffectTo(ShootingPlayersCube cube) {
-        EffectApplicator.getInstance().addEffect(cube,2000, new Effect(){
+    protected void applyEffectTo(ShootingPlayersCube cube, EffectApplicator applicator) {
+        applicator.addEffect(cube,2000, new Effect(){
             float absGrowth, relGrowth;
             @Override
             public void apply(ShootingPlayersCube cube) {

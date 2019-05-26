@@ -3,10 +3,10 @@ package com.geometric.wars.scene;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelCache;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.gameobjects.DynamicGameObject;
-import com.geometric.wars.powerups.DoubleDamagePowerUp;
+import com.geometric.wars.powerups.EffectApplicator;
+import com.geometric.wars.powerups.NoOverHeatPowerUp;
 import com.geometric.wars.powerups.PowerUp;
 import com.geometric.wars.utils.Position;
 
@@ -43,7 +43,9 @@ public class PowerUpService implements DynamicGameObject {
             addRandomPowerUp();
         }
 
-        for(Iterator<PowerUp> it = powerUps.iterator(); it.hasNext();) {
+        EffectApplicator.getInstance().update();
+
+        for (Iterator<PowerUp> it = powerUps.iterator(); it.hasNext();) {
             PowerUp powerUp = it.next();
             if(!powerUp.exists()) {
                 cacheUpdatingRequired = true;
@@ -51,6 +53,7 @@ public class PowerUpService implements DynamicGameObject {
                 it.remove();
             }
         }
+
         if(cacheUpdatingRequired) {
             updateCache();
         }
@@ -60,7 +63,7 @@ public class PowerUpService implements DynamicGameObject {
         updateMaxiPowerUpCount();
         if(powerUps.size < relativeMaxiPowerUpCount) {
             Position position = SceneManager.getInstance().getCurrentMapService().getEmptyCells().random();
-            addPowerUp(new DoubleDamagePowerUp(), position.x, position.y);
+            addPowerUp(new NoOverHeatPowerUp(), position.x, position.y);
         }
     }
 

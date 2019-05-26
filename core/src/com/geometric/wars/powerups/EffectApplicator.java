@@ -44,7 +44,7 @@ public class EffectApplicator {
             effects.put(cube,new PriorityQueue<TimeEffect>());
         for(Iterator<TimeEffect> it = effects.get(cube).iterator(); it.hasNext();) {
             TimeEffect e = it.next();
-            if(effect.getClass().isAssignableFrom(e.effect.getClass())) {
+            if(e.effect.getClass().isInstance(effect.getClass())) {
                 e.effect.revert(e.cube);
                 it.remove();
             }

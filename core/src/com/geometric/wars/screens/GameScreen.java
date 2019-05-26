@@ -109,8 +109,10 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
-        if(sceneManager.getCurrentScene() != null)
+        if(sceneManager.getCurrentScene() != null) {
+            sceneManager.getCurrentScene().getPowerUpService().dispose();
             sceneManager.getCurrentScene().dispose();
+        }
         if(batch != null)
             batch.dispose();
         if(spriteBatch != null)

@@ -23,7 +23,7 @@ public class PowerUpService implements DynamicGameObject {
     private boolean cacheUpdatingRequired = false;
 
 
-    private static final int maxiPowerUpCountPer100emptyCells = 5;
+    private static final int maxiPowerUpCountPer100emptyCells = 1;
     private int relativeMaxiPowerUpCount = -1;
 
 
@@ -60,6 +60,7 @@ public class PowerUpService implements DynamicGameObject {
         }
 
         if(cacheUpdatingRequired) {
+            updateMaxiPowerUpCount();
             updateCache();
         }
     }
@@ -69,31 +70,30 @@ public class PowerUpService implements DynamicGameObject {
     }
 
     private void addRandomPowerUp() {
-        updateMaxiPowerUpCount();
-        if(powerUps.size < relativeMaxiPowerUpCount) {
-            PowerUp powerUp;
-            int rand = MathUtils.random(160);
-            if(rand <= 40) {
-                powerUp = new DamagePowerUp(2);
-            }
-            else if(rand <= 100) {
-                powerUp = new NoOverHeatPowerUp();
-            }
-            else if(rand <= 150) {
-                powerUp = new HealingPowerUp();
-            }
-            else {
-                powerUp = new InvincibilityPowerUp(5);
-            }
-
-            Position position = SceneManager.getInstance().getCurrentMapService().getEmptyCells().random();
-            addPowerUp(powerUp,position.x,position.y);
+        PowerUp powerUp;
+        int rand = MathUtils.random(160);
+        if(rand <= 40) {
+            powerUp = new DamagePowerUp(2);
         }
+        else if(rand <= 100) {
+            powerUp = new NoOverHeatPowerUp();
+        }
+        else if(rand <= 150) {
+            powerUp = new HealingPowerUp();
+        }
+        else {
+            powerUp = new InvincibilityPowerUp(5);
+        }
+
+        if(SceneManager.getInstance().getCurrentMapService().getEmptyCells().size == 0)
+            return;
+        Position position = SceneManager.getInstance().getCurrentMapService().getEmptyCells().random();
+        addPowerUp(powerUp,position.x,position.y);
     }
 
     private void updateMaxiPowerUpCount() {
         int emptyCells = SceneManager.getInstance().getCurrentMapService().getEmptyCells().size;
-        relativeMaxiPowerUpCount =  emptyCells*maxiPowerUpCountPer100emptyCells/100;
+        relativeMaxiPowerUpCount =  emptyCells*maxiPowerUpCountPer100emptyCells/100 + MathUtils.random(1) + 1;
     }
 
     private void updateCache() {
@@ -107,9 +107,10 @@ public class PowerUpService implements DynamicGameObject {
             cacheUpdatingRequired = false;
         }
     }
-    private void dispose() {
-        if(powerUpCache != null)
+    public void dispose() {
+        if(powerUpCache != null) {
             powerUpCache.dispose();
+        }
     }
 
     public EffectApplicator getEffectApplicator() {

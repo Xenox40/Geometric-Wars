@@ -16,6 +16,8 @@ import com.geometric.wars.utils.Direction3D;
 
 public class ShootingPlayersCube extends PlayersCube {
     public static final int startingHp = 25;
+    public boolean isInvincible = false;
+
     public ShootingPlayersCube(DynamicCubeController controller) {
         super(controller);
     }
@@ -60,7 +62,8 @@ public class ShootingPlayersCube extends PlayersCube {
     }
 
     public void takeHp(int hp) {
-        setHealthPoints(getHealthPoints()-hp);
+        if(!isInvincible)
+            setHealthPoints(getHealthPoints()-hp);
     }
     public void setHealthPoints(int hp) {
         healthPoints = hp;

@@ -6,10 +6,8 @@ import com.badlogic.gdx.graphics.g3d.ModelCache;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.gameobjects.DynamicGameObject;
-import com.geometric.wars.powerups.DoubleDamagePowerUp;
-import com.geometric.wars.powerups.EffectApplicator;
-import com.geometric.wars.powerups.NoOverHeatPowerUp;
-import com.geometric.wars.powerups.PowerUp;
+import com.geometric.wars.player.ShootingPlayersCube;
+import com.geometric.wars.powerups.*;
 import com.geometric.wars.utils.Position;
 
 import java.util.Iterator;
@@ -66,16 +64,26 @@ public class PowerUpService implements DynamicGameObject {
         }
     }
 
+    public void applyPowerUpTo(ShootingPlayersCube cube, PowerUp powerUp) {
+        powerUp.onCollisionWith(cube);
+    }
+
     private void addRandomPowerUp() {
         updateMaxiPowerUpCount();
         if(powerUps.size < relativeMaxiPowerUpCount) {
             PowerUp powerUp;
-            int rand = MathUtils.random(100);
+            int rand = MathUtils.random(160);
             if(rand <= 40) {
-                powerUp = new DoubleDamagePowerUp();
+                powerUp = new DamagePowerUp(2);
+            }
+            else if(rand <= 100) {
+                powerUp = new NoOverHeatPowerUp();
+            }
+            else if(rand <= 150) {
+                powerUp = new HealingPowerUp();
             }
             else {
-                powerUp = new NoOverHeatPowerUp();
+                powerUp = new InvincibilityPowerUp(5);
             }
 
             Position position = SceneManager.getInstance().getCurrentMapService().getEmptyCells().random();

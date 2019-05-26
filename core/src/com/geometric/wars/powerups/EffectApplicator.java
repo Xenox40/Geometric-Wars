@@ -9,7 +9,6 @@ import java.util.PriorityQueue;
 
 
 public class EffectApplicator {
-
     private static class TimeEffect implements Comparable<TimeEffect>{
         Effect effect;
         ShootingPlayersCube cube;

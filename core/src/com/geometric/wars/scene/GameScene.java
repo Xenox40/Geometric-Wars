@@ -6,7 +6,6 @@ import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.player.ShooterPlayersController;
 import com.geometric.wars.player.ShootingPlayersCube;
-import com.geometric.wars.powerups.PowerUp;
 import com.geometric.wars.utils.Action;
 
 
@@ -16,12 +15,13 @@ public class GameScene extends Scene {
     private ShootingService shootingService;
     private RespawningService respawningService;
     private Scoreboard scoreboard;
-
+    private PowerUpService powerUpService;
     GameScene() {
         super();
         mapService = new MapService();
         shootingService = new ShootingService();
         respawningService = new RespawningService();
+        powerUpService = new PowerUpService();
         scoreboard = new Scoreboard();
         scoreboard.addActionOnEndOfGame(new Action(){
             @Override
@@ -31,6 +31,7 @@ public class GameScene extends Scene {
         });;
         addDynamicGameObject(shootingService);
         addDynamicGameObject(respawningService);
+        addDynamicGameObject(powerUpService);
         addDynamicGameObject(scoreboard);
     }
 
@@ -69,4 +70,5 @@ public class GameScene extends Scene {
         return respawningService;
     }
     public Scoreboard getScoreboard() {return scoreboard;}
+    public PowerUpService getPowerUpService() {return powerUpService;}
 }

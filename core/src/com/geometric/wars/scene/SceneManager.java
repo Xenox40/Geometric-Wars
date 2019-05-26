@@ -54,10 +54,6 @@ public class SceneManager {
         mapLoader
                 .setScene(currentScene)
                 .load(map);
-
-        PowerUp powerUp = new PowerUp(1,2);
-        currentScene.addStaticGameObject(powerUp);
-        currentScene.getMapService().addCollidable(powerUp,2,1);
     }
 
     public void reportKill(ShootingPlayersCube killer, ShootingPlayersCube victim) {

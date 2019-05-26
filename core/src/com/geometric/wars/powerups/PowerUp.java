@@ -1,17 +1,17 @@
 package com.geometric.wars.powerups;
 
 import com.badlogic.gdx.graphics.g3d.*;
-import com.badlogic.gdx.math.Vector3;
 import com.geometric.wars.collisions.DynamicBody;
 import com.geometric.wars.gameobjects.StaticGameObject;
 import com.geometric.wars.models.PowerUpModel;
+import com.geometric.wars.utils.Position;
 import com.geometric.wars.utils.Values;
 
 public class PowerUp  extends ModelInstance implements StaticGameObject {
-
-    public PowerUp(int x, int y) {
-        super(PowerUpModel.getModel(), new Vector3(x * Values.unit,0, y * Values.unit));
+    public PowerUp() {
+        super(PowerUpModel.getModel());
     }
+    private Position position;
     private boolean isAlive = true;
 
     public void remove() {
@@ -43,5 +43,14 @@ public class PowerUp  extends ModelInstance implements StaticGameObject {
     @Override
     public boolean exists() {
         return isAlive;
+    }
+
+    public void setPosition(int x, int y) {
+        this.position = new Position(x,y);
+        transform.translate(x * Values.unit,0, y * Values.unit);
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

@@ -15,6 +15,8 @@ public class RespawningService implements DynamicGameObject {
     private Queue<Long> lastDeathTimeInMillis = new Queue<>();
 
     public void moveToKilledQueue(ShootingPlayersCube cube) {
+        SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(cube,(int)cube.getPosition().x,(int)cube.getPosition().y);
+        SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(cube,(int)cube.getApproachingPosition().x,(int)cube.getApproachingPosition().y);
         deadCubes.addLast(cube);
         lastDeathTimeInMillis.addLast(TimeUtils.millis());
     }

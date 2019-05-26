@@ -2,6 +2,7 @@ package com.geometric.mapgenerators;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.geometric.wars.maps.GameMap;
+import com.geometric.wars.utils.WeightedPoint;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class CellularMapGenerator implements MapGenerator{
         this.startingWallChance = startingWallChance;
     }
 
-    private GameMap.WeightedPoint[] neighbours;
+    private WeightedPoint[] neighbours;
 
     @Override
     public GameMap generate(int width, int height) {
@@ -41,23 +42,23 @@ public class CellularMapGenerator implements MapGenerator{
     }
 
     private void setNeighbours() {
-        ArrayList<GameMap.WeightedPoint> neighboursList = new ArrayList<>();
-        neighboursList.add(new GameMap.WeightedPoint(-1,0,3));
-        neighboursList.add(new GameMap.WeightedPoint(1,0,3));
-        neighboursList.add(new GameMap.WeightedPoint(0,1,3));
-        neighboursList.add(new GameMap.WeightedPoint(0,-1,3));
-        neighboursList.add(new GameMap.WeightedPoint(-2,0,2));
-        neighboursList.add(new GameMap.WeightedPoint(2,0,2));
-        neighboursList.add(new GameMap.WeightedPoint(0,2,2));
-        neighboursList.add(new GameMap.WeightedPoint(0,-2,2));
-        neighboursList.add(new GameMap.WeightedPoint(-3,0,1));
-        neighboursList.add(new GameMap.WeightedPoint(3,0,1));
-        neighboursList.add(new GameMap.WeightedPoint(0,3,1));
-        neighboursList.add(new GameMap.WeightedPoint(0,-3,1));
+        ArrayList<WeightedPoint> neighboursList = new ArrayList<>();
+        neighboursList.add(new WeightedPoint(-1,0,3));
+        neighboursList.add(new WeightedPoint(1,0,3));
+        neighboursList.add(new WeightedPoint(0,1,3));
+        neighboursList.add(new WeightedPoint(0,-1,3));
+        neighboursList.add(new WeightedPoint(-2,0,2));
+        neighboursList.add(new WeightedPoint(2,0,2));
+        neighboursList.add(new WeightedPoint(0,2,2));
+        neighboursList.add(new WeightedPoint(0,-2,2));
+        neighboursList.add(new WeightedPoint(-3,0,1));
+        neighboursList.add(new WeightedPoint(3,0,1));
+        neighboursList.add(new WeightedPoint(0,3,1));
+        neighboursList.add(new WeightedPoint(0,-3,1));
 
-        neighbours = new GameMap.WeightedPoint[neighboursList.size()];
+        neighbours = new WeightedPoint[neighboursList.size()];
         int ct=0;
-        for(GameMap.WeightedPoint p : neighboursList)
+        for(WeightedPoint p : neighboursList)
             neighbours[ct++] = p;
     }
 
@@ -81,7 +82,7 @@ public class CellularMapGenerator implements MapGenerator{
         for(int i=0;i<map.getHeight();i++) {
             for (int j = 0; j < map.getWidth(); j++) {
                 int totalWeightSum = 0, wallsWeightSum = 0;
-                for(GameMap.WeightedPoint point : neighbours) {
+                for(WeightedPoint point : neighbours) {
                     if(i+point.x >= 0 && i + point.x < map.getHeight() && j+point.y >= 0 && j+point.y < map.getWidth()) {
                         totalWeightSum += point.weight;
                         if(map.isWall(i+point.x,j+point.y)) {

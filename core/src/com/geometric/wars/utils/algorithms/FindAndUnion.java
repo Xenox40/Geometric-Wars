@@ -1,8 +1,8 @@
-package com.geometric.mapgenerators;
+package com.geometric.wars.utils.algorithms;
 
 public class FindAndUnion {
-    private int fau[];
-    private int size[];
+    private int[] fau;
+    private int[] size;
 
     public FindAndUnion(int n){
         fau = new int[n];

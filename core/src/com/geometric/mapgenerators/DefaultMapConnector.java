@@ -2,6 +2,7 @@ package com.geometric.mapgenerators;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.geometric.wars.maps.GameMap;
+import com.geometric.wars.utils.algorithms.FindAndUnion;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +50,7 @@ public class DefaultMapConnector implements MapConnector{
         }
         randomShuffle(verticesPairs);
         Collections.sort(verticesPairs);
-        FindAndUnion fau = new FindAndUnion(componentCount+1);
+        com.geometric.wars.utils.algorithms.FindAndUnion fau = new FindAndUnion(componentCount+1);
         for (int i=0;i<verticesPairs.size() ;i++){
             if(fau.find(verticesPairs.get(i).component1) != fau.find(verticesPairs.get(i).component2)){
                 fau.union(verticesPairs.get(i).component1,verticesPairs.get(i).component2);

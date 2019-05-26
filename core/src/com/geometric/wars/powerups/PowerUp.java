@@ -1,13 +1,16 @@
 package com.geometric.wars.powerups;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.*;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.geometric.wars.collisions.DynamicBody;
 import com.geometric.wars.gameobjects.StaticGameObject;
 import com.geometric.wars.models.PowerUpModel;
+import com.geometric.wars.player.ShootingPlayersCube;
 import com.geometric.wars.utils.Position;
 import com.geometric.wars.utils.Values;
 
-public class PowerUp  extends ModelInstance implements StaticGameObject {
+public abstract class PowerUp  extends ModelInstance implements StaticGameObject {
     public PowerUp() {
         super(PowerUpModel.getModel());
     }
@@ -17,6 +20,14 @@ public class PowerUp  extends ModelInstance implements StaticGameObject {
     public void remove() {
         isAlive = false;
     }
+
+    /**
+     * the bigger power is, the less chance of spawning this powerUp have
+     * @return power (in range [1,10]
+     */
+    public abstract int getPower();
+
+    protected abstract void applyEffectTo(ShootingPlayersCube cube);
 
     @Override
     public void render(ModelBatch modelBatch, Environment environment) {
@@ -36,8 +47,10 @@ public class PowerUp  extends ModelInstance implements StaticGameObject {
 
     @Override
     public void onCollisionWith(DynamicBody object) {
-        System.out.println("removing me");
-        remove();
+        if(object instanceof ShootingPlayersCube) {
+            applyEffectTo((ShootingPlayersCube)object);
+            remove();
+        }
     }
 
     @Override
@@ -52,5 +65,9 @@ public class PowerUp  extends ModelInstance implements StaticGameObject {
 
     public Position getPosition() {
         return position;
+    }
+
+    protected void setColor(Color color) {
+        this.materials.get(0).set(ColorAttribute.createDiffuse(color));
     }
 }

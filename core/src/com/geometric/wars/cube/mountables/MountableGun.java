@@ -2,8 +2,7 @@ package com.geometric.wars.cube.mountables;
 
 public abstract class MountableGun extends Mountable {
     protected float heatLevel;
-
-    public abstract int getDamage();
+    private int damage;
     public abstract int getWaitingTimeInMillis();
 
     /**
@@ -25,5 +24,10 @@ public abstract class MountableGun extends Mountable {
     }
     public void setHeatLevel(float heatLevel) {
         this.heatLevel = heatLevel;
+    }
+
+    public int getDamage() {return damage;}
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

@@ -11,6 +11,7 @@ import com.geometric.wars.models.BoxBuilder;
 
 public class SimpleGun extends MountableGun {
     public SimpleGun() {
+        setDamage(5);
         this.view = new MountableView(new Vector3(0.3f, 0.2f, 0.2f)) {
             @Override
             public void buildMeshPart(ModelBuilder modelBuilder) {
@@ -18,11 +19,6 @@ public class SimpleGun extends MountableGun {
                 node = BoxBuilder.addColoredBoxNode(modelBuilder, "gun1", Color.CORAL, size.x, size.y, size.z);
             }
         };
-    }
-
-    @Override
-    public int getDamage() {
-        return 5;
     }
 
     @Override

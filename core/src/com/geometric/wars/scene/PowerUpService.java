@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g3d.ModelCache;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.gameobjects.DynamicGameObject;
+import com.geometric.wars.powerups.DoubleDamagePowerUp;
 import com.geometric.wars.powerups.PowerUp;
 import com.geometric.wars.utils.Position;
 
@@ -59,7 +60,7 @@ public class PowerUpService implements DynamicGameObject {
         updateMaxiPowerUpCount();
         if(powerUps.size < relativeMaxiPowerUpCount) {
             Position position = SceneManager.getInstance().getCurrentMapService().getEmptyCells().random();
-            addPowerUp(new PowerUp(), position.x, position.y);
+            addPowerUp(new DoubleDamagePowerUp(), position.x, position.y);
         }
     }
 

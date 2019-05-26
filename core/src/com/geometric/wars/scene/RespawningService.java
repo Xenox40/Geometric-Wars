@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.player.ShootingPlayersCube;
+import com.geometric.wars.utils.Position;
 
 
 public class RespawningService implements DynamicGameObject {
@@ -26,6 +27,8 @@ public class RespawningService implements DynamicGameObject {
         while (!deadCubes.isEmpty() && TimeUtils.timeSinceMillis(lastDeathTimeInMillis.first()) >= respawnTimeInMillis) {
             ShootingPlayersCube cube = deadCubes.removeFirst();
             lastDeathTimeInMillis.removeFirst();
+            Position position =  SceneManager.getInstance().getCurrentMapService().getEmptyCells().random();
+            cube.setPosition(position.y,position.x);
             cube.setHealthPoints(ShootingPlayersCube.startingHp);
             cube.setGunHeatLevel(0);
         }

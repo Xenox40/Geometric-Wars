@@ -1,6 +1,7 @@
 package com.geometric.wars.player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.geometric.wars.collisions.DynamicBody;
@@ -8,12 +9,15 @@ import com.geometric.wars.cube.CubeFace;
 import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.cube.mountables.MountableGun;
 import com.geometric.wars.gameobjects.Bullet;
+import com.geometric.wars.powerups.PowerUp;
 import com.geometric.wars.scene.OverheatCalculator;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction3D;
 
 public class ShootingPlayersCube extends PlayersCube {
     public static final int startingHp = 25;
+    public boolean isInvincible = false;
+
     public ShootingPlayersCube(DynamicCubeController controller) {
         super(controller);
     }
@@ -58,7 +62,8 @@ public class ShootingPlayersCube extends PlayersCube {
     }
 
     public void takeHp(int hp) {
-        setHealthPoints(getHealthPoints()-hp);
+        if(!isInvincible)
+            setHealthPoints(getHealthPoints()-hp);
     }
     public void setHealthPoints(int hp) {
         healthPoints = hp;

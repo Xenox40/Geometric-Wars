@@ -1,9 +1,11 @@
 package com.geometric.wars.cube.mountables;
 
 public abstract class MountableGun extends Mountable {
-    protected float heatLevel;
+    private float heatLevel = 0;
+    private int damage = 5;
+    private float overheatRelativeGrowth = 0.06f;
+    private float overheatAbsoluteGrowth = 0.08f;
 
-    public abstract int getDamage();
     public abstract int getWaitingTimeInMillis();
 
     /**
@@ -17,13 +19,23 @@ public abstract class MountableGun extends Mountable {
      */
 
 
-    public float getOverheatRelativeGrowth() {return 0.06f; }
-    public float getOverheatAbsoluteGrowth() {return 0.08f; }
+    public float getOverheatRelativeGrowth() {return overheatRelativeGrowth; }
+    public float getOverheatAbsoluteGrowth() {return overheatAbsoluteGrowth; }
 
     public float getHeatLevel() {
         return heatLevel;
     }
     public void setHeatLevel(float heatLevel) {
         this.heatLevel = heatLevel;
+    }
+
+    public int getDamage() {return damage;}
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public void setOverheatGrowth(float relative, float absolute) {
+        this.overheatRelativeGrowth = relative;
+        this.overheatAbsoluteGrowth = absolute;
     }
 }

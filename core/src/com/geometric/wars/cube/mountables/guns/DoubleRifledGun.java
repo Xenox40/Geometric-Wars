@@ -15,11 +15,9 @@ public class DoubleRifledGun extends MountableGun {
     private static final Vector3 rifleSize = new Vector3(0.45f,0.1f,0.1f);
     private static final float spaceBetweenRifles = 0.05f;
 
-
-
     public DoubleRifledGun() {
+        setDamage(10);
         this.view = new MountableView(new Vector3(rifleSize.x, rifleSize.y, 2*rifleSize.z+spaceBetweenRifles)) {
-
             private TextureRegion getTextureRegion() {
                 final String name = "rifleTexture";
                 if (!GameResourceDisposer.contains(name)){
@@ -41,11 +39,6 @@ public class DoubleRifledGun extends MountableGun {
 
             }
         };
-    }
-
-    @Override
-    public int getDamage() {
-        return 10;
     }
 
     @Override

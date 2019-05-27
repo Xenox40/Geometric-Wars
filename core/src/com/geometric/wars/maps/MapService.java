@@ -18,11 +18,20 @@ public class MapService {
     private int height;
 
 
-    void addCollidables(Array<Array<Collidable> > collidables) {
+    public void addCollidable(Collidable collidable, int i, int j) {
+        if(collidable != null)
+         mapObjects.get(i).get(j).add(collidable);
+    }
+    public void removeCollidable(Collidable collidable, int x, int y) {
+        if(x < 0 || y < 0 ||  x >= getWidth() || y >= getHeight())
+            return;
+        mapObjects.get(y).get(x).removeValue(collidable,true);
+    }
+
+    public void addCollidables(Array<Array<Collidable> > collidables) {
         for(int i=0;i<collidables.size;i++){
             for(int j=0;j<collidables.get(i).size;j++) {
-                if(collidables.get(i).get(j) != null)
-                    mapObjects.get(i).get(j).add(collidables.get(i).get(j));
+                addCollidable(collidables.get(i).get(j),i,j);
             }
         }
     }
@@ -97,9 +106,7 @@ public class MapService {
     }
 
     public void decreaseCollisionArea(DynamicBody dynamicBody, int x, int y) {
-        if(x < 0 || y < 0 ||  x >= getWidth() || y >= getHeight())
-            return;
-        mapObjects.get(y).get(x).removeValue(dynamicBody,true);
+        removeCollidable(dynamicBody, x,y);
     }
 
 

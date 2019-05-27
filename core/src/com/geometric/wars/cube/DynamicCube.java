@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.math.RotationCalculator;
 import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.utils.Direction3D;
+import com.geometric.wars.utils.Position;
 
 
 public class DynamicCube {
@@ -74,15 +75,15 @@ public class DynamicCube {
     /**
      * @return position where dynamicCube was before it started moving
      */
-    public Vector2 getPosition() {
-        return new Vector2(bx,bz);
+    public Position getPosition() {
+        return new Position(bx,bz);
     }
 
     /**
      * @return position where dynamicCube will be after it finishes moving
      */
-    public Vector2 getApproachingPosition() {
-        return new Vector2(ax,az);
+    public Position getApproachingPosition() {
+        return new Position(ax,az);
     }
 
 

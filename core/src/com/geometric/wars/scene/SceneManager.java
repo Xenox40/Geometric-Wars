@@ -5,6 +5,7 @@ import com.geometric.wars.GeometricWars;
 import com.geometric.wars.maps.MapLoader;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.player.ShootingPlayersCube;
+import com.geometric.wars.powerups.PowerUp;
 
 public class SceneManager {
 

@@ -9,6 +9,7 @@ import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction2D;
+import com.geometric.wars.utils.Position;
 
 /**
  * Dynamic cube that interacts with collision system and has own controller
@@ -52,7 +53,7 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
      */
     @Override
     public void move(Direction2D direction) {
-        Vector2 newPos = getPosition().cpy().add(direction.toVector2());
+        Position newPos = new Position(getPosition().x + (int)direction.toVector2().x, (getPosition().y + (int)direction.toVector2().y));
         if(!isMoving() && service.isMoveAllowed(this,(int)newPos.x,(int)newPos.y)) {
             super.move(direction);
             service.extendCollisionArea(this,(int) getApproachingPosition().x, (int) getApproachingPosition().y);

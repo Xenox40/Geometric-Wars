@@ -15,21 +15,23 @@ public class GameScene extends Scene {
     private ShootingService shootingService;
     private RespawningService respawningService;
     private Scoreboard scoreboard;
-
+    private PowerUpService powerUpService;
     GameScene() {
         super();
         mapService = new MapService();
         shootingService = new ShootingService();
         respawningService = new RespawningService();
+        powerUpService = new PowerUpService();
         scoreboard = new Scoreboard();
         scoreboard.addActionOnEndOfGame(new Action(){
             @Override
             public void doAction() {
                 isEndOfScene = true;
             }
-        });
+        });;
         addDynamicGameObject(shootingService);
         addDynamicGameObject(respawningService);
+        addDynamicGameObject(powerUpService);
         addDynamicGameObject(scoreboard);
     }
 
@@ -68,4 +70,5 @@ public class GameScene extends Scene {
         return respawningService;
     }
     public Scoreboard getScoreboard() {return scoreboard;}
+    public PowerUpService getPowerUpService() {return powerUpService;}
 }

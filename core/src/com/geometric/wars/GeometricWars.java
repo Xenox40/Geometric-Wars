@@ -95,6 +95,7 @@ public class GeometricWars extends Game{
 		WallModel.dispose();
 		LineModel.dispose();
 		BulletModel.dispose();
+		PowerUpModel.dispose();
 		InputMethodGetter.dispose();
 	}
 

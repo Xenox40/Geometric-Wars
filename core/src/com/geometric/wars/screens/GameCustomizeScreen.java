@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.mapgenerators.*;
 import com.geometric.wars.GeometricWars;
@@ -143,18 +144,10 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
         buttonsTable.row();
 
 
+        final Table imageAndArrowTable = new Table();
         final Table imageTable = new Table();
 
-        imageTable.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                generateMap();
-                game.setScreen(game.gameCustomizeScreen);
-            }
-        });
-
         imageTable.top();
-
         int cellSize = (int)(mapPreviewWidth/map.getWidth() < mapPreviewHeight/map.getHeight() ? mapPreviewWidth/map.getWidth() : mapPreviewHeight/map.getHeight());
 
         for(int i=0;i<map.getHeight();i++) {
@@ -163,8 +156,21 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
             imageTable.row();
         }
 
+        imageAndArrowTable.add(imageTable);
+        imageAndArrowTable.row();
+        TextButton nextMap = new TextButton("Next",skin);
+        imageAndArrowTable.add(nextMap).minSize(mapPreviewHeight/2,40).padTop(20).align(Align.bottomRight).colspan(map.getWidth()).expand();
+
+        nextMap.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                generateMap();
+                game.setScreen(game.gameCustomizeScreen);
+            }
+        });
+
         table.add(buttonsTable).minSize(200,600).expand();
-        table.add(imageTable).minSize(mapPreviewWidth,mapPreviewHeight).expand();
+        table.add(imageAndArrowTable).minSize(mapPreviewWidth,mapPreviewHeight).expand();
         stage.addActor(table);
     }
 

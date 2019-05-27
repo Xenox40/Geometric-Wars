@@ -9,7 +9,7 @@ import com.geometric.wars.maps.GameMap;
  */
 public class StockMapPicker implements MapGenerator {
     private static int mapId = 1;
-    private static final int mapCount = 2;
+    private static final int mapCount = 3;
 
     @Override
     public GameMap generate(int mapWidth, int mapHeight) {
@@ -25,8 +25,10 @@ public class StockMapPicker implements MapGenerator {
 
     public static void setMapId(int mapId) {
         StockMapPicker.mapId = mapId;
-        if(StockMapPicker.mapId > mapCount)
-            StockMapPicker.mapId = 1;
+        if(StockMapPicker.mapId >= mapCount)
+            StockMapPicker.mapId %= mapCount;
+        if(StockMapPicker.mapId < 0)
+            StockMapPicker.mapId = (StockMapPicker.mapId%mapCount+mapCount);
     }
     public static int getMapId() {
         return mapId;

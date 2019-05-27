@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.mapgenerators.*;
 import com.geometric.wars.GeometricWars;
@@ -119,7 +120,7 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
             }
         });
 
-        Table buttonsTable = new Table();
+        final Table buttonsTable = new Table();
         buttonsTable.top();
 
         if(customizeMap){
@@ -143,18 +144,10 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
         buttonsTable.row();
 
 
+        final Table imageAndArrowTable = new Table();
         final Table imageTable = new Table();
 
-        imageTable.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                generateMap();
-                game.setScreen(game.gameCustomizeScreen);
-            }
-        });
-
         imageTable.top();
-
         int cellSize = (int)(mapPreviewWidth/map.getWidth() < mapPreviewHeight/map.getHeight() ? mapPreviewWidth/map.getWidth() : mapPreviewHeight/map.getHeight());
 
         for(int i=0;i<map.getHeight();i++) {
@@ -163,8 +156,52 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
             imageTable.row();
         }
 
+
+
+
+        if(template.equals("Default")) {
+            imageAndArrowTable.add(imageTable).expand().colspan(2);
+            imageAndArrowTable.row();
+            TextButton prevMap = new TextButton("Prev",skin);
+            TextButton nextMap = new TextButton("Next",skin);
+            imageAndArrowTable.add(prevMap).minSize(mapPreviewWidth/2-10 , 40).padTop(20).padRight(10).expand().align(Align.bottomLeft);
+            imageAndArrowTable.add(nextMap).minSize(mapPreviewWidth-mapPreviewWidth/2, 40).padTop(20).expand().align(Align.bottomRight);
+
+            nextMap.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    generateMap();
+                    game.setScreen(game.gameCustomizeScreen);
+                }
+            });
+            prevMap.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    StockMapPicker.setMapId(StockMapPicker.getMapId()-2);
+                    generateMap();
+                    game.setScreen(game.gameCustomizeScreen);
+                }
+            });
+        }
+        else{
+            imageAndArrowTable.add(imageTable).expand();
+            imageAndArrowTable.row();
+            TextButton generateButton = new TextButton("Generate",skin);
+            imageAndArrowTable.add(generateButton).minSize(mapPreviewHeight / 2, 40).padTop(20).align(Align.bottom).expand();
+
+            generateButton.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    generateMap();
+                    game.setScreen(game.gameCustomizeScreen);
+                }
+            });
+        }
+
+
+
         table.add(buttonsTable).minSize(200,600).expand();
-        table.add(imageTable).minSize(mapPreviewWidth,mapPreviewHeight).expand();
+        table.add(imageAndArrowTable).minSize(mapPreviewWidth,mapPreviewHeight).expand();
         stage.addActor(table);
     }
 
@@ -185,11 +222,11 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
                 images.get(i).add(new Image(texture));
                 if (map.get(i, j) == '#')
                     images.get(i).get(j).setColor(Color.LIME);
-                if (map.get(i, j) == 'P')
+                else if (map.get(i, j) == 'P')
                     images.get(i).get(j).setColor(Color.RED);
-                if (map.get(i, j) == 'B')
+                else if (map.get(i, j) == 'B')
                     images.get(i).get(j).setColor(Color.BLUE);
-                if (map.get(i, j) == '.')
+                else
                     images.get(i).get(j).setColor(Color.BLACK);
             }
         }
@@ -201,18 +238,20 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
         for(int i=0;i<selectedPlayers.size;i++) {
             if(selectedPlayers.get(i).equals("Player"))
                 persons++;
-            else
+            else if(selectedPlayers.get(i).equals("Bot"))
                 bots++;
         }
 
         int ct = 0;
         for(int i=0; i < map.getHeight(); i++) {
             for (int j = 0; j < map.getWidth(); j++) {
-                if (map.get(i, j) == 'P' || map.get(i,j) == 'B') {
+                if (map.get(i, j) == 'P' || map.get(i,j) == 'B' || map.get(i,j) == 'N') {
                     if(selectedPlayers.get(ct).equals("Player"))
                          map.put(i, j, 'P');
-                    else
+                    else if(selectedPlayers.get(ct).equals("Bot"))
                         map.put(i, j, 'B');
+                    else
+                        map.put(i,j,'N'); //none player
                     ct++;
                 }
             }

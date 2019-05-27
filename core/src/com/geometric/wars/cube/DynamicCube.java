@@ -1,6 +1,7 @@
 package com.geometric.wars.cube;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
@@ -12,6 +13,8 @@ import com.geometric.wars.utils.Position;
 
 
 public class DynamicCube {
+
+    public Color color;
 
     public DynamicCube() {
         faces = new Array<>(6);

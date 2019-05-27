@@ -48,6 +48,7 @@ public class DynamicCubeBuilder {
 
         Model model = builder.end();
         GameResourceDisposer.addResource(model);
+        cube.color = coreColor;
         cube.dynamicCubeView = new DynamicCubeView(model);
         return cube;
     }

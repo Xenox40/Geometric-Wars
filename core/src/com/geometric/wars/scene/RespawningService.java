@@ -37,6 +37,7 @@ public class RespawningService implements DynamicGameObject {
             SceneManager.getInstance().getCurrentScene().getPowerUpService().applyPowerUpTo(cube,new InvincibilityPowerUp(2000));
             cube.setHealthPoints(ShootingPlayersCube.startingHp);
             cube.setGunHeatLevel(0);
+            SceneManager.getInstance().getCurrentMapService().extendCollisionArea(cube, cube.getPosition().x, cube.getPosition().y);
         }
     }
 }

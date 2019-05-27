@@ -120,7 +120,7 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
             }
         });
 
-        Table buttonsTable = new Table();
+        final Table buttonsTable = new Table();
         buttonsTable.top();
 
         if(customizeMap){
@@ -156,18 +156,49 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
             imageTable.row();
         }
 
-        imageAndArrowTable.add(imageTable);
-        imageAndArrowTable.row();
-        TextButton nextMap = new TextButton("Next",skin);
-        imageAndArrowTable.add(nextMap).minSize(mapPreviewHeight/2,40).padTop(20).align(Align.bottomRight).colspan(map.getWidth()).expand();
 
-        nextMap.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                generateMap();
-                game.setScreen(game.gameCustomizeScreen);
-            }
-        });
+
+
+        if(template.equals("Default")) {
+            imageAndArrowTable.add(imageTable).expand().colspan(2);
+            imageAndArrowTable.row();
+            TextButton prevMap = new TextButton("Prev",skin);
+            TextButton nextMap = new TextButton("Next",skin);
+            imageAndArrowTable.add(prevMap).minSize(mapPreviewWidth/2-10 , 40).padTop(20).padRight(10).expand().align(Align.bottomLeft);
+            imageAndArrowTable.add(nextMap).minSize(mapPreviewWidth-mapPreviewWidth/2, 40).padTop(20).expand().align(Align.bottomRight);
+
+            nextMap.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    generateMap();
+                    game.setScreen(game.gameCustomizeScreen);
+                }
+            });
+            prevMap.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    StockMapPicker.setMapId(StockMapPicker.getMapId()-2);
+                    generateMap();
+                    game.setScreen(game.gameCustomizeScreen);
+                }
+            });
+        }
+        else{
+            imageAndArrowTable.add(imageTable).expand();
+            imageAndArrowTable.row();
+            TextButton generateButton = new TextButton("Generate",skin);
+            imageAndArrowTable.add(generateButton).minSize(mapPreviewHeight / 2, 40).padTop(20).align(Align.bottom).expand();
+
+            generateButton.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    generateMap();
+                    game.setScreen(game.gameCustomizeScreen);
+                }
+            });
+        }
+
+
 
         table.add(buttonsTable).minSize(200,600).expand();
         table.add(imageAndArrowTable).minSize(mapPreviewWidth,mapPreviewHeight).expand();

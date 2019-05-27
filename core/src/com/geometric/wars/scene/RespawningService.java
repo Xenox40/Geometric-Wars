@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.player.ShootingPlayersCube;
-import com.geometric.wars.powerups.EffectApplicator;
 import com.geometric.wars.powerups.InvincibilityPowerUp;
 import com.geometric.wars.utils.Position;
 

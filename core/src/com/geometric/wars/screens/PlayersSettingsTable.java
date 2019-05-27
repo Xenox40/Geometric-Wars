@@ -19,7 +19,7 @@ public class PlayersSettingsTable {
         playersTable.top();
         for (int i = 0; i < 4; i++) {
             final SelectBox<String> box = new SelectBox<>(screen.skin);
-            box.setItems("Player", "Bot");
+            box.setItems("Player", "Bot","None");
             box.setSelected(screen.selectedPlayers.get(i));
             boxes.add(box);
 

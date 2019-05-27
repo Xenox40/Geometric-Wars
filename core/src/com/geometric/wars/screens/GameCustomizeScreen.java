@@ -185,11 +185,11 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
                 images.get(i).add(new Image(texture));
                 if (map.get(i, j) == '#')
                     images.get(i).get(j).setColor(Color.LIME);
-                if (map.get(i, j) == 'P')
+                else if (map.get(i, j) == 'P')
                     images.get(i).get(j).setColor(Color.RED);
-                if (map.get(i, j) == 'B')
+                else if (map.get(i, j) == 'B')
                     images.get(i).get(j).setColor(Color.BLUE);
-                if (map.get(i, j) == '.')
+                else
                     images.get(i).get(j).setColor(Color.BLACK);
             }
         }
@@ -201,18 +201,20 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
         for(int i=0;i<selectedPlayers.size;i++) {
             if(selectedPlayers.get(i).equals("Player"))
                 persons++;
-            else
+            else if(selectedPlayers.get(i).equals("Bot"))
                 bots++;
         }
 
         int ct = 0;
         for(int i=0; i < map.getHeight(); i++) {
             for (int j = 0; j < map.getWidth(); j++) {
-                if (map.get(i, j) == 'P' || map.get(i,j) == 'B') {
+                if (map.get(i, j) == 'P' || map.get(i,j) == 'B' || map.get(i,j) == 'N') {
                     if(selectedPlayers.get(ct).equals("Player"))
                          map.put(i, j, 'P');
-                    else
+                    else if(selectedPlayers.get(ct).equals("Bot"))
                         map.put(i, j, 'B');
+                    else
+                        map.put(i,j,'N'); //none player
                     ct++;
                 }
             }

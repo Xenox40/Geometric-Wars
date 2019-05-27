@@ -18,10 +18,6 @@ public class Scene {
     Array<StaticGameObject> staticMapObjects;
     Array<DynamicGameObject> dynamicMapObjects;
     ModelCache staticModelsCache;
-    NinePatch healthBarModel;
-    NinePatch overheatBarModel;
-    BitmapFont font;
-    static final float barHeight = 10f;
     boolean isEndOfScene;
     private boolean areStaticObjectsCacheUpdated;
 
@@ -29,9 +25,6 @@ public class Scene {
         staticMapObjects = new Array<>();
         dynamicMapObjects = new Array<>();
         staticModelsCache = new ModelCache();
-        healthBarModel = BarModel.getInstance().newBar(Color.GREEN);
-        overheatBarModel = BarModel.getInstance().newBar(Color.RED);
-        font = new BitmapFont();
     }
 
 
@@ -69,7 +62,6 @@ public class Scene {
         dynamicMapObjects.clear();
         staticModelsCache.dispose();
         BarModel.dispose();
-        font.dispose();
     }
 
     private void updateStaticObjectCache() {

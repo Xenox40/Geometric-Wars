@@ -1,9 +1,13 @@
 package com.geometric.wars.scene;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.gameobjects.DynamicGameObject;
 import com.geometric.wars.maps.MapService;
+import com.geometric.wars.models.BarModel;
 import com.geometric.wars.player.ShooterPlayersController;
 import com.geometric.wars.player.ShootingPlayersCube;
 import com.geometric.wars.utils.Action;
@@ -11,18 +15,20 @@ import com.geometric.wars.utils.Action;
 
 public class GameScene extends Scene {
 
-    private MapService mapService;
-    private ShootingService shootingService;
-    private RespawningService respawningService;
-    private Scoreboard scoreboard;
-    private PowerUpService powerUpService;
+    private MapService mapService = new MapService();
+    private ShootingService shootingService = new ShootingService();
+    private RespawningService respawningService = new RespawningService();
+    private Scoreboard scoreboard = new Scoreboard();
+    private PowerUpService powerUpService = new PowerUpService();
+
+    NinePatch healthBarModel = BarModel.getInstance().newBar(Color.GREEN);
+    NinePatch overheatBarModel = BarModel.getInstance().newBar(Color.RED);
+    NinePatch colorIndicators = BarModel.getInstance().newBar(Color.WHITE);
+    BitmapFont font = new BitmapFont();
+    static final float barHeight = 10f;
+
     GameScene() {
         super();
-        mapService = new MapService();
-        shootingService = new ShootingService();
-        respawningService = new RespawningService();
-        powerUpService = new PowerUpService();
-        scoreboard = new Scoreboard();
         scoreboard.addActionOnEndOfGame(new Action(){
             @Override
             public void doAction() {
@@ -37,13 +43,15 @@ public class GameScene extends Scene {
 
     @Override
     public void renderGUI(SpriteBatch batch) {
-        float posX = 20, posY = 40;
+        float posX = 40, posY = 40;
         Array<Scoreboard.PlayerScore> scores = new Array<>(scoreboard.getScores());
         scores.reverse();
         for (Scoreboard.PlayerScore playerScore : scores) {
             ShootingPlayersCube cube = playerScore.controller.getCube();
             int hp = cube.getHealthPoints();
             float overheat = cube.getGunHeatLevel();
+            colorIndicators.setColor(playerScore.controller.getCube().getColor());
+            colorIndicators.draw(batch,posX-3*barHeight/2,posY,barHeight,barHeight);
             font.draw(batch,playerScore.score+" " + cube.getName(), posX, posY+barHeight);
             if(hp > 0) {
                 healthBarModel.draw(batch, posX+120f, posY, 5f*hp, barHeight);
@@ -71,4 +79,10 @@ public class GameScene extends Scene {
     }
     public Scoreboard getScoreboard() {return scoreboard;}
     public PowerUpService getPowerUpService() {return powerUpService;}
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        font.dispose();
+    }
 }

@@ -1,5 +1,6 @@
 package com.geometric.wars.player;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -87,6 +88,10 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Color getColor()  {
+        return color;
     }
 }
 

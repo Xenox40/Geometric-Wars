@@ -8,11 +8,6 @@ import com.geometric.wars.utils.Direction2D;
 
 public class DynamicCubeRandomController extends DynamicCubeController {
 
-    public DynamicCubeRandomController() {
-        super();
-    }
-
-
     @Override
     public void processMoving() {
         int val = MathUtils.random(0, 5);

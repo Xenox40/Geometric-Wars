@@ -10,6 +10,7 @@ import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.InputMethodGetter;
 import com.geometric.wars.player.PlayersController;
 import com.geometric.wars.player.ShooterPlayersController;
+import com.geometric.wars.player.bots.mediumbot.MediumBotFactory;
 import com.geometric.wars.player.bots.randomactingbot.RandomBotFactory;
 import com.geometric.wars.player.persons.shooting.ShootingPersonsCubeFactory;
 import com.geometric.wars.scene.Scene;
@@ -107,7 +108,7 @@ public class MapLoader {
     private void addRandomBot(Array<Collidable> objects, int x, int y) {
         x *= Values.unit;
         y *= Values.unit;
-        PlayersController controller = new ShooterPlayersController(x, y, new RandomBotFactory());
+        PlayersController controller = new ShooterPlayersController(x, y, new MediumBotFactory());
         scene.addDynamicGameObject(controller);
         SceneManager.getInstance().getCurrentMapService();
         objects.add(controller.getCube(0));

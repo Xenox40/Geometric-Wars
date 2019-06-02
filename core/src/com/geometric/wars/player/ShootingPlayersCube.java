@@ -50,15 +50,22 @@ public class ShootingPlayersCube extends PlayersCube {
 
 
     public void setGunHeatLevel(float heat) {
-        getGun().setHeatLevel(heat);
+        try {
+            getGun().setHeatLevel(heat);
+        }
+        catch (RuntimeException e) {}
     }
-
     public int getHealthPoints() {
         return healthPoints;
     }
 
     public float getGunHeatLevel() {
-        return getGun().getHeatLevel();
+        try {
+            return getGun().getHeatLevel();
+        }
+        catch (RuntimeException e) {
+            return 0;
+        }
     }
 
     public void takeHp(int hp) {
@@ -89,7 +96,10 @@ public class ShootingPlayersCube extends PlayersCube {
     @Override
     public  void update() {
         super.update();
-        getGun().setHeatLevel(OverheatCalculator.getHeatLevelAfterCooling(getGun(), Gdx.graphics.getDeltaTime()));
+        try {
+            getGun().setHeatLevel(OverheatCalculator.getHeatLevelAfterCooling(getGun(), Gdx.graphics.getDeltaTime()));
+        }
+        catch (RuntimeException e){}
     }
 
     @Override

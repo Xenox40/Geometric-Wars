@@ -52,10 +52,15 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
      * also checks collisions
      * @param direction
      */
+    public boolean canMove(Direction2D direction) {
+        Position newPos = new Position(getPosition().x + (int)direction.toVector2().x, (getPosition().y + (int)direction.toVector2().y));
+        return (!isMoving() && service.isMoveAllowed(this,(int)newPos.x,(int)newPos.y));
+    }
+
+
     @Override
     public void move(Direction2D direction) {
-        Position newPos = new Position(getPosition().x + (int)direction.toVector2().x, (getPosition().y + (int)direction.toVector2().y));
-        if(!isMoving() && service.isMoveAllowed(this,(int)newPos.x,(int)newPos.y)) {
+        if(canMove(direction)){
             super.move(direction);
             service.extendCollisionArea(this,(int) getApproachingPosition().x, (int) getApproachingPosition().y);
         }

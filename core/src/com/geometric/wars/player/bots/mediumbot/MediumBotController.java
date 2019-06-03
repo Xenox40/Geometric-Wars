@@ -9,6 +9,7 @@ import com.geometric.wars.player.PlayersCube;
 import com.geometric.wars.player.ShootingPlayersCube;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction2D;
+import com.geometric.wars.utils.Direction3D;
 import com.geometric.wars.utils.Position;
 
 
@@ -17,6 +18,11 @@ public class MediumBotController extends DynamicCubeController {
     private MapService service =  SceneManager.getInstance().getCurrentMapService();
     private PlayersCube target;
     private Array<Position> path;
+    private Position plannedMove;
+    private Direction3D getGunDirection() {
+        return cube.getFaceOrientation(cube.getGun().getFaceMountedAt());
+    }
+
     @Override
     public void processMoving() {
         if(cube == null)
@@ -24,16 +30,27 @@ public class MediumBotController extends DynamicCubeController {
         if(cube.isMoving())
             return;
 
-       // if(cube.canShoot()) {
-            Collidable shootingTarget = service.mapGraph.getLookingAt(cube, cube.getApproachingPosition(), cube.getFaceOrientation(cube.getGun().getFaceMountedAt()));
-            if (shootingTarget != null && shootingTarget instanceof PlayersCube && shootingTarget != cube) {
+        Collidable shootingTarget = service.mapGraph.getLookingAt(cube, cube.getApproachingPosition(),getGunDirection());
+        if (shootingTarget instanceof PlayersCube && !shootingTarget.equals(cube)) {
+            if(cube.canShoot()) {
                 cube.shoot();
                 return;
             }
-      //  }
+            else{
+                hide();
+            }
+            return;
+        }
 
         if(MathUtils.random(100) <= 5)
             resetTarget();
+
+        if(plannedMove != null) {
+            cube.move(cube.getApproachingPosition().getDirection(plannedMove));
+            plannedMove = null;
+            resetTarget();
+            return;
+        }
 
         if(target == null) {
             int ct = 0;
@@ -43,16 +60,30 @@ public class MediumBotController extends DynamicCubeController {
             }
         }
         if(target != null) {
-            path = service.mapGraph.findShortestPath(cube,target.getApproachingPosition());
-            if (path == null || path.size < 2) {
+            path = service.mapGraph.findShortestPath(cube,target.getApproachingPosition(),1);
+            if (path == null || path.size < 1) {
                 resetTarget();
             }
             else{
-                cube.move(cube.getApproachingPosition().getDirection(path.get(1)));
+                cube.move(cube.getApproachingPosition().getDirection(path.get(0)));
             }
         }
-        if(target == null) {
-            cube.move(Direction2D.values()[MathUtils.random(0,3)]);
+        cube.move(Direction2D.values()[MathUtils.random(0,3)]);
+    }
+
+    private void planMove(Position pos) {
+        plannedMove = pos;
+    }
+
+    private void hide() {
+        for(int i=0;i<8;i++) {
+            Direction2D d = Direction2D.values()[MathUtils.random(0,3)];
+            Direction3D gunDirection = getGunDirection();
+            if (gunDirection == Direction3D.TOP || gunDirection == Direction3D.BOTTOM || (gunDirection.toDirection2D() != d && gunDirection.opposite().toDirection2D() != d && cube.canMove(d))) {
+                planMove(cube.getPosition());
+                cube.move(d);
+                return;
+            }
         }
     }
 

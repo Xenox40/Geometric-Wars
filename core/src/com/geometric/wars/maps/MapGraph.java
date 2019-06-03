@@ -39,10 +39,12 @@ public class MapGraph {
             position.y += lookingDirection.toDirection2D().toVector2().y;
         }
         while (service.isMoveAllowed(body,position.x,position.y));
+        if(position.x >= service.getWidth() || position.y >= service.getHeight() || position.x < 0 || position.y < 0)
+            return null;
         return service.getCollidable(position.x,position.y);
     }
 
-    public Array<Position> findShortestPath(PlayersCube cube, Position target) {
+    public Array<Position> findShortestPath(PlayersCube cube, Position target, int radius) {
         reset();
         Queue<Position> que = new Queue<>();
         que.addLast(cube.getApproachingPosition());
@@ -57,7 +59,7 @@ public class MapGraph {
             if(position.getManhattanDistance(target) <= nearest.getManhattanDistance(target)) {
                 nearest = position;
             }
-            if (nearest.getManhattanDistance(target) < 2)
+            if (nearest.getManhattanDistance(target) <= radius)
                 break;
             que.removeFirst();
             for(Position d : directions) {
@@ -73,6 +75,7 @@ public class MapGraph {
             path.add(position);
             position = prev[position.y][position.x];
         }
+        path.pop();
         path.reverse();
         return path;
     }

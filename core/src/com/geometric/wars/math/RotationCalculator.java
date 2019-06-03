@@ -3,6 +3,7 @@ package com.geometric.wars.math;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.utils.Direction3D;
 
@@ -57,7 +58,6 @@ public class RotationCalculator {
      * @return calculated object's transform
      *
      */
-
     public static Matrix4 transformAfterRoll(Matrix4 transform, Direction2D direction2D, float degrees, float size, int px, int pz) {
         if(direction2D == Direction2D.UP)
             return transformAfterRollUp(transform, degrees,size, new Vector3(px,0,pz));
@@ -70,9 +70,34 @@ public class RotationCalculator {
         throw new NullPointerException("Bad direction2d inside RotationCalculator.rotate()");
     }
 
+    public static Direction3D orientationAfterRoll(Direction3D orientation, Direction2D rollDirection) {
+        Array<Direction3D> lrRotations = new Array<>();
+        lrRotations.add(Direction3D.TOP,Direction3D.LEFT,Direction3D.BOTTOM,Direction3D.RIGHT);
+        Array<Direction3D> udRotations = new Array<>();
+        udRotations.add(Direction3D.TOP,Direction3D.UP,Direction3D.BOTTOM,Direction3D.DOWN);
+
+        if(rollDirection ==  Direction2D.LEFT || rollDirection == Direction2D.RIGHT) {
+            if(rollDirection == Direction2D.RIGHT)
+                lrRotations.reverse();
+            for(int i=0;i<4;i++){
+                if(lrRotations.get(i).equals(orientation))
+                    return lrRotations.get((i+1)%lrRotations.size);
+            }
+            return orientation;
+        }
+        else{
+            if(rollDirection == Direction2D.DOWN)
+                udRotations.reverse();
+            for(int i=0;i<4;i++){
+                if(udRotations.get(i).equals(orientation))
+                    return udRotations.get((i+1)%udRotations.size);
+            }
+            return orientation;
+        }
+    }
 
 
-    public static ArrayList<Integer> quaternionToArrayInt(Quaternion q) {
+    private static ArrayList<Integer> quaternionToArrayInt(Quaternion q) {
         return new ArrayList<>(Arrays.asList(Math.round(10*q.x),Math.round(10*q.y),Math.round(10*q.z),Math.round(10*q.w)));
     }
 

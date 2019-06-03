@@ -21,4 +21,9 @@ public class Position {
             return Direction2D.LEFT;
         return Direction2D.UP;
     }
+
+    @Override
+    public String toString() {
+        return "("+x+", "+y+")";
+    }
 }

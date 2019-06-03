@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.cube.DynamicCubeController;
+import com.geometric.wars.maps.FinalStateChecker;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.player.PlayersCube;
 import com.geometric.wars.player.ShootingPlayersCube;
@@ -22,7 +23,6 @@ public class MediumBotController extends DynamicCubeController {
     private Direction3D getGunDirection() {
         return cube.getFaceOrientation(cube.getGun().getFaceMountedAt());
     }
-
     @Override
     public void processMoving() {
         if(cube == null)
@@ -42,8 +42,8 @@ public class MediumBotController extends DynamicCubeController {
             return;
         }
 
-        if(MathUtils.random(100) <= 5)
-            resetTarget();
+       // if(MathUtils.random(100) <= 5)
+       //     resetTarget();
 
         if(plannedMove != null) {
             cube.move(cube.getApproachingPosition().getDirection(plannedMove));
@@ -56,11 +56,21 @@ public class MediumBotController extends DynamicCubeController {
             int ct = 0;
             while (target == null && ct < 10) {
                 target = service.cubes.random();
+                if(target.equals(cube))
+                    target = null;
                 ct++;
             }
         }
         if(target != null) {
-            path = service.mapGraph.findShortestPath(cube,target.getApproachingPosition(),1);
+            path = service.mapGraph.findShortestPath(cube, cube.getFaceAt(getGunDirection()), target.getApproachingPosition(), new FinalStateChecker() {
+                @Override
+                public boolean isFinalState(Position position, Direction3D orientation) {
+                    Collidable c =  service.mapGraph.getLookingAt(cube, position,orientation);
+                    return  position.getManhattanDistance(target.getApproachingPosition()) <= 3 &&
+                            c instanceof PlayersCube &&
+                            c.equals(target);
+                }
+            });
             if (path == null || path.size < 1) {
                 resetTarget();
             }

@@ -4,8 +4,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.collisions.DynamicBody;
+import com.geometric.wars.cube.CubeFace;
+import com.geometric.wars.math.RotationCalculator;
 import com.geometric.wars.player.PlayersCube;
-import com.geometric.wars.utils.Direction2D;
 import com.geometric.wars.utils.Direction3D;
 import com.geometric.wars.utils.Position;
 
@@ -16,64 +17,80 @@ public class MapGraph {
         this.service = service;
     }
 
-    private boolean[][] visited;
-    private Position[][] prev;
+    //[y][x][orientation]
+    private boolean[][][] visited;
+    private PositionAndOrientation[][][] prev;
+
     private Array<Position> path;
 
     private void reset() {
         path = new Array<>();
-        prev = new Position[service.getHeight()][service.getWidth()];
-        visited = new boolean[service.getHeight()][service.getWidth()];
+        prev = new PositionAndOrientation[service.getHeight()][service.getWidth()][6];
+        visited = new boolean[service.getHeight()][service.getWidth()][6];
     }
 
-    void visit(Position position, Position previous) {
-        visited[position.y][position.x] = true;
-        prev[position.y][position.x] = previous;
+    void visit(PositionAndOrientation current, PositionAndOrientation previous) {
+        visited[current.position.y][current.position.x][current.orientation.ordinal()] = true;
+        prev[current.position.y][current.position.x][current.orientation.ordinal()] = previous;
     }
 
     public Collidable getLookingAt(DynamicBody body, Position position, Direction3D lookingDirection) {
         if (lookingDirection == Direction3D.TOP || lookingDirection == Direction3D.BOTTOM)
             return null;
+        Position posCp = new Position(position.x,position.y);
         do {
-            position.x += lookingDirection.toDirection2D().toVector2().x;
-            position.y += lookingDirection.toDirection2D().toVector2().y;
+            posCp.x += lookingDirection.toDirection2D().toVector2().x;
+            posCp.y += lookingDirection.toDirection2D().toVector2().y;
         }
-        while (service.isMoveAllowed(body,position.x,position.y));
-        if(position.x >= service.getWidth() || position.y >= service.getHeight() || position.x < 0 || position.y < 0)
+        while (service.isMoveAllowed(body,posCp.x,posCp.y));
+        if(posCp.x >= service.getWidth() || posCp.y >= service.getHeight() || posCp.x < 0 || posCp.y < 0)
             return null;
-        return service.getCollidable(position.x,position.y);
+        return service.getCollidable(posCp.x,posCp.y);
     }
 
-    public Array<Position> findShortestPath(PlayersCube cube, Position target, int radius) {
+    private class PositionAndOrientation {
+        public Position position;
+        public Direction3D orientation;
+        public PositionAndOrientation(Position position, Direction3D orientation) {
+            this.position = position;
+            this.orientation = orientation;
+        }
+    }
+
+    public Array<Position> findShortestPath(PlayersCube cube, CubeFace orientationFace, Position target, FinalStateChecker finalStateChecker) {
         reset();
-        Queue<Position> que = new Queue<>();
-        que.addLast(cube.getApproachingPosition());
-        visit(cube.getApproachingPosition(), null);
+        Queue<PositionAndOrientation> que = new Queue<>();
+        que.addLast(new PositionAndOrientation(cube.getApproachingPosition(),cube.getFaceOrientation(orientationFace)));
+        visit(new PositionAndOrientation(cube.getApproachingPosition(),cube.getFaceOrientation(orientationFace)), null);
 
         Position[] directions = {new Position(1,0),new Position(-1,0),new Position(0,1),new Position(0,-1)};
 
-        Position nearest = cube.getApproachingPosition();
+        PositionAndOrientation nearest = null;
 
         while (!que.isEmpty()) {
-            Position position = que.first();
-            if(position.getManhattanDistance(target) <= nearest.getManhattanDistance(target)) {
-                nearest = position;
-            }
-            if (nearest.getManhattanDistance(target) <= radius)
+            Position position = que.first().position;
+            Direction3D orientation = que.first().orientation;
+            if (finalStateChecker.isFinalState(position,orientation)) {
+                nearest = que.first();
                 break;
-            que.removeFirst();
+            }
             for(Position d : directions) {
-                if (service.isMoveAllowed(cube, position.x + d.x, position.y+d.y) && !visited[position.y+d.y][position.x + d.x]) {
-                    Position newPos = new Position(position.x + d.x, position.y + d.y);
-                    que.addLast(newPos);
-                    visit(newPos,position);
+                Position newPos = new Position(position.x + d.x, position.y + d.y);
+                Direction3D newOrientation = RotationCalculator.orientationAfterRoll(orientation, position.getDirection(newPos));
+                if (service.isMoveAllowed(cube, newPos.x,newPos.y) && !visited[newPos.y][newPos.x][newOrientation.ordinal()]) {
+                    PositionAndOrientation po = new PositionAndOrientation(newPos,newOrientation);
+                    que.addLast(po);
+                    visit(po, que.first());
                 }
             }
+            que.removeFirst();
         }
-        Position position = nearest;
-        while(position != null) {
-            path.add(position);
-            position = prev[position.y][position.x];
+        if(nearest == null)
+            return new Array<>();
+
+        while(nearest != null) {
+            path.add(nearest.position);
+            nearest = prev[nearest.position.y][nearest.position.x][nearest.orientation.ordinal()];
         }
         path.pop();
         path.reverse();

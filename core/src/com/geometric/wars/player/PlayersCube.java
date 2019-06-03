@@ -74,8 +74,9 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
 
     @Override
     public boolean canCollideWith(DynamicBody object) {
-        if(object instanceof DynamicCube)
-            return false;
+        if(object instanceof DynamicCube) {
+            return object.equals(this); //self collisions are allowed
+        }
         throw new RuntimeException("dynamicGameObject "+object+" not supported by PlayersCube collisions");
     }
 

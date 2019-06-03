@@ -116,4 +116,7 @@ public class MapService {
     }
 
 
+    public Collidable getCollidable(int x, int y) {
+        return mapObjects.get(y).get(x).get(0);
+    }
 }

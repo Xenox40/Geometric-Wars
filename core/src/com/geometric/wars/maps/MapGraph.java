@@ -2,7 +2,11 @@ package com.geometric.wars.maps;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
+import com.geometric.wars.collisions.Collidable;
+import com.geometric.wars.collisions.DynamicBody;
 import com.geometric.wars.player.PlayersCube;
+import com.geometric.wars.utils.Direction2D;
+import com.geometric.wars.utils.Direction3D;
 import com.geometric.wars.utils.Position;
 
 
@@ -27,6 +31,17 @@ public class MapGraph {
         prev[position.y][position.x] = previous;
     }
 
+    public Collidable getLookingAt(DynamicBody body, Position position, Direction3D lookingDirection) {
+        if (lookingDirection == Direction3D.TOP || lookingDirection == Direction3D.BOTTOM)
+            return null;
+        do {
+            position.x += lookingDirection.toDirection2D().toVector2().x;
+            position.y += lookingDirection.toDirection2D().toVector2().y;
+        }
+        while (service.isMoveAllowed(body,position.x,position.y));
+        return service.getCollidable(position.x,position.y);
+    }
+
     public Array<Position> findShortestPath(PlayersCube cube, Position target) {
         reset();
         Queue<Position> que = new Queue<>();
@@ -42,7 +57,7 @@ public class MapGraph {
             if(position.getManhattanDistance(target) <= nearest.getManhattanDistance(target)) {
                 nearest = position;
             }
-            if (nearest.getManhattanDistance(target) < 3)
+            if (nearest.getManhattanDistance(target) < 2)
                 break;
             que.removeFirst();
             for(Position d : directions) {

@@ -79,8 +79,12 @@ public class ShootingPlayersCube extends PlayersCube {
         }
     }
 
+    public boolean canShoot(){
+        return !(isMoving() || !SceneManager.getInstance().getCurrentShootingService().canShoot(getGun(),lastShootTimeInMillis));
+    }
+
     public void shoot() {
-        if(isMoving() || !SceneManager.getInstance().getCurrentShootingService().canShoot(getGun(),lastShootTimeInMillis))
+        if(!canShoot())
             return;
         lastShootTimeInMillis = TimeUtils.millis();
 

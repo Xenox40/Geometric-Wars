@@ -2,6 +2,7 @@ package com.geometric.wars.player.bots.mediumbot;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.maps.MapService;
 import com.geometric.wars.player.PlayersCube;
@@ -22,6 +23,14 @@ public class MediumBotController extends DynamicCubeController {
             cube = (ShootingPlayersCube) dynamicCube;
         if(cube.isMoving())
             return;
+
+       // if(cube.canShoot()) {
+            Collidable shootingTarget = service.mapGraph.getLookingAt(cube, cube.getApproachingPosition(), cube.getFaceOrientation(cube.getGun().getFaceMountedAt()));
+            if (shootingTarget != null && shootingTarget instanceof PlayersCube && shootingTarget != cube) {
+                cube.shoot();
+                return;
+            }
+      //  }
 
         if(MathUtils.random(100) <= 5)
             resetTarget();

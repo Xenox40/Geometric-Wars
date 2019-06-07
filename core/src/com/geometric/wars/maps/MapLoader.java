@@ -1,6 +1,9 @@
 package com.geometric.wars.maps;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.geometric.wars.GeometricWars;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.gameobjects.enviromentparts.Floor;
 import com.geometric.wars.gameobjects.enviromentparts.Wall;
@@ -99,7 +102,6 @@ public class MapLoader {
     private void addPlayersController(Array<Collidable> objects, int x, int y) throws IOException {
         x *= Values.unit;
         y *= Values.unit;
-        //TODO throw exception if not enough distinct controllers
         PlayersController controller = new ShooterPlayersController(x, y, new ShootingPersonsCubeFactory(InputMethodGetter.getInstance().getInputMethod(personsCount++)));
         scene.addDynamicGameObject(controller);
         objects.add(controller.getCube(0));
@@ -108,6 +110,8 @@ public class MapLoader {
     private void addBot(Array<Collidable> objects, int x, int y, PlayersCubeFactory factory) {
         x *= Values.unit;
         y *= Values.unit;
+        if(GeometricWars.isAndroidPlatform() && MathUtils.randomBoolean())
+            factory = new MediumBotFactory();
         PlayersController controller = new ShooterPlayersController(x, y, factory);
         scene.addDynamicGameObject(controller);
         SceneManager.getInstance().getCurrentMapService();

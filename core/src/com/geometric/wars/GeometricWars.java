@@ -99,7 +99,7 @@ public class GeometricWars extends Game{
 		InputMethodGetter.dispose();
 	}
 
-	public boolean isAndroidPlatform() {
+	public static boolean isAndroidPlatform() {
     	return Gdx.app.getType() == Application.ApplicationType.Android;
 	}
 

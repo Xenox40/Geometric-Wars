@@ -96,11 +96,17 @@ public class MapGraph {
 
         Position[] directions = {new Position(1,0),new Position(-1,0),new Position(0,1),new Position(0,-1)};
         PositionAndOrientation nearest = null;
+        int minPenalty = 1000;
+
         while (!que.isEmpty()) {
             Position position = que.first().position;
             Direction3D orientation = que.first().orientation;
-            if (finalStateChecker.isFinalState(position,orientation)) {
+            int penalty = finalStateChecker.getPenalty(position,orientation);
+            if(minPenalty > penalty) {
+                minPenalty = penalty;
                 nearest = que.first();
+            }
+            if (penalty == 0) {
                 break;
             }
             for(Position d : directions) {

@@ -62,13 +62,15 @@ public class MediumBotController extends DynamicCubeController {
             }
         }
         if(target != null) {
-            path = service.mapGraph.findShortestPath(cube, cube.getFaceAt(getGunDirection()), new FinalStateChecker() {
+            if(path == null || path.size < 3)
+                path = service.mapGraph.findShortestPath(cube, cube.getFaceAt(getGunDirection()), new FinalStateChecker() {
                 @Override
-                public boolean isFinalState(Position position, Direction3D orientation) {
-                    if(position.getManhattanDistance(target.getApproachingPosition()) <= 3) {
-                        return service.mapGraph.isLookingAt(cube,position,orientation,target);
+                public int getPenalty(Position position, Direction3D orientation) {
+                    int md = position.getManhattanDistance(target.getApproachingPosition());
+                    if(md <= 4) {
+                        return service.mapGraph.isLookingAt(cube,position,orientation,target) ? 0 : 6;
                     }
-                    return false;
+                    return md;
                 }
             });
             if (path == null || path.size < 1) {
@@ -76,6 +78,7 @@ public class MediumBotController extends DynamicCubeController {
             }
             else{
                 cube.move(cube.getApproachingPosition().getDirection(path.get(0)));
+                path.removeIndex(0);
             }
         }
         cube.move(Direction2D.values()[MathUtils.random(0,3)]);

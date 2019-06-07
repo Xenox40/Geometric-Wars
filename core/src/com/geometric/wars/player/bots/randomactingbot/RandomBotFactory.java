@@ -24,7 +24,7 @@ public class RandomBotFactory extends PlayersCubeFactory {
         else
             builder.addMountable(Direction3D.DOWN,new DoubleRifledGun());
         RandomBotCube cube = (RandomBotCube)builder.build();
-        cube.setName(name);
+        cube.setName(name + " [E]");
         return cube;
     }
 

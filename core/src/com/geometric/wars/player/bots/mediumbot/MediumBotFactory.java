@@ -19,9 +19,12 @@ public class MediumBotFactory extends PlayersCubeFactory {
     public MediumBotCube createCube() {
         String name = ColorAndNameGiver.getRandomUnusedColorName();
         builder.createCube(ColorAndNameGiver.getColorByName(name));
-        builder.addMountable(Direction3D.DOWN,new SimpleGun());
+        if(MathUtils.randomBoolean())
+            builder.addMountable(Direction3D.DOWN, new SimpleGun());
+        else
+            builder.addMountable(Direction3D.DOWN,new DoubleRifledGun());
         MediumBotCube cube = (MediumBotCube)builder.build();
-        cube.setName(name);
+        cube.setName(name+" [M]");
         return cube;
     }
 

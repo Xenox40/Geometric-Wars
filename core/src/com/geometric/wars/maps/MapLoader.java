@@ -1,14 +1,12 @@
 package com.geometric.wars.maps;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.gameobjects.enviromentparts.Floor;
 import com.geometric.wars.gameobjects.enviromentparts.Wall;
-import com.geometric.wars.input.InputController;
 import com.geometric.wars.input.InputMethodGetter;
 import com.geometric.wars.player.PlayersController;
+import com.geometric.wars.player.PlayersCubeFactory;
 import com.geometric.wars.player.ShooterPlayersController;
 import com.geometric.wars.player.bots.mediumbot.MediumBotFactory;
 import com.geometric.wars.player.bots.randomactingbot.RandomBotFactory;
@@ -18,7 +16,6 @@ import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Values;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class MapLoader {
     private String fileName;
@@ -71,7 +68,10 @@ public class MapLoader {
                     addPlayersController(objects, col, row);
                     break;
                 case 'B':
-                    addRandomBot(objects, col, row);
+                    addBot(objects, col, row,new RandomBotFactory());
+                    break;
+                case 'M':
+                    addBot(objects, col, row, new MediumBotFactory());
                     break;
                 default:
                     addFloorObject(objects, col, row);
@@ -105,10 +105,10 @@ public class MapLoader {
         objects.add(controller.getCube(0));
     }
 
-    private void addRandomBot(Array<Collidable> objects, int x, int y) {
+    private void addBot(Array<Collidable> objects, int x, int y, PlayersCubeFactory factory) {
         x *= Values.unit;
         y *= Values.unit;
-        PlayersController controller = new ShooterPlayersController(x, y, new MediumBotFactory());
+        PlayersController controller = new ShooterPlayersController(x, y, factory);
         scene.addDynamicGameObject(controller);
         SceneManager.getInstance().getCurrentMapService();
         objects.add(controller.getCube(0));

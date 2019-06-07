@@ -11,10 +11,10 @@ public class MovementSpeedPowerUp extends PowerUp {
 
     @Override
     protected void applyEffectTo(ShootingPlayersCube cube, EffectApplicator applicator) {
-        applicator.addEffect(cube,5000, new Effect(){
+        applicator.addEffect(cube,10000, new Effect(){
             @Override
             public void apply(ShootingPlayersCube cube) {
-                cube.setMovementSpeed(0.15f);
+                cube.setMovementSpeed(0.17f);
             }
 
             @Override

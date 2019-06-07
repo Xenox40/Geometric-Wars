@@ -36,13 +36,9 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
     public void update() {
         dynamicCubeController.processMoving();
         this.updateRotationAndPosition();
-        if(rotationAngleSumInDegrees >= 40 && extendingCollisionAreaPhase == 1) {
-            service.extendCollisionArea(this, getApproachingPosition().x,  getApproachingPosition().y);
-            extendingCollisionAreaPhase = 2;
-        }
-        if(rotationAngleSumInDegrees >= 50 && extendingCollisionAreaPhase == 2) {
+        if(rotationAngleSumInDegrees >= 45 && extendingCollisionAreaPhase == 1){
             service.decreaseCollisionArea(this,getPosition().x,getPosition().y);
-            extendingCollisionAreaPhase = 0;
+            extendingCollisionAreaPhase = 2;
         }
     }
 
@@ -70,8 +66,9 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
     @Override
     public void move(Direction2D direction) {
         if(canMove(direction)){
-            extendingCollisionAreaPhase = 1;
             super.move(direction);
+            service.extendCollisionArea(this, getApproachingPosition().x,  getApproachingPosition().y);
+            extendingCollisionAreaPhase = 1;
         }
     }
 

@@ -62,13 +62,13 @@ public class MediumBotController extends DynamicCubeController {
             }
         }
         if(target != null) {
-            path = service.mapGraph.findShortestPath(cube, cube.getFaceAt(getGunDirection()), target.getApproachingPosition(), new FinalStateChecker() {
+            path = service.mapGraph.findShortestPath(cube, cube.getFaceAt(getGunDirection()), new FinalStateChecker() {
                 @Override
                 public boolean isFinalState(Position position, Direction3D orientation) {
-                    Collidable c =  service.mapGraph.getLookingAt(cube, position,orientation);
-                    return  position.getManhattanDistance(target.getApproachingPosition()) <= 3 &&
-                            c instanceof PlayersCube &&
-                            c.equals(target);
+                    if(position.getManhattanDistance(target.getApproachingPosition()) <= 3) {
+                        return service.mapGraph.isLookingAt(cube,position,orientation,target);
+                    }
+                    return false;
                 }
             });
             if (path == null || path.size < 1) {

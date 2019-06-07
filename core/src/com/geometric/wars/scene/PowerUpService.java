@@ -71,18 +71,21 @@ public class PowerUpService implements DynamicGameObject {
 
     private void addRandomPowerUp() {
         PowerUp powerUp;
-        int rand = MathUtils.random(160);
+        int rand = MathUtils.random(200);
         if(rand <= 40) {
             powerUp = new DamagePowerUp(2);
         }
-        else if(rand <= 100) {
+        else if(rand <= 90) {
             powerUp = new NoOverHeatPowerUp();
         }
-        else if(rand <= 150) {
+        else if(rand <= 140) {
             powerUp = new HealingPowerUp();
         }
+        else if (rand <= 190) {
+            powerUp = new MovementSpeedPowerUp();
+        }
         else {
-            powerUp = new InvincibilityPowerUp(5);
+            powerUp = new InvincibilityPowerUp(8000);
         }
 
         if(SceneManager.getInstance().getCurrentMapService().getEmptyCells().size == 0)

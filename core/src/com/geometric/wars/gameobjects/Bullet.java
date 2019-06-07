@@ -54,23 +54,34 @@ public class Bullet extends ModelInstance implements DynamicBody {
     public void update() {
         if(exists() && startedMoving) {
             float deltaTranslation = speed * Gdx.graphics.getDeltaTime();
-            transform.translate(direction.toVector3().scl(deltaTranslation));
-
-            Vector3 translation = transform.getTranslation(new Vector3());
-
-            px = Math.round(translation.x);
-            py = Math.round(translation.z);
-
-            if(px != lastX || py != lastY){
-                SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(this,lastX,lastY);
-                lastX = px;
-                lastY = py;
-                SceneManager.getInstance().getCurrentMapService().extendCollisionArea(this,px,py);
+            while (deltaTranslation > 0) {
+                float translationPart = Math.min(deltaTranslation, 1);
+                transform.translate(direction.toVector3().scl(translationPart));
+                updatePartial(translationPart);
+                deltaTranslation -= translationPart;
             }
-            if(!SceneManager.getInstance().getCurrentMapService().isMoveAllowed(this,px,py)) {
-                destroy();
-                return;
-            }
+
+        }
+    }
+
+    /**
+     * updates assuming deltaTransform <= 1 in order to detect all collisions
+     */
+    private void updatePartial(float deltaTransform) {
+        Vector3 translation = transform.getTranslation(new Vector3());
+
+        px = Math.round(translation.x);
+        py = Math.round(translation.z);
+
+        if(px != lastX || py != lastY){
+            SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(this,lastX,lastY);
+            lastX = px;
+            lastY = py;
+            SceneManager.getInstance().getCurrentMapService().extendCollisionArea(this,px,py);
+        }
+        if(!SceneManager.getInstance().getCurrentMapService().isMoveAllowed(this,px,py)) {
+            destroy();
+            return;
         }
     }
 

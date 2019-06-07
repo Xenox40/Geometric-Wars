@@ -69,8 +69,10 @@ public class MapGraph {
             else if(orientation.equals(Direction3D.LEFT))
                 check = true;
         }
-        if(check)
-            return getLookingAt(player,position,orientation).equals(target);
+        if(check) {
+            Collidable c = getLookingAt(player,position,orientation);
+            return c != null && c.equals(target);
+        }
         return false;
     }
 

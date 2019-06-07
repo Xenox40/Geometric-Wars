@@ -25,7 +25,7 @@ public class DynamicCube {
 
     static final float movementTimeInSeconds = 0.25f;
 
-    private float rotationAngleSumInDegrees;
+    protected float rotationAngleSumInDegrees;
     private boolean moving = false;
     private Direction2D rotationDirection2D;
 

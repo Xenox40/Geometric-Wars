@@ -19,6 +19,7 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
     private MapService service = SceneManager.getInstance().getCurrentMapService();
 
     protected DynamicCubeController dynamicCubeController;
+    private int extendingCollisionAreaPhase;
     private String name;
 
 
@@ -35,6 +36,14 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
     public void update() {
         dynamicCubeController.processMoving();
         this.updateRotationAndPosition();
+        if(rotationAngleSumInDegrees >= 40 && extendingCollisionAreaPhase == 1) {
+            service.extendCollisionArea(this, getApproachingPosition().x,  getApproachingPosition().y);
+            extendingCollisionAreaPhase = 2;
+        }
+        if(rotationAngleSumInDegrees >= 50 && extendingCollisionAreaPhase == 2) {
+            service.decreaseCollisionArea(this,getPosition().x,getPosition().y);
+            extendingCollisionAreaPhase = 0;
+        }
     }
 
     /**
@@ -61,15 +70,16 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
     @Override
     public void move(Direction2D direction) {
         if(canMove(direction)){
+            extendingCollisionAreaPhase = 1;
             super.move(direction);
-            service.extendCollisionArea(this,(int) getApproachingPosition().x, (int) getApproachingPosition().y);
         }
     }
 
     @Override
     protected void finishRotating() {
-        service.decreaseCollisionArea(this,(int)getPosition().x,(int)getPosition().y);
+        service.decreaseCollisionArea(this,getPosition().x,getPosition().y);
         super.finishRotating();
+        extendingCollisionAreaPhase = 0;
     }
 
     @Override

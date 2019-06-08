@@ -84,5 +84,6 @@ public class GameScene extends Scene {
     public void dispose() {
         super.dispose();
         font.dispose();
+        SceneManager.getInstance().getCurrentShootingService().dispose();
     }
 }

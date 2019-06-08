@@ -38,11 +38,17 @@ public class Bullet extends ModelInstance implements DynamicBody {
      * @param y - y coordinate on a plane grid
      */
     public Bullet(int x, int y, int damage) {
-        super(BulletModel.getModel(), new Vector3(x * Values.unit, 0, y * Values.unit));
+        super(BulletModel.getModel());
+        setParams(x,y,damage);
+    }
+
+    public void setParams(int x, int y, int damage) {
+        transform.setToTranslation(new Vector3(x * Values.unit, 0, y * Values.unit));
         this.startX = this.px = this.lastX = x;
         this.startY = this.py = this.lastY = y;
         this.damage = damage;
         this.speed = 0f; //Bullet isn't shoot yet
+        this.destroyed = false;
     }
 
     public void shoot(float speed, Direction3D shootingDirection) {
@@ -54,23 +60,34 @@ public class Bullet extends ModelInstance implements DynamicBody {
     public void update() {
         if(exists() && startedMoving) {
             float deltaTranslation = speed * Gdx.graphics.getDeltaTime();
-            transform.translate(direction.toVector3().scl(deltaTranslation));
-
-            Vector3 translation = transform.getTranslation(new Vector3());
-
-            px = Math.round(translation.x);
-            py = Math.round(translation.z);
-
-            if(px != lastX || py != lastY){
-                SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(this,lastX,lastY);
-                lastX = px;
-                lastY = py;
-                SceneManager.getInstance().getCurrentMapService().extendCollisionArea(this,px,py);
+            while (deltaTranslation > 0) {
+                float translationPart = Math.min(deltaTranslation, 1);
+                transform.translate(direction.toVector3().scl(translationPart));
+                updatePartial();
+                deltaTranslation -= translationPart;
             }
-            if(!SceneManager.getInstance().getCurrentMapService().isMoveAllowed(this,px,py)) {
-                destroy();
-                return;
-            }
+
+        }
+    }
+
+    /**
+     * updates assuming deltaTransform <= 1 in order to detect all collisions
+     */
+    private void updatePartial() {
+        Vector3 translation = transform.getTranslation(new Vector3());
+
+        px = Math.round(translation.x);
+        py = Math.round(translation.z);
+
+        if(px != lastX || py != lastY){
+            SceneManager.getInstance().getCurrentMapService().decreaseCollisionArea(this,lastX,lastY);
+            lastX = px;
+            lastY = py;
+            SceneManager.getInstance().getCurrentMapService().extendCollisionArea(this,px,py);
+        }
+        if(!SceneManager.getInstance().getCurrentMapService().isMoveAllowed(this,px,py)) {
+            destroy();
+            return;
         }
     }
 

@@ -3,6 +3,7 @@ package com.geometric.wars.maps;
 import com.badlogic.gdx.utils.Array;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.collisions.DynamicBody;
+import com.geometric.wars.player.PlayersCube;
 import com.geometric.wars.utils.Position;
 
 
@@ -10,17 +11,21 @@ public class MapService {
 
     public MapService() {
         mapObjects = new Array<>();
+        mapGraph = new MapGraph(this);
     }
-
-    public Array<Array<Array<Collidable>> > mapObjects;
-
+    public MapGraph mapGraph;
+    private Array<Array<Array<Collidable>> > mapObjects;
+    public Array<PlayersCube> cubes = new Array<>();
     private int width;
     private int height;
 
 
     public void addCollidable(Collidable collidable, int i, int j) {
-        if(collidable != null)
-         mapObjects.get(i).get(j).add(collidable);
+        if(collidable != null) {
+            mapObjects.get(i).get(j).add(collidable);
+            if(collidable instanceof PlayersCube)
+                cubes.add((PlayersCube)collidable);
+        }
     }
     public void removeCollidable(Collidable collidable, int x, int y) {
         if(x < 0 || y < 0 ||  x >= getWidth() || y >= getHeight())
@@ -35,6 +40,7 @@ public class MapService {
             }
         }
     }
+
     void setWidth(int width) {
         this.width = width;
         updateMapSize();
@@ -110,4 +116,7 @@ public class MapService {
     }
 
 
+    public Collidable getCollidable(int x, int y) {
+        return mapObjects.get(y).get(x).get(0);
+    }
 }

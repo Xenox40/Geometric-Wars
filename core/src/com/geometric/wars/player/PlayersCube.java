@@ -19,6 +19,7 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
     private MapService service = SceneManager.getInstance().getCurrentMapService();
 
     protected DynamicCubeController dynamicCubeController;
+    private int extendingCollisionAreaPhase;
     private String name;
 
 
@@ -35,6 +36,10 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
     public void update() {
         dynamicCubeController.processMoving();
         this.updateRotationAndPosition();
+        if(rotationAngleSumInDegrees >= 45 && extendingCollisionAreaPhase == 1){
+            service.decreaseCollisionArea(this,getPosition().x,getPosition().y);
+            extendingCollisionAreaPhase = 2;
+        }
     }
 
     /**
@@ -52,25 +57,33 @@ public abstract class PlayersCube extends DynamicCube implements DynamicBody {
      * also checks collisions
      * @param direction
      */
+    public boolean canMove(Direction2D direction) {
+        Position newPos = new Position(getPosition().x + (int)direction.toVector2().x, (getPosition().y + (int)direction.toVector2().y));
+        return (!isMoving() && service.isMoveAllowed(this,(int)newPos.x,(int)newPos.y));
+    }
+
+
     @Override
     public void move(Direction2D direction) {
-        Position newPos = new Position(getPosition().x + (int)direction.toVector2().x, (getPosition().y + (int)direction.toVector2().y));
-        if(!isMoving() && service.isMoveAllowed(this,(int)newPos.x,(int)newPos.y)) {
+        if(canMove(direction)){
             super.move(direction);
-            service.extendCollisionArea(this,(int) getApproachingPosition().x, (int) getApproachingPosition().y);
+            service.extendCollisionArea(this, getApproachingPosition().x,  getApproachingPosition().y);
+            extendingCollisionAreaPhase = 1;
         }
     }
 
     @Override
     protected void finishRotating() {
-        service.decreaseCollisionArea(this,(int)getPosition().x,(int)getPosition().y);
+        service.decreaseCollisionArea(this,getPosition().x,getPosition().y);
         super.finishRotating();
+        extendingCollisionAreaPhase = 0;
     }
 
     @Override
     public boolean canCollideWith(DynamicBody object) {
-        if(object instanceof DynamicCube)
-            return false;
+        if(object instanceof DynamicCube) {
+            return object.equals(this); //self collisions are allowed
+        }
         throw new RuntimeException("dynamicGameObject "+object+" not supported by PlayersCube collisions");
     }
 

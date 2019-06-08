@@ -13,7 +13,7 @@ public class DamagePowerUp extends PowerUp {
     public DamagePowerUp(float multiplier) {
         super();
         this.multiplier = multiplier;
-        setColor(new Color(0.4f,0.6f,0.3f,1));
+        setColor(new Color(71/255f,239/255f,116/255f,1));
     }
 
 

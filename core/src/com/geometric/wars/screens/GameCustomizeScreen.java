@@ -71,7 +71,7 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
         if(selectedPlayers == null) {
             selectedPlayers = new Array<>();
             selectedPlayers.clear();
-            selectedPlayers.add("Player", "Bot", "Bot", "Bot");
+            selectedPlayers.add("Player", "Easy Bot", "Easy Bot", "Easy Bot");
             persons = 1;
             bots = 3;
         }
@@ -224,7 +224,7 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
                     images.get(i).get(j).setColor(Color.LIME);
                 else if (map.get(i, j) == 'P')
                     images.get(i).get(j).setColor(Color.RED);
-                else if (map.get(i, j) == 'B')
+                else if (map.get(i, j) == 'B' || map.get(i, j) == 'M')
                     images.get(i).get(j).setColor(Color.BLUE);
                 else
                     images.get(i).get(j).setColor(Color.BLACK);
@@ -238,18 +238,22 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
         for(int i=0;i<selectedPlayers.size;i++) {
             if(selectedPlayers.get(i).equals("Player"))
                 persons++;
-            else if(selectedPlayers.get(i).equals("Bot"))
+            else if(selectedPlayers.get(i).equals("Easy Bot"))
+                bots++;
+            else if(selectedPlayers.get(i).equals("Medium Bot"))
                 bots++;
         }
 
         int ct = 0;
         for(int i=0; i < map.getHeight(); i++) {
             for (int j = 0; j < map.getWidth(); j++) {
-                if (map.get(i, j) == 'P' || map.get(i,j) == 'B' || map.get(i,j) == 'N') {
+                if (map.get(i, j) == 'P' || map.get(i,j) == 'B' || map.get(i,j) == 'N' || map.get(i,j) == 'M') {
                     if(selectedPlayers.get(ct).equals("Player"))
                          map.put(i, j, 'P');
-                    else if(selectedPlayers.get(ct).equals("Bot"))
+                    else if(selectedPlayers.get(ct).equals("Easy Bot"))
                         map.put(i, j, 'B');
+                    else if(selectedPlayers.get(ct).equals("Medium Bot"))
+                        map.put(i, j, 'M');
                     else
                         map.put(i,j,'N'); //none player
                     ct++;

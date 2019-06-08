@@ -1,7 +1,6 @@
 package com.geometric.wars.player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.geometric.wars.collisions.DynamicBody;
@@ -9,7 +8,6 @@ import com.geometric.wars.cube.CubeFace;
 import com.geometric.wars.cube.DynamicCubeController;
 import com.geometric.wars.cube.mountables.MountableGun;
 import com.geometric.wars.gameobjects.Bullet;
-import com.geometric.wars.powerups.PowerUp;
 import com.geometric.wars.scene.OverheatCalculator;
 import com.geometric.wars.scene.SceneManager;
 import com.geometric.wars.utils.Direction3D;
@@ -50,15 +48,22 @@ public class ShootingPlayersCube extends PlayersCube {
 
 
     public void setGunHeatLevel(float heat) {
-        getGun().setHeatLevel(heat);
+        try {
+            getGun().setHeatLevel(heat);
+        }
+        catch (RuntimeException e) {}
     }
-
     public int getHealthPoints() {
         return healthPoints;
     }
 
     public float getGunHeatLevel() {
-        return getGun().getHeatLevel();
+        try {
+            return getGun().getHeatLevel();
+        }
+        catch (RuntimeException e) {
+            return 0;
+        }
     }
 
     public void takeHp(int hp) {
@@ -72,8 +77,12 @@ public class ShootingPlayersCube extends PlayersCube {
         }
     }
 
+    public boolean canShoot(){
+        return !(isMoving() || !SceneManager.getInstance().getCurrentShootingService().canShoot(getGun(),lastShootTimeInMillis));
+    }
+
     public void shoot() {
-        if(isMoving() || !SceneManager.getInstance().getCurrentShootingService().canShoot(getGun(),lastShootTimeInMillis))
+        if(!canShoot())
             return;
         lastShootTimeInMillis = TimeUtils.millis();
 
@@ -87,7 +96,7 @@ public class ShootingPlayersCube extends PlayersCube {
 
 
     @Override
-    public  void update() {
+    public void update() {
         super.update();
         getGun().setHeatLevel(OverheatCalculator.getHeatLevelAfterCooling(getGun(), Gdx.graphics.getDeltaTime()));
     }

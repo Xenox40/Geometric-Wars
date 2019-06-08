@@ -23,9 +23,9 @@ public class DynamicCube {
         }
     }
 
-    static final float movementTimeInSeconds = 0.25f;
+    private float movementTimeInSeconds = 0.25f;
 
-    private float rotationAngleSumInDegrees;
+    protected float rotationAngleSumInDegrees;
     private boolean moving = false;
     private Direction2D rotationDirection2D;
 
@@ -54,7 +54,6 @@ public class DynamicCube {
                 return Direction3D.values()[i];
         throw new RuntimeException("face not found");
     }
-
 
 
     public boolean isMoving() {
@@ -139,5 +138,8 @@ public class DynamicCube {
         rotationBeforeMove = rotationAfterMove;
     }
 
+    public void setMovementSpeed(float movesPerSecond) {
+        this.movementTimeInSeconds = movesPerSecond;
+    }
 
 }

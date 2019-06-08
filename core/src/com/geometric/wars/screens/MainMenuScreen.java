@@ -25,6 +25,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 
         final TextButton playButton = new TextButton("Play!", skin);
         final TextButton optionsButton = new TextButton("Options", skin);
+        final TextButton howToPlayButton = new TextButton("How to play", skin);
         final TextButton exitButton = new TextButton("Exit", skin);
 
         playButton.addListener(new ClickListener(){
@@ -34,6 +35,12 @@ public class MainMenuScreen extends AbstractMenuScreen {
             }
         });
 
+        howToPlayButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(game.howToPlayScreen);
+            }
+        });
 
         optionsButton.addListener(new ClickListener(){
             @Override
@@ -49,7 +56,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
             }
         });
 
-        for (Button button : new Button[]{playButton,optionsButton,exitButton}){
+        for (Button button : new Button[]{playButton,optionsButton,howToPlayButton,exitButton}){
             table.add(button).minSize(500, 80).expand();
             table.row();
         }

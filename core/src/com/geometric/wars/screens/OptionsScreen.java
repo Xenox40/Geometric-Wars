@@ -34,6 +34,13 @@ public class OptionsScreen extends AbstractMenuScreen {
             }
         });
 
+        aboutButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(game.aboutScreen);
+            }
+        });
+
         Table table = new Table();
         table.setFillParent(true);
         table.top();

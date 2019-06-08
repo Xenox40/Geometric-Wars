@@ -20,8 +20,10 @@ public class GeometricWars extends Game{
 	public ControlPickScreen controlPickScreen;
 	public GameResultScreen gameResultScreen;
 	public HowToPlayScreen howToPlayScreen;
+	public AboutScreen aboutScreen;
 
 	public Preferences prefs;
+
 
 
 	private GameMap map;
@@ -60,6 +62,7 @@ public class GeometricWars extends Game{
 			optionsScreen = new OptionsScreen(this);
 			controlPickScreen = new ControlPickScreen(this);
 			howToPlayScreen = new HowToPlayScreen(this);
+			aboutScreen = new AboutScreen(this);
 			controlPickScreen.setSettingsToDefaultIfNotPresent();
 			setScreen(splashScreen);
 		}

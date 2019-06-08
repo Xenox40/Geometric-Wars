@@ -10,8 +10,8 @@ import com.geometric.wars.GeometricWars;
 
 public class HowToPlayScreen extends AbstractMenuScreen {
     private int page = 0;
-    private Texture textures[] = {new Texture(Gdx.files.internal("howToPlay1.png")),new Texture(Gdx.files.internal("howToPlay2.png")), new Texture(Gdx.files.internal("howToPlay3.png"))};
-    private String strings[] = {
+    private final Texture textures[] = {new Texture(Gdx.files.internal("howToPlay1.png")),new Texture(Gdx.files.internal("howToPlay2.png")), new Texture(Gdx.files.internal("howToPlay3.png"))};
+    public static final String strings[] = {
             "Kill as many enemies as you can! Control the cube with the gun at one of its sides. Every move causes rotating of cube - your gun also rotates. " +
                     "Be careful - every time you shoot the bullet, your gun heats- overheated gun shots slower. " +
                     "Watch out your health and collect power ups to crush your enemies.",
@@ -51,12 +51,18 @@ public class HowToPlayScreen extends AbstractMenuScreen {
         Table table = new Table();
         table.setFillParent(true);
         table.top();
-
-        table.add(label).minSize(400,600).expand();
-        table.add(new Image(textures[page])).expand();
+        if(page == 1) {
+            table.add(label).minSize(500, 300).colspan(2).expand();
+            table.row();
+            table.add(new Image(textures[page])).colspan(2).expand();
+        }
+        else{
+            table.add(label).minSize(500, 300).expand();
+            table.add(new Image(textures[page])).expand();
+        }
         table.row();
-        table.add(backButton).minSize(500,80).align(Align.center).expand();
-        table.add(nextButton).minSize(500,80).align(Align.center).expand();
+        table.add(backButton).minSize(350,60).align(Align.center).expand();
+        table.add(nextButton).minSize(350,60).align(Align.center).expand();
         table.row();
 
         stage.addActor(table);

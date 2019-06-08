@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import com.geometric.wars.screens.HowToPlayScreen;
+import com.geometric.wars.utils.Values;
 
 public class AndroidLauncher extends Activity {
 
@@ -75,11 +77,11 @@ public class AndroidLauncher extends Activity {
 	}
 
 	private void openHowToPlayButton() {
-		openPopupWindow("How to play?", "todo how to play");
+		openPopupWindow("How to play?", HowToPlayScreen.strings[0]+" To move simply swipe finger on screen, to shoot tap on screen.");
 	}
 
 	private void openAboutActivity() {
-		openPopupWindow("About the application", "todo about");
+		openPopupWindow("About the application", Values.aboutText);
 
 	}
 

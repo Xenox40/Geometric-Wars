@@ -2,6 +2,7 @@ package com.geometric.wars.maps;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.geometric.wars.GeometricWars;
 import com.geometric.wars.collisions.Collidable;
 import com.geometric.wars.collisions.DynamicBody;
@@ -101,12 +102,14 @@ public class MapGraph {
         PositionAndOrientation nearest = null;
         int minPenalty = 1000;
 
-        int maxQueueElements = 1000000000;
-        if(GeometricWars.isAndroidPlatform()) {
-            maxQueueElements = 300;
-        }
 
-        while (!que.isEmpty() && maxQueueElements --> 0) {
+
+        long time = TimeUtils.millis();
+
+        while (!que.isEmpty()) {
+            if(TimeUtils.timeSinceMillis(time) >= 100) {
+                break;
+            }
             Position position = que.first().position;
             Direction3D orientation = que.first().orientation;
             int penalty = finalStateChecker.getPenalty(position,orientation);

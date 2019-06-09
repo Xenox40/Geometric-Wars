@@ -55,6 +55,7 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
+        bgTexture.dispose();
         spriteBatch.dispose();
         stage.dispose();
         skin.dispose();

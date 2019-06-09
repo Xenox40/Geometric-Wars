@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent" android:background="@drawable/menuBg">
 
     <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="90dp"
               android:layout_margin="16dp"
               android:textSize="56sp"
-              android:text="Geometric Wars"/>
+    />
 
     <Button style="@style/MenuButton"
             android:text="Play!"

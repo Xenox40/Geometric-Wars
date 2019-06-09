@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -117,6 +118,8 @@ public class AndroidLauncher extends Activity {
 		TextView titleTv = popupView.findViewById(R.id.title);
 		TextView contentTv = popupView.findViewById(R.id.content);
 
+		titleTv.setTextColor(Color.parseColor("#000000"));
+		contentTv.setTextColor(Color.parseColor("#000000"));
 		titleTv.setText(title);
 		contentTv.setText(content);
 	}

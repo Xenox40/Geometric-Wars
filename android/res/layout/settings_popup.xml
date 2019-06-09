@@ -12,7 +12,7 @@
               android:layout_marginStart="32dp"
               android:layout_marginTop="32dp"
               android:text="width:"
-    />
+              android:textColor="@android:color/black"/>
     <SeekBar style="@style/MenuButton"
              android:progress="10"
              android:max="20"
@@ -22,7 +22,7 @@
               android:layout_height="wrap_content"
               android:layout_marginLeft="32dp"
               android:layout_marginStart="32dp"
-              android:text="height:"/>
+              android:text="height:" android:textColor="@android:color/black"/>
     <SeekBar style="@style/MenuButton"
              android:progress="10"
              android:max="20"
@@ -32,7 +32,7 @@
               android:layout_height="wrap_content"
               android:layout_marginLeft="32dp"
               android:layout_marginStart="32dp"
-              android:text="wall threshold_slider"/>
+              android:text="wall threshold_slider" android:textColor="@android:color/black"/>
     <SeekBar style="@style/MenuButton"
              android:progress="10"
              android:max="20"

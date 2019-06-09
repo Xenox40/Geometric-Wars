@@ -19,8 +19,9 @@ public class DefaultMapConnector implements MapConnector{
      */
     private int maxConnectionLength1D = 15;
 
-    public DefaultMapConnector(int iterations){
+    public DefaultMapConnector(int iterations, int maxConnectionLength1D){
         this.iterations = iterations;
+        this.maxConnectionLength1D = maxConnectionLength1D;
     }
 
     @Override

@@ -7,7 +7,7 @@ public class MapBuilder {
     private CuttingMapSizeCompressor compressor;
     private DefaultMapConnector connector;
     private CornerMapPlayerPlacer playerPlacer;
-    private int scaleW, scaleH;
+    private float scaleW, scaleH;
     private static final int maximumTries = 10;
 
     public MapBuilder setGenerator(MapGenerator generator) {
@@ -24,10 +24,15 @@ public class MapBuilder {
         return this;
     }
 
-    public MapBuilder setCompressor(CuttingMapSizeCompressor compressor, int scaleW, int scaleH) {
+    public MapBuilder setCompressor(CuttingMapSizeCompressor compressor, float scaleW, float scaleH) {
         this.compressor = compressor;
+        if(scaleW < 1)
+            scaleW = 1;
+        if(scaleH < 1)
+            scaleH = 1;
         this.scaleW = scaleW;
         this.scaleH = scaleH;
+
 
         return this;
     }
@@ -44,10 +49,11 @@ public class MapBuilder {
         for(int i=0;i<maximumTries;i++) {
             GameMap map;
             if (compressor != null) {
-                map = generator.generate(width * scaleW, height * scaleH);
+                map = generator.generate((int)(width * scaleW+1), (int)(height * scaleH+1));
                 compressor.compress(map, width, height);
-            } else
+            } else {
                 map = generator.generate(width, height);
+            }
             if (connector != null) {
                 connector.connectAllComponents(map);
             }
@@ -78,7 +84,7 @@ public class MapBuilder {
     public static void main(String[] args) {
         MapBuilder builder = new MapBuilder();
 
-        builder.setGenerator(new CellularMapGenerator(100,0.5f)).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(5)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
+        builder.setGenerator(new CellularMapGenerator(100,0.5f)).setCompressor(new CuttingMapSizeCompressor(),3,3).setConnector(new DefaultMapConnector(5,15)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
         //builder.setGenerator(new TunnelingMapGenerator(0.55f, 4)).setPlayerPlacer(new CornerMapPlayerPlacer(4,3));
         builder.build(30,30).saveAs("map3",true);
 

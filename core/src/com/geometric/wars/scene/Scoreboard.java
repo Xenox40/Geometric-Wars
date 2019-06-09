@@ -25,7 +25,7 @@ public class Scoreboard implements DynamicGameObject {
         }
     }
 
-    private static final int scoreToWin = 3;
+    private static final int scoreToWin = 10;
     private Array<PlayerScore> scores = new Array<>();
     private Action endOfGameAction;
 

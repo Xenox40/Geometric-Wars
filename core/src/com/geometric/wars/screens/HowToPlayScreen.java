@@ -14,7 +14,7 @@ public class HowToPlayScreen extends AbstractMenuScreen {
     public static final String strings[] = {
             "Kill as many enemies as you can! Control the cube with the gun at one of its sides. Every move causes rotating of cube - your gun also rotates. " +
                     "Be careful - every time you shoot the bullet, your gun heats- overheated gun shots slower. " +
-                    "Watch out your health and collect power ups to crush your enemies.",
+                    "Watch out your health and collect power ups to crush your enemies. The cube, who firs kills 10 other cubes wins.",
             "You can play with bots (easy or medium) or with friends on the same device. Bots are randomly given a better gun - play safe with them. " +
             "Choose one of maps created by us or try random map generators (cellular or tunnels).",
             "You can check and change default controls in options. Good luck and have fun!"

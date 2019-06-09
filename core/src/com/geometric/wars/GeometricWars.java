@@ -19,10 +19,14 @@ public class GeometricWars extends Game{
 	public OptionsScreen optionsScreen;
 	public ControlPickScreen controlPickScreen;
 	public GameResultScreen gameResultScreen;
+	public HowToPlayScreen howToPlayScreen;
+	public AboutScreen aboutScreen;
 
 	public Preferences prefs;
 
-    private GameMap map;
+
+
+	private GameMap map;
 
 
     public GeometricWars() {}
@@ -47,6 +51,20 @@ public class GeometricWars extends Game{
 		if(isAndroidPlatform()){
 			gameScreen.setMap(map);
 			setScreen(gameScreen);
+		}
+
+		if(!isAndroidPlatform()) {
+			mainMenuScreen = new MainMenuScreen(this);
+			splashScreen = new SplashScreen(this);
+			splashScreen.setNextScreen(mainMenuScreen);
+
+			gameCustomizeScreen = new GameCustomizeScreen(this);
+			optionsScreen = new OptionsScreen(this);
+			controlPickScreen = new ControlPickScreen(this);
+			howToPlayScreen = new HowToPlayScreen(this);
+			aboutScreen = new AboutScreen(this);
+			controlPickScreen.setSettingsToDefaultIfNotPresent();
+			setScreen(splashScreen);
 		}
 		else {
             mainMenuScreen = new MainMenuScreen(this);

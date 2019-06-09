@@ -41,7 +41,7 @@ public class GameCustomizeScreen extends AbstractMenuScreen{
             builder
                     .setGenerator(new CellularMapGenerator(15,wallThreshold))
                     .setCompressor(new CuttingMapSizeCompressor(),3,3)
-                    .setConnector(new DefaultMapConnector(5))
+                    .setConnector(new DefaultMapConnector(5,15))
                     .setPlayerPlacer(new CornerMapPlayerPlacer(persons+bots,bots));
         }
         if(template.equals("Tunnels")) {

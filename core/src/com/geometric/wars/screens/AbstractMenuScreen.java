@@ -3,9 +3,11 @@ package com.geometric.wars.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.geometric.wars.GeometricWars;
@@ -15,6 +17,8 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
     protected Stage stage;
     protected SpriteBatch spriteBatch;
     private TextureAtlas skinAtlas;
+    private Texture bgTexture;
+    private Image bgImage;
     protected Skin skin;
 
     public AbstractMenuScreen(GeometricWars game) {
@@ -24,11 +28,14 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
         spriteBatch = new SpriteBatch();
         skinAtlas = new TextureAtlas("skins/uiskin.atlas");
         skin = new Skin(Gdx.files.internal("skins/uiskin.json"), skinAtlas);
+        bgTexture = new Texture("defaultBg.png");
+        bgImage = new Image(bgTexture);
     }
 
     @Override
     public void show() {
         stage.clear();
+        stage.addActor(bgImage);
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -48,6 +55,7 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
+        bgTexture.dispose();
         spriteBatch.dispose();
         stage.dispose();
         skin.dispose();

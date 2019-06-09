@@ -43,26 +43,22 @@ public class GeometricWars extends Game{
 
 		gameScreen = new GameScreen(this);
 		gameResultScreen = new GameResultScreen(this);
+
 		if(isAndroidPlatform()){
 			gameScreen.setMap(map);
 			setScreen(gameScreen);
 		}
-
-
-		if(!isAndroidPlatform()) {
-			mainMenuScreen = new MainMenuScreen(this);
-			splashScreen = new SplashScreen(this);
-			splashScreen.setNextScreen(mainMenuScreen);
-
-			gameCustomizeScreen = new GameCustomizeScreen(this);
-			optionsScreen = new OptionsScreen(this);
-			controlPickScreen = new ControlPickScreen(this);
-			controlPickScreen.setSettingsToDefaultIfNotPresent();
-			setScreen(splashScreen);
-		}
 		else {
+            mainMenuScreen = new MainMenuScreen(this);
+            splashScreen = new SplashScreen(this);
+            splashScreen.setNextScreen(mainMenuScreen);
 
-		}
+            gameCustomizeScreen = new GameCustomizeScreen(this);
+            optionsScreen = new OptionsScreen(this);
+            controlPickScreen = new ControlPickScreen(this);
+            controlPickScreen.setSettingsToDefaultIfNotPresent();
+            setScreen(splashScreen);
+        }
 	}
 
 	private void addInputController(InputController inputController) {

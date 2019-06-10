@@ -17,7 +17,7 @@ public class SplashScreen extends AbstractMenuScreen {
     private Texture texture;
     private Image image;
     private long elapsedTimeInMillis;
-    private long durationInMillis = 2000;
+    private long durationInMillis = 100;
     private AbstractScreen nextScreen;
 
     public void setDuration(long millis){
@@ -46,7 +46,7 @@ public class SplashScreen extends AbstractMenuScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        elapsedTimeInMillis += delta*1000;
+        elapsedTimeInMillis++;
         if(elapsedTimeInMillis >= durationInMillis) {
             if(nextScreen == null)
                 throw new RuntimeException("next screen after splash not found");
